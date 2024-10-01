@@ -2,11 +2,8 @@
 
 # HR.Project-B
 
-<div align="right">
 [![.NET version 8](https://img.shields.io/badge/version-8.0-purple.svg?logo=dotnet)]()
 [![SQLite version 9.0.0](https://img.shields.io/badge/SQLite-9.0.0%20rc.1.24451.1-003B57.svg?logo=sqlite)]()
-</div>
-
 
 ## (EN)
 
