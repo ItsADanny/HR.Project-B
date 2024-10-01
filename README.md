@@ -33,18 +33,18 @@ Project documentation will follow in the weeks to come, as the project moves alo
 
 ### Code and Repo author(s)
 
-[ItsADanny]()
+[ItsADanny](https://github.com/ItsADanny)
 - [@ItsADanny - GitHub](https://github.com/ItsADanny)
 - [Danny - Personal website](https://ddesnoo.nl)
 - [Danny - Linkedin](https://www.linkedin.com/in/ddesnoo/)
 
-[mickdarxy]()
+[mickdarxy](https://github.com/mickdarxy)
 - [@mickdarxy - GitHub](https://github.com/mickdarxy)
 
-[ThomasApistola]()
+[ThomasApistola](https://github.com/ThomasApistola)
 - [@ThomasApistola - GitHub](https://github.com/ThomasApistola)
 
-[owentemi505]()
+[owentemi505](https://github.com/owentemi505)
 - [@owentemi505 - GitHub](https://github.com/owentemi505)
 
 ## (NL)
@@ -74,16 +74,16 @@ De project documentatie zal volgen in de komende weken zodra het codeer gedeelte
 
 ### Code en Repo auteur(s)
 
-[ItsADanny]()
+[ItsADanny](https://github.com/ItsADanny)
 - [@ItsADanny - GitHub](https://github.com/ItsADanny)
 - [Danny - Personal website](https://ddesnoo.nl)
 - [Danny - Linkedin](https://www.linkedin.com/in/ddesnoo/)
 
-[mickdarxy]()
+[mickdarxy](https://github.com/mickdarxy)
 - [@mickdarxy - GitHub](https://github.com/mickdarxy)
 
-[ThomasApistola]()
+[ThomasApistola](https://github.com/ThomasApistola)
 - [@ThomasApistola - GitHub](https://github.com/ThomasApistola)
 
-[owentemi505]()
+[owentemi505](https://github.com/owentemi505)
 - [@owentemi505 - GitHub](https://github.com/owentemi505)
