@@ -48,6 +48,8 @@ Project documentation will follow in the weeks to come, as the project moves alo
 - [@owentemi505 - GitHub](https://github.com/owentemi505)
 
 ## (NL)
+
+### Description
 Dit repo bevat alle code voor Project-Beta. Dit is het tweede project voor het tweede halfjaar op de Informatica opleiding op Hogeschool Rotterdam.
 
 In Project-Beta, wordt je als groep een paar opties gegeven om te kiezen wat voor soort applicatie je wilt maken.
