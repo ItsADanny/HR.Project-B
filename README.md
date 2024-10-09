@@ -44,9 +44,6 @@ Project documentation will follow in the weeks to come, as the project moves alo
 [ThomasApistola](https://github.com/ThomasApistola)
 - [@ThomasApistola - GitHub](https://github.com/ThomasApistola)
 
-[owentemi505](https://github.com/owentemi505)
-- [@owentemi505 - GitHub](https://github.com/owentemi505)
-
 ## (NL)
 
 ### Beschrijving
@@ -84,6 +81,3 @@ De project documentatie zal volgen in de komende weken zodra het codeer gedeelte
 
 [ThomasApistola](https://github.com/ThomasApistola)
 - [@ThomasApistola - GitHub](https://github.com/ThomasApistola)
-
-[owentemi505](https://github.com/owentemi505)
-- [@owentemi505 - GitHub](https://github.com/owentemi505)
