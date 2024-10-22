@@ -9,8 +9,11 @@
 
     <ItemGroup>
       <Folder Include="Data/Database/Diagrams/" />
-      <Folder Include="Logic/" />
       <Folder Include="Presentation/" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
     </ItemGroup>
 
 </Project>
