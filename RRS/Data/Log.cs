@@ -5,29 +5,20 @@ public static class Log {
     public static string GetTimeStamp() => DateTime.Now.ToString("MM\\/dd\\/yyyy h\\:mm tt");
 
     public static void Write(string logline) {
-        string timestamp = GetTimeStamp();
-
-        using (StreamWriter outputFile = new StreamWriter("WriteLines.txt"))
-        {
-            outputFile.WriteLine($"{timestamp} - {logline}");
+        using (StreamWriter outputFile = new StreamWriter(logfileLocation)) {
+            outputFile.WriteLine($"{GetTimeStamp()} - {logline}");
         }
     }
 
     public static void WriteError(string logline) {
-        string timestamp = GetTimeStamp();
-
-        using (StreamWriter outputFile = new StreamWriter("WriteLines.txt"))
-        {
-            outputFile.WriteLine($"{timestamp} - {logline}");
+        using (StreamWriter outputFile = new StreamWriter(logfileLocation)) {
+            outputFile.WriteLine($"{GetTimeStamp()} - ERROR: {logline}");
         }
     }
 
     public static void WriteError(string logline, Exception exception) {
-        string timestamp = GetTimeStamp();
-
-        using (StreamWriter outputFile = new StreamWriter("WriteLines.txt"))
-        {
-            outputFile.WriteLine($"{timestamp} - {logline} - {exception}");
+        using (StreamWriter outputFile = new StreamWriter(logfileLocation)) {
+            outputFile.WriteLine($"{GetTimeStamp()} - {logline} - {exception}");
         }
     }
 }
