@@ -1,0 +1,5 @@
+C:\Users\mickd\Documents\GitHub\HR.Project-B\RRS\obj\Debug\net8.0\RRS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mickd\Documents\GitHub\HR.Project-B\RRS\obj\Debug\net8.0\RRS.AssemblyInfoInputs.cache
+C:\Users\mickd\Documents\GitHub\HR.Project-B\RRS\obj\Debug\net8.0\RRS.AssemblyInfo.cs
+C:\Users\mickd\Documents\GitHub\HR.Project-B\RRS\obj\Debug\net8.0\RRS.csproj.CoreCompileInputs.cache
+C:\Users\mickd\Documents\GitHub\HR.Project-B\RRS\obj\Debug\net8.0\RRS.sourcelink.json
