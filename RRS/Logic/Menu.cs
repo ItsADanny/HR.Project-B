@@ -5,6 +5,8 @@ namespace RRS.Logic;
 
 public class Menu
 {
+    // set ID for number 3 e.g. 3001 3002 3003
+    public List<Menu> MenuList = new List<Menu>();
     public int ID;
     public int RestaurantID;
     public string Name;
@@ -37,21 +39,34 @@ public class Menu
     }
 
 
-    public void AddMenuItem(int ID, string Name,string Description,double Price,string Foodtype)
+    public static void AddMenuItem(int ID, string Name,string Description,double Price,string Foodtype)
     {
-        //new menuitem object
         
+        
+        //new menuitem object
+        Menu NewItem = new Menu();
+
+        var existingItem = MenuList.FirstOrDefault(NewItem => NewItem.Name.Equals(NewItem.Name, StringComparison.OrdinalIgnoreCase));
+
+        if (existingItem != null)
+        {
+
+        }
         //retrieve data from presentation layer name/desc/type/price
         //make sure name isnt the same as existing items
         //add a description
         //ask a foodtype
 
+
+
     }
 
     public string deletemenuitem(int ID,string Name,string Description,double Price,string Foodtype)
     {
-        //receive menu item ID 
+        //receive menu item name
+        //check if its an actual object in the list 
         //try a way to delete object?
+       ;
 
     }
 
@@ -61,6 +76,7 @@ public class Menu
         //remove name from item
         //receive new name for item
         //add the new name for item
+        return;
     }
 
     public string editmenuitemDescription(int ID, string Description)
@@ -69,6 +85,7 @@ public class Menu
         //remove description from item
         //receive new desc for item
         //add the new name for item
+        return;
 
     }
 
@@ -78,6 +95,7 @@ public class Menu
         //remove price from item
         //receive new price
         //add new price 
+        return;
     }
 
     public string editmenuitemType(int ID, string Foodtype)
@@ -86,6 +104,7 @@ public class Menu
         //delete type of item
         //receive type of item
         //edit type item
+        return;
     }
 
 
