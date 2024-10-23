@@ -27,7 +27,22 @@ public class Accounts {
         AccountLevel = accountlevel;
     }
 
+    public Accounts(int id, string email, string firstname, string lastname, string phonenumber, int accountlevel) {
+        ID = id;
+        Email = email;
+        Password = "";
+        FirstName = firstname;
+        LastName = lastname;
+        PhoneNumber = phonenumber;
+        AccountLevel = accountlevel;
+    }
+
     public string GetPassword() {
         return Password;
+    }
+
+    public override string ToString()
+    {
+        return $"ID: {ID}\nEmail: {Email}\nFirstName: {FirstName}\nLastName: {LastName}\nPhoneNumber: {PhoneNumber}\nAccountLevel: {AccountLevel}";
     }
 }
