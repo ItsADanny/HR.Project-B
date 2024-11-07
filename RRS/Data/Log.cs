@@ -24,7 +24,7 @@ public static class Log {
     public static void WriteError(string logline, Exception exception) {
         if (CheckFile()) {
             using (StreamWriter sw = File.AppendText(logfileLocation)) {
-                sw.WriteLine($"{GetTimeStamp()} - {logline} - {exception}");
+                sw.WriteLine($"{GetTimeStamp()} - ERROR: {logline} - EXCEPTION: {exception}");
             }
         }
     }

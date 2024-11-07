@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using System.Globalization;
 using System.Text;
 
 public static class Functions {
@@ -44,7 +45,89 @@ public static class Functions {
         return Database.SelectAccount(email, password);
     }
 
-    public static void DisplayEnvironment(Accounts account) {
-        account.ToString();
+    public static bool IsAccountAdmin(Accounts account) {
+        if (Database.SelectAccountLevel(account.AccountLevel).IsAnAdmin) {
+            return true;
+        }
+        return false;
+    }
+
+    public static string RequestValidString(string request) {
+        while (true) {
+            Display.PrintText(request + ":");
+            string input = Console.ReadLine();
+
+            if (input is not null && input != "" && input.Count() >= 1) {
+                return input;
+            }
+            Display.PrintText($"Invalid input, please input a valid {request}");
+            Thread.Sleep(1500);
+        }
+    }
+
+    public static int RequestValidInt(string request) {
+        while (true) {
+            Display.PrintText(request + ":");
+            string input = Console.ReadLine();
+
+            if (input is not null && input != "" && input.Count() >= 1) {
+                if (int.TryParse(input, out int output)) {
+                    return output;
+                }
+            }
+            Display.PrintText($"Invalid input, please input a valid {request}");
+            Thread.Sleep(1500);
+        }
+    }
+
+    public static string RequestValidEmail() {
+        while (true) {
+            Display.PrintText("E-mail:");
+            string input = Console.ReadLine();
+
+            bool containsAt = false;
+            bool constainsDot = false;
+
+            foreach (char letter in input) {
+                if (letter == '@') {
+                    containsAt = true;
+                }
+                if (letter == '.') {
+                    constainsDot = true;
+                }
+            }
+
+            if (input is not null && input != "" && input.Count() >= 1 && containsAt && constainsDot) {
+                return input;
+            }
+            Display.PrintText($"Invalid input, please input a valid E-mail");
+            Thread.Sleep(1500);
+        }
+    }
+
+    public static string RequestValidDate() {
+        while (true) {
+            Display.PrintText("Date:");
+            string input = Console.ReadLine();
+
+            if (DateTime.TryParseExact(input, "dd/MM/yyyy", new CultureInfo("fr-FR"), DateTimeStyles.None, out DateTime output)) {
+                return input;
+            }
+            Display.PrintText($"Invalid input, please input a valid Date");
+            Thread.Sleep(1500);
+        }
+    }
+
+    public static string RequestValidTime(string request) {
+        while (true) {
+            Display.PrintText(request + ":");
+            string input = Console.ReadLine();
+
+            if (DateTime.TryParseExact(input, "hh:mm", new CultureInfo("en-US"), DateTimeStyles.None, out DateTime output)) {
+                return input;
+            }
+            Display.PrintText($"Invalid input, please input a valid {request}");
+            Thread.Sleep(1500);
+        }
     }
 }

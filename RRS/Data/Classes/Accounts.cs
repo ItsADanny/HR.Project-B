@@ -37,6 +37,16 @@ public class Accounts {
         AccountLevel = accountlevel;
     }
 
+    public Accounts(string email, string firstname, string lastname, string phonenumber, int accountlevel) {
+        ID = 999999999;
+        Email = email;
+        Password = "";
+        FirstName = firstname;
+        LastName = lastname;
+        PhoneNumber = phonenumber;
+        AccountLevel = accountlevel;
+    }
+
     public string GetPassword() {
         return Password;
     }
