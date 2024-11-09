@@ -328,6 +328,29 @@ public static class Database {
         }
         return null;
     }
+    //Select - From Account - Returns a True if an inputted Password matches with the current Password
+    public static bool CheckAccountPassword(int ID, string Input) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE ID = {ID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                
+                string hashed_password = sqlite_datareader.GetString(2);
+                CloseConn(db_conn);
+                if (hashed_password == Input) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     //Select - Menu
 
