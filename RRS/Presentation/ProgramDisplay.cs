@@ -1,3 +1,5 @@
+using RRS.Logic;
+
 public static class ProgramDisplay {
     private static int SelectedRestaurant = 0;
     private static Accounts LoggedInAccount = null;
@@ -49,7 +51,7 @@ public static class ProgramDisplay {
 
     public static void Display_Admin_Environment() {
         while (true) {
-            Console.Clear();
+            // Console.Clear();
             Console.WriteLine("====================================================================");
             Console.WriteLine(" ▗▄▖ ▗▄▄▄  ▗▖  ▗▖▗▄▄▄▖▗▖  ▗▖\n" +
                                 "▐▌ ▐▌▐▌  █ ▐▛▚▞▜▌  █  ▐▛▚▖▐▌\n" + 
@@ -58,18 +60,14 @@ public static class ProgramDisplay {
             Console.WriteLine("====================================================================\n");
             Console.WriteLine($"Welcome {LoggedInAccount.FirstName} {LoggedInAccount.LastName}\nWhat would you like to do?\n");
 
-            Console.WriteLine("Reservation options");
-            Console.WriteLine("1 - Create reservation");
-            Console.WriteLine("2 - View reservations");
-            Console.WriteLine("3 - Cancel reservation\n");
-            Console.WriteLine("Customer account options");
-            Console.WriteLine("4 - Create Customer account");
-            Console.WriteLine("5 - Lookup Customer\n");
-            Console.WriteLine("Account options");
-            Console.WriteLine("6 - Create new account");
-            Console.WriteLine("7 - Account lookup");
-            Console.WriteLine("8 - Create account level");
-            Console.WriteLine("9 - Account levels lookup");
+            Console.WriteLine("Quick actions");
+            Console.WriteLine("1 - View reservations");
+            Console.WriteLine("2 - Customer Lookup");
+            Console.WriteLine("3 - View dining menu");
+            Console.WriteLine("Menu's:");
+            Console.WriteLine("4 - Reservation options");
+            Console.WriteLine("5 - Dining menu options");
+            Console.WriteLine("6 - Account options");
             Console.WriteLine("\n\nQ - Logout");
             Console.WriteLine("====================================================================\n");
             Console.WriteLine("Choice:");
@@ -79,13 +77,23 @@ public static class ProgramDisplay {
                 switch (choice.ToLower())
                 {
                     case "1":
-                        ReservationDisplay.DisplayCreateReservation(SelectedRestaurant);
-                        break;
-                    case "2":
                         ReservationDisplay.DisplayForRestaurant(SelectedRestaurant);
                         break;
-                    // case "3":
+                    // case "2":
+                    // NOTE: Need to implement a menu for making it easy to search for customers
                     //     break;
+                    // case "3":
+                    // NOTE: Need to implement a method to display the current menu items available for dinner
+                    //     break;
+                    case "4":
+                        ReservationDisplay.ReservationMenu_Admin(SelectedRestaurant, LoggedInAccount);
+                        break;
+                    // case "5":
+                    // NOTE: Still need to implement this menu in a new Display class for the dining menu
+                    //     break;
+                    case "6":
+                        AccountDisplay.AdminAccountMenu(LoggedInAccount);
+                        break;
                     case "q":
                             Environment.Exit(0);
                         break;

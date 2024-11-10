@@ -1,4 +1,15 @@
 public static class ReservationDisplay {
+
+    public static void ReservationMenu_Customer(int restaurantID, Accounts LoggedInAccount) {
+        PrintHeader();
+
+    }
+
+    public static void ReservationMenu_Admin (int restaurantID, Accounts LoggedInAccount) {
+        PrintHeader();
+        
+    }
+
     public static void DisplayForRestaurant(int restaurantID) {
         PrintHeader();
         Console.WriteLine(ReservationLogic.RetrieveReservations(restaurantID));

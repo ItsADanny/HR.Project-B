@@ -55,4 +55,19 @@ public class Accounts {
     {
         return $"ID: {ID}\nEmail: {Email}\nFirstName: {FirstName}\nLastName: {LastName}\nPhoneNumber: {PhoneNumber}\nAccountLevel: {AccountLevel}";
     }
+
+    public string ToString_WithAccountLevelName()
+    {
+        return $"ID: {ID}\nEmail: {Email}\nFirstName: {FirstName}\nLastName: {LastName}\nPhoneNumber: {PhoneNumber}\nAccountLevel: {Database.SelectAccountLevel(AccountLevel).Name}";
+    }
+
+    public string FancyToString_WithAccountLevelName()
+    {
+        return $"===============================================================\nID           : {ID}\nEmail        : {Email}\nFirstName    : {FirstName}\nLastName     : {LastName}\nPhoneNumber  : {PhoneNumber}\nAccountLevel : {Database.SelectAccountLevel(AccountLevel).Name}\n===============================================================";
+    }
+
+    public string FancyToString_WithAccountLevelName_NoBorder()
+    {
+        return $"ID           : {ID}\nEmail        : {Email}\nFirstName    : {FirstName}\nLastName     : {LastName}\nPhoneNumber  : {PhoneNumber}\nAccountLevel : {Database.SelectAccountLevel(AccountLevel).Name}";
+    }
 }

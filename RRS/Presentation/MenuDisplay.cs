@@ -7,6 +7,10 @@ namespace RRS.Logic;
 
 public class MenuDisplay
 { 
+
+    public static void PrintAccountID(Accounts LoggedInAccount) {
+        Console.WriteLine($"Account ID: {LoggedInAccount.ID}");
+    }
     // private Menu MenuManager = new Menu();
 
 //     public static string MenuItemEditorMenu()
