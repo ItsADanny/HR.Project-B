@@ -6,5 +6,6 @@ class Program {
         Functions.VitalSystemsCheck();
         //The RRS program will start here
         ProgramDisplay.Display();
+        
     }
 }

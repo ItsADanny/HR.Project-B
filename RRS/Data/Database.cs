@@ -222,8 +222,16 @@ public static class Database {
             SqliteDataReader sqlite_datareader;
             SqliteCommand sqlite_cmd;
             sqlite_cmd = db_conn.CreateCommand();
-            sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE Email = '{email}' AND Password = '{password}'";
-
+            if (password == "firstname") {
+                sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE FirstName = '{email}'";
+            } else if (password == "lastname") {
+                sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE LastName = '{email}'";
+            } else if (password == "email") {
+                sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE Email = '{email}'";
+            } else {
+                sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE Email = '{email}' AND Password = '{password}'";
+            }
+            
             sqlite_datareader = sqlite_cmd.ExecuteReader();
             while (sqlite_datareader.Read())
             {                
@@ -266,7 +274,117 @@ public static class Database {
             }
         }
         return null;
-    } 
+    }
+
+    public static List<Accounts> SelectAccount() {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<Accounts> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Accounts";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {                
+                int AccountID = sqlite_datareader.GetInt32(0);
+                string AccountEmail = sqlite_datareader.GetString(1);
+                string AccountFirstName = sqlite_datareader.GetString(3);
+                string AccountLastName = sqlite_datareader.GetString(4);
+                string AccountPhoneNumber = sqlite_datareader.GetString(5);
+                int AccountAccountLevel = sqlite_datareader.GetInt32(6);
+
+                results.Add(new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountAccountLevel));
+            }
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
+
+    public static List<Accounts> SelectAccount(string input, string choice, bool returnList) {
+        if (returnList) {
+            SqliteConnection db_conn = CreateConn();
+
+            if (db_conn is not null) {
+                List<Accounts> results = [];
+
+                SqliteDataReader sqlite_datareader;
+                SqliteCommand sqlite_cmd;
+                sqlite_cmd = db_conn.CreateCommand();
+                if (choice == "firstname") {
+                    sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE FirstName = '{input}'";
+                } else if (choice == "lastname") {
+                    sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE LastName = '{input}'";
+                }
+
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                while (sqlite_datareader.Read())
+                {                
+                    int AccountID = sqlite_datareader.GetInt32(0);
+                    string AccountEmail = sqlite_datareader.GetString(1);
+                    string AccountFirstName = sqlite_datareader.GetString(3);
+                    string AccountLastName = sqlite_datareader.GetString(4);
+                    string AccountPhoneNumber = sqlite_datareader.GetString(5);
+                    int AccountAccountLevel = sqlite_datareader.GetInt32(6);
+
+                    results.Add(new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountAccountLevel));
+                }
+                CloseConn(db_conn);
+                return results;
+            }
+            return null;
+        } else {
+            return [SelectAccount(input, choice)];
+        }
+    }
+
+    //Select - From Account - Return Hashed Password Only
+    public static string SelectAccountPassword(int ID) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE ID = {ID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                CloseConn(db_conn);
+                return sqlite_datareader.GetString(2);
+            }
+        }
+        return null;
+    }
+
+    //Select - From Account - Returns a True if an inputted Password matches with the current Password
+    public static bool CheckAccountPassword(int ID, string Input) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE ID = {ID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                
+                string hashed_password = sqlite_datareader.GetString(2);
+                CloseConn(db_conn);
+                if (hashed_password == Input) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     //Select - AccountLevel
 
@@ -327,29 +445,6 @@ public static class Database {
             }
         }
         return null;
-    }
-    //Select - From Account - Returns a True if an inputted Password matches with the current Password
-    public static bool CheckAccountPassword(int ID, string Input) {
-        SqliteConnection db_conn = CreateConn();
-
-        if (db_conn is not null) {
-            SqliteDataReader sqlite_datareader;
-            SqliteCommand sqlite_cmd;
-            sqlite_cmd = db_conn.CreateCommand();
-            sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE ID = {ID}";
-
-            sqlite_datareader = sqlite_cmd.ExecuteReader();
-            while (sqlite_datareader.Read())
-            {
-                
-                string hashed_password = sqlite_datareader.GetString(2);
-                CloseConn(db_conn);
-                if (hashed_password == Input) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     //Select - Menu
@@ -564,6 +659,44 @@ public static class Database {
             }
         }
         return null;
+    }
+
+    public static bool UpdateAccountLevelForAccount(Accounts account, AccountLevel accountLevel, Accounts adminAccount) {
+        if (account is not null && accountLevel is not null && adminAccount is not null) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET AccountLevel = {accountLevel.ID} WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static string DeleteAccount(int accountID) {
+        if (accountID != 0 | accountID != 1) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"DELETE FROM Accounts WHERE ID = {accountID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return "Account has been succesfully removed from system";
+        } else if (accountID != 1) {
+            return "Can't Remove the main superadmin account";
+        }
+        return "invalid input";
     }
 
     public static int Temp_GetLastID(string table) {
