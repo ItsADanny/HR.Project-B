@@ -661,6 +661,24 @@ public static class Database {
         return null;
     }
 
+    public static bool UpdatePasswordForAccount(Accounts account, string oldPassword, string newPassword) {
+        if (account is not null && oldPassword is not null && newPassword is not null) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET Password = {newPassword} WHERE ID = {account.ID} AND Password = {oldPassword};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
     public static bool UpdateAccountLevelForAccount(Accounts account, AccountLevel accountLevel, Accounts adminAccount) {
         if (account is not null && accountLevel is not null && adminAccount is not null) {
             //Creating a connection to the database
