@@ -240,4 +240,29 @@ public static class AccountDisplay {
             }
         }
     }
+
+    public static int ChooseAccountLevel(){
+        List<AccountLevel> accountLevels = Database.SelectAccountLevel();
+        int selectedAccountLevel = 0;
+        while (true) {
+            foreach (AccountLevel accountLevel in accountLevels) {
+                accountLevel.ToString();
+            }
+            Console.WriteLine("Choose Account Level:");
+            if (int.TryParse(Console.ReadLine(), out int result)) {
+                foreach (AccountLevel accountLevel in accountLevels) {
+                    if (accountLevel.ID == result) {
+                        selectedAccountLevel = result;
+                    }
+                }
+            }
+
+            if (selectedAccountLevel != 0) {
+                break;
+            } else {
+                Console.WriteLine("Invalid option chosen, please select an valid option");
+            }
+        }
+        return selectedAccountLevel;
+    }
 }

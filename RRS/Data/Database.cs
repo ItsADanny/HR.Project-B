@@ -401,6 +401,28 @@ public static class Database {
         return false;
     }
 
+    public static bool DoesEmailAlreadyExist(string input) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE Email = \"{input}\"";
+            
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                string email = sqlite_datareader.GetString(1);
+                CloseConn(db_conn);
+                if (email == input) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     //Select - AccountLevel
 
     //Select Everything
