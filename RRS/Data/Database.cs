@@ -194,8 +194,6 @@ public static class Database {
             //Creating a connection to the database
             SqliteConnection db_conn = CreateConn();
 
-            Console.WriteLine($"INSERT INTO ReservationTimeSlots (RestaurantID, ReservationDate, StartTime, EndTime) VALUES ({timeSlot.RestaurantID}, '{timeSlot.GetDate()}', '{timeSlot.GetStartTime()}', '{timeSlot.GetEndTime()}');");
-
             SqliteCommand sqlite_cmd;
             sqlite_cmd = db_conn.CreateCommand();
             sqlite_cmd.CommandText = $"INSERT INTO ReservationTimeSlots (RestaurantID, ReservationDate, StartTime, EndTime) VALUES ({timeSlot.RestaurantID}, '{timeSlot.GetDate()}', '{timeSlot.GetStartTime()}', '{timeSlot.GetEndTime()}');";
@@ -209,6 +207,23 @@ public static class Database {
         return false;
     }
 
+    public static bool InsertInformationShare(Accounts accountOne, Accounts accountTwo) {
+        if (accountOne is not null & accountTwo is not null) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"INSERT INTO InfoShared (AccountID_One, AccountID_Two) VALUES ({accountOne.ID}, {accountTwo.ID});";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
 
     //[23-10-2024] - [82924077] – [ItsDanny]
     //[Added the select function for the Menu, Reservations and Account]
@@ -679,6 +694,60 @@ public static class Database {
         return false;
     }
 
+    public static bool UpdateFirstNameForAccount(Accounts account, string firstname) {
+        if (account is not null && firstname is not null && firstname != "") {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET FirstName = {firstname} WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool UpdateLastNameForAccount(Accounts account, string lastname) {
+        if (account is not null && lastname is not null && lastname != "") {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET LastName = {lastname} WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool UpdatePhoneNumberForAccount(Accounts account, string phonenumber) {
+        if (account is not null && phonenumber is not null && phonenumber != "") {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET PhoneNumber = {phonenumber} WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
     public static bool UpdateAccountLevelForAccount(Accounts account, AccountLevel accountLevel, Accounts adminAccount) {
         if (account is not null && accountLevel is not null && adminAccount is not null) {
             //Creating a connection to the database
@@ -687,6 +756,24 @@ public static class Database {
             SqliteCommand sqlite_cmd;
             sqlite_cmd = db_conn.CreateCommand();
             sqlite_cmd.CommandText = $"UPDATE Accounts SET AccountLevel = {accountLevel.ID} WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool ConfirmInformationShare(Accounts ShareToAccount, Accounts ShareFromAccount) {
+        if (ShareToAccount is not null && ShareFromAccount is not null) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET Confirmation = 1 WHERE AccountID_One = {ShareFromAccount.ID} AND AccountID_Two = {ShareToAccount.ID};";
             sqlite_cmd.ExecuteNonQuery();
 
             //Close the connection to the database

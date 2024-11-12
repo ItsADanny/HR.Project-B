@@ -57,6 +57,7 @@ public static class AccountDisplay {
                             break;
                         default:
                             Console.WriteLine("Invalid input, please select an valid option");
+                            Thread.Sleep(1500);
                             break;
                     }
                 } else {
@@ -70,6 +71,7 @@ public static class AccountDisplay {
                             break;
                         default:
                             Console.WriteLine("Invalid input, please select an valid option");
+                            Thread.Sleep(1500);
                             break;
                     }
                 }

@@ -9,7 +9,7 @@ public static class ProgramDisplay {
         int attempts = 4;
         while (true) {
             Console.Clear();
-            Console.WriteLine("[TEMP] MATCHMAKING RESTAURANT [TEMP]");
+            Console.WriteLine("       MATCHMAKING RESTAURANT       ");
             Console.WriteLine("====================================\n");
             Console.WriteLine("Login");
             Console.WriteLine("------------------------------------");
