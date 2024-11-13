@@ -208,7 +208,11 @@ public static class Database {
             //Creating a connection to the database
             SQLiteConnection db_conn = CreateConn();
 
+<<<<<<< Updated upstream
             SQLiteCommand sqlite_cmd;
+=======
+            SqliteCommand sqlite_cmd;
+>>>>>>> Stashed changes
             sqlite_cmd = db_conn.CreateCommand();
 
             foreach (Accounts account in accounts) { 
@@ -223,4 +227,650 @@ public static class Database {
         }
         return false;
     }
+<<<<<<< Updated upstream
+=======
+
+    public static bool InsertInformationShare(Accounts accountOne, Accounts accountTwo) {
+        if (accountOne is not null & accountTwo is not null) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"INSERT INTO InfoShared (AccountID_One, AccountID_Two) VALUES ({accountOne.ID}, {accountTwo.ID});";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    //[23-10-2024] - [82924077] – [ItsDanny]
+    //[Added the select function for the Menu, Reservations and Account]
+    //Select - Account
+
+    //Select by Email and Password
+    public static Accounts SelectAccount(string email, string password) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            if (password == "firstname") {
+                sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE FirstName = '{email}'";
+            } else if (password == "lastname") {
+                sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE LastName = '{email}'";
+            } else if (password == "email") {
+                sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE Email = '{email}'";
+            } else {
+                sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE Email = '{email}' AND Password = '{password}'";
+            }
+            
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {                
+                int AccountID = sqlite_datareader.GetInt32(0);
+                string AccountEmail = sqlite_datareader.GetString(1);
+                string AccountFirstName = sqlite_datareader.GetString(3);
+                string AccountLastName = sqlite_datareader.GetString(4);
+                string AccountPhoneNumber = sqlite_datareader.GetString(5);
+                int AccountAccountLevel = sqlite_datareader.GetInt32(6);
+
+                CloseConn(db_conn);
+                return new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountAccountLevel);
+            }
+        }
+        return null;
+    }
+
+    //Select by ID
+    public static Accounts SelectAccount(int ID) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE ID = {ID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int AccountID = sqlite_datareader.GetInt32(0);
+                string AccountEmail = sqlite_datareader.GetString(1);
+                string AccountFirstName = sqlite_datareader.GetString(3);
+                string AccountLastName = sqlite_datareader.GetString(4);
+                string AccountPhoneNumber = sqlite_datareader.GetString(5);
+                int AccountAccountLevel = sqlite_datareader.GetInt32(6);
+
+                CloseConn(db_conn);
+                return new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountAccountLevel);
+            }
+        }
+        return null;
+    }
+
+    public static List<Accounts> SelectAccount() {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<Accounts> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Accounts";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {                
+                int AccountID = sqlite_datareader.GetInt32(0);
+                string AccountEmail = sqlite_datareader.GetString(1);
+                string AccountFirstName = sqlite_datareader.GetString(3);
+                string AccountLastName = sqlite_datareader.GetString(4);
+                string AccountPhoneNumber = sqlite_datareader.GetString(5);
+                int AccountAccountLevel = sqlite_datareader.GetInt32(6);
+
+                results.Add(new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountAccountLevel));
+            }
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
+
+    public static List<Accounts> SelectAccount(string input, string choice, bool returnList) {
+        if (returnList) {
+            SqliteConnection db_conn = CreateConn();
+
+            if (db_conn is not null) {
+                List<Accounts> results = [];
+
+                SqliteDataReader sqlite_datareader;
+                SqliteCommand sqlite_cmd;
+                sqlite_cmd = db_conn.CreateCommand();
+                if (choice == "firstname") {
+                    sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE FirstName = '{input}'";
+                } else if (choice == "lastname") {
+                    sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE LastName = '{input}'";
+                }
+
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                while (sqlite_datareader.Read())
+                {                
+                    int AccountID = sqlite_datareader.GetInt32(0);
+                    string AccountEmail = sqlite_datareader.GetString(1);
+                    string AccountFirstName = sqlite_datareader.GetString(3);
+                    string AccountLastName = sqlite_datareader.GetString(4);
+                    string AccountPhoneNumber = sqlite_datareader.GetString(5);
+                    int AccountAccountLevel = sqlite_datareader.GetInt32(6);
+
+                    results.Add(new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountAccountLevel));
+                }
+                CloseConn(db_conn);
+                return results;
+            }
+            return null;
+        } else {
+            return [SelectAccount(input, choice)];
+        }
+    }
+
+    //Select - From Account - Return Hashed Password Only
+    public static string SelectAccountPassword(int ID) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE ID = {ID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                CloseConn(db_conn);
+                return sqlite_datareader.GetString(2);
+            }
+        }
+        return null;
+    }
+
+    //Select - From Account - Returns a True if an inputted Password matches with the current Password
+    public static bool CheckAccountPassword(int ID, string Input) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE ID = {ID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                
+                string hashed_password = sqlite_datareader.GetString(2);
+                CloseConn(db_conn);
+                if (hashed_password == Input) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static bool DoesEmailAlreadyExist(string input) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Accounts WHERE Email = \"{input}\"";
+            
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                string email = sqlite_datareader.GetString(1);
+                CloseConn(db_conn);
+                if (email == input) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    //Select - AccountLevel
+
+    //Select Everything
+    public static List<AccountLevel> SelectAccountLevel() {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<AccountLevel> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM AccountLevel";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {                
+                int AccountLevel_ID = sqlite_datareader.GetInt32(0);
+                string AccountLevel_Name = sqlite_datareader.GetString(1);
+                int AccountLevel_CanChangeReservations = sqlite_datareader.GetInt32(0);
+                int AccountLevel_CanChangeTimeSlots = sqlite_datareader.GetInt32(0);
+                int AccountLevel_CanCancelReservations = sqlite_datareader.GetInt32(0);
+                int AccountLevel_IsAnAdmin = sqlite_datareader.GetInt32(0);
+                int AccountLevel_CanCreateAdmins = sqlite_datareader.GetInt32(0);
+
+                results.Add(new AccountLevel(AccountLevel_ID, AccountLevel_Name, AccountLevel_CanChangeReservations, AccountLevel_CanChangeTimeSlots, AccountLevel_CanCancelReservations, AccountLevel_IsAnAdmin, AccountLevel_CanCreateAdmins));
+            }
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
+
+    //Select By ID
+    public static AccountLevel SelectAccountLevel(int AccountLevelID) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM AccountLevel WHERE ID = {AccountLevelID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {                
+                int AccountLevel_ID = sqlite_datareader.GetInt32(0);
+                string AccountLevel_Name = sqlite_datareader.GetString(1);
+                int AccountLevel_CanChangeReservations = sqlite_datareader.GetInt32(0);
+                int AccountLevel_CanChangeTimeSlots = sqlite_datareader.GetInt32(0);
+                int AccountLevel_CanCancelReservations = sqlite_datareader.GetInt32(0);
+                int AccountLevel_IsAnAdmin = sqlite_datareader.GetInt32(0);
+                int AccountLevel_CanCreateAdmins = sqlite_datareader.GetInt32(0);
+
+                CloseConn(db_conn);
+                return new AccountLevel(AccountLevel_ID, AccountLevel_Name, AccountLevel_CanChangeReservations, AccountLevel_CanChangeTimeSlots, AccountLevel_CanCancelReservations, AccountLevel_IsAnAdmin, AccountLevel_CanCreateAdmins);
+            }
+        }
+        return null;
+    }
+
+    //Select - Menu
+
+    //Select Everything
+
+
+    //Select Everything for a certain Restaurant
+
+
+    //Select Menu by ID and Restaurant
+
+
+    //Select - FoodType
+
+    //Select Everything
+    public static List<FoodType> SelectFoodType() {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<FoodType> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM FoodType";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int FoodTypeID = sqlite_datareader.GetInt32(0);
+                int FoodTypeRestaurantID = sqlite_datareader.GetInt32(1);
+                string FoodTypeName = sqlite_datareader.GetString(2);
+
+                results.Add(new FoodType(FoodTypeID, FoodTypeRestaurantID, FoodTypeName));
+            }
+
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
+
+    //Select Everything for a certain Restaurant
+    public static List<FoodType> SelectFoodType(int restaurantID) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<FoodType> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM FoodType WHERE RestaurantID = {restaurantID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int FoodTypeID = sqlite_datareader.GetInt32(0);
+                int FoodTypeRestaurantID = sqlite_datareader.GetInt32(1);
+                string FoodTypeName = sqlite_datareader.GetString(2);
+
+                results.Add(new FoodType(FoodTypeID, FoodTypeRestaurantID, FoodTypeName));
+            }
+
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
+
+    //Select Name by ID and Restaurant
+    public static string SelectFoodType(int FoodTypeID, int restaurantID) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM FoodType WHERE ID = {FoodTypeID} AND RestaurantID = {restaurantID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {   
+                CloseConn(db_conn);
+                return sqlite_datareader.GetString(2);
+            }
+        }
+        return null;
+    }
+
+    //Select - Reservations
+
+    //Select Everything
+    public static List<Reservations> SelectReservations() {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<Reservations> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Reservations";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int ReservationID = sqlite_datareader.GetInt32(0);
+                int ReservationRestaurantID = sqlite_datareader.GetInt32(1);
+                int ReservationTimeSlotID = sqlite_datareader.GetInt32(2);
+                int ReservationTableID = sqlite_datareader.GetInt32(3);
+                int ReservationAccountID = sqlite_datareader.GetInt32(4);
+                int ReservationStatus = sqlite_datareader.GetInt32(5);
+
+                results.Add(new Reservations(ReservationID, ReservationRestaurantID, ReservationTimeSlotID, ReservationTableID, ReservationAccountID, ReservationStatus));
+            }
+
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
+
+    //Select Everything for a certain Restaurant
+    public static List<Reservations> SelectReservations(int restaurantID) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<Reservations> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Reservations WHERE RestaurantID = {restaurantID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int ReservationID = sqlite_datareader.GetInt32(0);
+                int ReservationRestaurantID = sqlite_datareader.GetInt32(1);
+                int ReservationTimeSlotID = sqlite_datareader.GetInt32(2);
+                int ReservationTableID = sqlite_datareader.GetInt32(3);
+                int ReservationAccountID = sqlite_datareader.GetInt32(4);
+                int ReservationStatus = sqlite_datareader.GetInt32(5);
+
+                results.Add(new Reservations(ReservationID, ReservationRestaurantID, ReservationTimeSlotID, ReservationTableID, ReservationAccountID, ReservationStatus));
+            }
+
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
+
+    //Select - Reservations
+
+    //Select Everything
+    public static List<ReservationTimeSlots> SelectReservationTimeSlots() {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<ReservationTimeSlots> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM ReservationTimeSlots";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int ReservationTimeSlotsID = sqlite_datareader.GetInt32(0);
+                int ReservationTimeSlotsRestaurantID = sqlite_datareader.GetInt32(1);
+                string ReservationTimeSlotsDate = sqlite_datareader.GetString(2);
+                string ReservationTimeSlotsStartTime = sqlite_datareader.GetString(3);
+                string ReservationTimeSlotsEndTime = sqlite_datareader.GetString(4);
+
+                results.Add(new ReservationTimeSlots(ReservationTimeSlotsID, ReservationTimeSlotsRestaurantID, ReservationTimeSlotsDate, ReservationTimeSlotsStartTime, ReservationTimeSlotsEndTime));
+            }
+
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
+
+    //Select by ID
+    public static ReservationTimeSlots SelectReservationTimeSlots(int timeSlotID) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<ReservationTimeSlots> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM ReservationTimeSlots WHERE ID = {timeSlotID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int ReservationTimeSlotsID = sqlite_datareader.GetInt32(0);
+                int ReservationTimeSlotsRestaurantID = sqlite_datareader.GetInt32(1);
+                string ReservationTimeSlotsDate = sqlite_datareader.GetString(2);
+                string ReservationTimeSlotsStartTime = sqlite_datareader.GetString(3);
+                string ReservationTimeSlotsEndTime = sqlite_datareader.GetString(4);
+
+                CloseConn(db_conn);
+
+                return new ReservationTimeSlots(ReservationTimeSlotsID, ReservationTimeSlotsRestaurantID, ReservationTimeSlotsDate, ReservationTimeSlotsStartTime, ReservationTimeSlotsEndTime);
+            }
+        }
+        return null;
+    }
+
+    public static bool UpdatePasswordForAccount(Accounts account, string oldPassword, string newPassword) {
+        if (account is not null && oldPassword is not null && newPassword is not null) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET Password = {newPassword} WHERE ID = {account.ID} AND Password = {oldPassword};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool UpdateFirstNameForAccount(Accounts account, string firstname) {
+        if (account is not null && firstname is not null && firstname != "") {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET FirstName = {firstname} WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool UpdateLastNameForAccount(Accounts account, string lastname) {
+        if (account is not null && lastname is not null && lastname != "") {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET LastName = {lastname} WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool UpdatePhoneNumberForAccount(Accounts account, string phonenumber) {
+        if (account is not null && phonenumber is not null && phonenumber != "") {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET PhoneNumber = {phonenumber} WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool UpdateAccountLevelForAccount(Accounts account, AccountLevel accountLevel, Accounts adminAccount) {
+        if (account is not null && accountLevel is not null && adminAccount is not null) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET AccountLevel = {accountLevel.ID} WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool ConfirmInformationShare(Accounts ShareToAccount, Accounts ShareFromAccount) {
+        if (ShareToAccount is not null && ShareFromAccount is not null) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET Confirmation = 1 WHERE AccountID_One = {ShareFromAccount.ID} AND AccountID_Two = {ShareToAccount.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static string DeleteAccount(int accountID) {
+        if (accountID != 0 | accountID != 1) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"DELETE FROM Accounts WHERE ID = {accountID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return "Account has been succesfully removed from system";
+        } else if (accountID != 1) {
+            return "Can't Remove the main superadmin account";
+        }
+        return "invalid input";
+    }
+
+    public static int Temp_GetLastID(string table) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<ReservationTimeSlots> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"select seq from sqlite_sequence where name='{table}'";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int ID = sqlite_datareader.GetInt32(0);
+                CloseConn(db_conn);
+
+                return ID;
+            }
+        }
+        return 0;
+    }
+
+>>>>>>> Stashed changes
 }
