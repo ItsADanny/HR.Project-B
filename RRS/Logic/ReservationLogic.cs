@@ -31,7 +31,6 @@ public static class ReservationLogic {
             //format return
             returnResult += $"{i} - Reservation for: {accounts.FirstName} {accounts.LastName}, Table: {reservation.TableID}, Date: {reservationTimeSlot.GetDate()}, from {reservationTimeSlot.GetStartTime()} to {reservationTimeSlot.GetEndTime()}";
         }
-
         return returnResult;
     }
 
