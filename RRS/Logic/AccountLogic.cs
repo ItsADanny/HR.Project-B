@@ -117,17 +117,25 @@ public static class AccountLogic {
         }
     }
 
-    public static void RemoveAccountFromSystem(int AccountLevelID) {
-        string resultFromAction = Database.DeleteAccount(AccountLevelID);
-        if (resultFromAction != "invalid input") {
-            Console.WriteLine(resultFromAction);
-        } else {
+    public static bool CreateNewCustomerAccount(string Email, string Password, string FirstName, string LastName, int PhoneNumber)
+    {
+        return Database.Insert(new Accounts(Email, Password, FirstName, LastName, PhoneNumber.ToString(), 3));
+    }
+
+
+    public static void RemoveAccountFromSystem(int AccountLevelID) 
+    {
+        string ActionResult = Database.DeleteAccount(AccountLevelID);
+
+        if (ActionResult != "invalid input") 
+        {
+            Console.WriteLine(ActionResult);
+        } 
+        else 
+        {
             Console.WriteLine("There was an error while trying to delete the account, please try it again later");
         }
     }
 
-    public static bool CreateNewCustomerAccount(string Email, string Password, string FirstName, string LastName, int PhoneNumber){
-        return Database.Insert(new Accounts(Email, Password, FirstName, LastName, PhoneNumber.ToString(), 3));
-    }
 
 }

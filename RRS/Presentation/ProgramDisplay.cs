@@ -1,11 +1,14 @@
 using RRS.Logic;
 
-public static class ProgramDisplay {
+public static class ProgramDisplay
+{
     private static int SelectedRestaurant = 0;
     private static Accounts LoggedInAccount = null;
 
-    public static void Display() {
-        while (true) {
+    public static void Display() 
+    {
+        while (true) 
+        {
             Console.Clear();
             Console.WriteLine("       MATCHMAKING RESTAURANT       ");
             Console.WriteLine("====================================\n");
@@ -15,9 +18,11 @@ public static class ProgramDisplay {
             Console.WriteLine("====================================");
             Console.WriteLine("Please select an option of what you\nwant to do (enter Q to exit):");
             int selectedOption = 0;
-            while (true) {
+            while (true) 
+            {
                 string userInput = Console.ReadLine();
-                switch (userInput.ToLower()) {
+                switch (userInput.ToLower()) 
+                {
                     case "1":
                         selectedOption = 1;
                         break;
@@ -33,30 +38,36 @@ public static class ProgramDisplay {
                         break;
                 }
 
-                if (selectedOption != 0) {
+                if (selectedOption != 0) 
+                {
                     break;
                 }
             }
 
-            if (selectedOption == 1) {
+            if (selectedOption == 1) 
+            {
                 //Displays the login page
                 DisplayLogin();
             }
 
-            if (selectedOption == 2) {
-                Display_CreateNewCustomerAccount();
+            if (selectedOption == 2) 
+            {
+                DisplayCreateNewCustomerAccount();
             }
 
-            if (selectedOption == 3) {
+            if (selectedOption == 3) 
+            {
                 //Exits the program
                 Environment.Exit(0);
             }
         }
     }
 
-    private static void DisplayLogin() {
+    private static void DisplayLogin() 
+    {
         int attempts = 0;
-        while (true) {
+        while (true) 
+        {
             Console.Clear();
             Console.WriteLine("       MATCHMAKING RESTAURANT       ");
             Console.WriteLine("====================================\n");
@@ -69,7 +80,8 @@ public static class ProgramDisplay {
 
             Accounts account = Functions.Login(input_email, input_password);
 
-            if (account is not null) {
+            if (account is not null) 
+            {
                 attempts = 4;
                 Console.WriteLine(Functions.IsAccountAdmin(account));
                 if (Functions.IsAccountAdmin(account)) {
@@ -78,42 +90,56 @@ public static class ProgramDisplay {
                     LoggedInAccount = null;
                 } else {
                     LoggedInAccount = account;
-                    Display_Customer_Environment();
+                    DisplayCustomerEnvironment();
                     LoggedInAccount = null;
                 }
-            } else {
+            }
+            else 
+            {
                 attempts--;
                 Console.WriteLine($"Incorrect login: you have {attempts} left.");
                 Thread.Sleep(1500);
             }
 
-            if (attempts == 0) {
+            if (attempts == 0) 
+            {
                 Console.WriteLine("All attempts have been used, Program shutting down.");
                 break;
             }
         }
     }
 
-    private static void Display_CreateNewCustomerAccount() {
-        Console.Clear();
+    private static void DisplayCreateNewCustomerAccount() 
+    {
+        Console.Clear(); //empty screen
         Console.WriteLine("       MATCHMAKING RESTAURANT       ");
         Console.WriteLine("====================================\n");
         Console.WriteLine("Create an account:");
-        //Request the needed information from a user to create a new account
+
+        //request needed information from user to create new account
         string FirstName = Functions.RequestValidString("First name");
         string LastName = Functions.RequestValidString("Last name");
         string Email = Functions.RequestValidEmail();
         int PhoneNumber = Functions.RequestValidInt("Phonenumber");
         Console.WriteLine("Password:");
         string Password = Functions.PasswordReadLine_WithValidCheck();
-        //THIS WILL ONLY BE REQUIRED FOR WHEN A ADMIN NEEDS TO CREATE AN ACCOUNT, AN CUSTOMER ACCOUNT IS ALWAYS 3
+        
+
+        //danny NOTE: THIS WILL ONLY BE REQUIRED FOR WHEN A ADMIN NEEDS TO CREATE AN ACCOUNT, AN CUSTOMER ACCOUNT IS ALWAYS 3
         // int Accountlevel = AccountLevelDisplay.ChooseAccountLevel();
-        if (AccountLogic.CreateNewCustomerAccount(Email, Password, FirstName, LastName, PhoneNumber)) {
-            Console.WriteLine("New account created!, you will be brought back to the start screen in a few seconds");
-        } else {
-            Console.WriteLine("There was an error while trying to create your account\nplease try again later.\nyou will be brought back to the start screen in a few seconds");
-            
+
+
+        //account success or error message
+        if (AccountLogic.CreateNewCustomerAccount(Email, Password, FirstName, LastName, PhoneNumber)) 
+        {
+            Console.WriteLine("New account created!\n You will be sent back to the start screen");
+        } 
+        else 
+        {
+            Console.WriteLine("There was an error while trying to create your account\nplease try again later\nyou will be sent back to the start screen");
         }
+
+        //1.5 sec wait
         Thread.Sleep(1500);
     }
 
@@ -177,7 +203,7 @@ public static class ProgramDisplay {
         }
     }
 
-    private static void Display_Customer_Environment() {
+    private static void DisplayCustomerEnvironment() {
         Console.WriteLine("IMPLEMENTATION FOR THIS SCREEN WILL HAPPEN 13/11/2024");
     }
 

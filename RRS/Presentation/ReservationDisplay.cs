@@ -10,7 +10,8 @@ public static class ReservationDisplay {
         
     }
 
-    public static void DisplayForRestaurant(int restaurantID) {
+    public static void DisplayForRestaurant(int restaurantID) 
+    {
         PrintHeader();
         Console.WriteLine(ReservationLogic.RetrieveReservations(restaurantID));
         Console.WriteLine("====================================================================\n\n");

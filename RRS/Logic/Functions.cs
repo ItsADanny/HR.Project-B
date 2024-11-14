@@ -102,6 +102,19 @@ public static class Functions {
         }
     }
 
+    public static string RequestValidString() {
+        while (true) {
+            Display.PrintText("Firstname:");
+            string input = Console.ReadLine();
+
+            if (input is not null && input != "" && input.Count() >= 1) {
+                return input;
+            }
+            Display.PrintText($"Invalid input, please input a valid ");
+            Thread.Sleep(1500);
+        }
+    }
+
     public static int RequestValidInt(string request) {
         while (true) {
             Display.PrintText(request + ":");

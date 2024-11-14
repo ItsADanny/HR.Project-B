@@ -34,8 +34,7 @@ public class ReservationTimeSlots {
         EndDateTime = endDateTime;
     }
 
-    public override string ToString()
-    {
+    public override string ToString() {
         string Date = StartDateTime.ToString("dd/MM/yyyy");
         string startTime = StartDateTime.ToString("hh:mm");
         string endTime = EndDateTime.ToString("hh:mm");

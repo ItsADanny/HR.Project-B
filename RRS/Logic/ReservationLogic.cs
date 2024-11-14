@@ -1,27 +1,37 @@
 public static class ReservationLogic {
-    public static string RetrieveReservations(int restaurantID) {
-        string returnValue = "";
-
+    public static string RetrieveReservations(int restaurantID) 
+    {
+        string returnResult = "";
         int i = 0;
+
+        //grab reserv list
         List<Reservations> reservations = Database.SelectReservations(restaurantID);
-        foreach (Reservations reservation in reservations) {
+
+        foreach (Reservations reservation in reservations) 
+        {
             i++;
+            //grab reservation timeslot
             ReservationTimeSlots reservationTimeSlot = Database.SelectReservationTimeSlots(reservation.TimeSlotID);
+            //retrieve acc info
             Accounts accounts = Database.SelectAccount(reservation.AccountID);
 
-            string reservation_status = "";
-            if (reservation.Status == 1) {
-                reservation_status = "CANCELLED";
+            string reservationStatus = "";
+            
+            //check actual status
+            if (reservation.Status == 1) 
+            {
+                reservationStatus = "CANCELLED";
             }
-
-            if (returnValue != "") {
-                returnValue += "\n";
+            
+            //add enter to every line
+            if (returnResult != "") 
+            {
+                returnResult += "\n";
             }
-
-            returnValue += $"{i} - Reservation for: {accounts.FirstName} {accounts.LastName}, Table: {reservation.TableID}, Date: {reservationTimeSlot.GetDate()}, from {reservationTimeSlot.GetStartTime()} to {reservationTimeSlot.GetEndTime()}";
+            //format return
+            returnResult += $"{i} - Reservation for: {accounts.FirstName} {accounts.LastName}, Table: {reservation.TableID}, Date: {reservationTimeSlot.GetDate()}, from {reservationTimeSlot.GetStartTime()} to {reservationTimeSlot.GetEndTime()}";
         }
-
-        return returnValue;
+        return returnResult;
     }
 
     public static bool CreateReservation(int restaurantID, string firstName, string lastName, string email, string phoneNumber, string date, string startTime, string endTime, int table) {

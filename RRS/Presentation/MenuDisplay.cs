@@ -387,11 +387,3 @@ public class MenuDisplay
  //editmenuitemname
  //viewmenulist
 
-/*
-reservations dashboard (presentation layer)
-
-- [ ]  reservation name (timeslot, people amount, language)
-- [ ] look through the list and input if you wanna join them
-- [ ] if not add a table for others to join
-*/
-

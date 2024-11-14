@@ -116,11 +116,13 @@ public static class AccountDisplay {
         }
     }
 
-    public static void CreateCustomerAccount(Accounts LoggedInAccount) {
+    public static void CreateCustomerAccount(Accounts LoggedInAccount) 
+    {
 
     }
 
-    public static void CreateAdminAccount(Accounts LoggedInAccount) {
+    public static void CreateAdminAccount(Accounts LoggedInAccount) 
+    {
 
     }
 
@@ -209,33 +211,63 @@ public static class AccountDisplay {
         Console.WriteLine("Press enter to continue.");
         Console.ReadLine();
     }
-
-    public static void DeleteAccount(Accounts LoggedInAccount) {
+    
+    //mick
+    public static void DeleteAccount(Accounts LoggedInAccount) 
+    {
         Accounts selectedAccount = null;
         bool WantsToExit = false;
-        do {
+
+        do 
+        {
+
+            Console.WriteLine("================================================================");
+            //users that logged in user can delete (usually only themselves if customer)
             AccountLogic.PrintAccounts(LoggedInAccount);
             Console.WriteLine("================================================================");
-            Console.WriteLine("Please select an account to delete (enter Q to exit):");
+            Console.WriteLine("Please select an account to delete:");
+            Console.WriteLine("or enter Q to exit");
+
             string userInput = Console.ReadLine();
-            if (userInput.ToLower() == "q") {
+
+            //if q then quit program else account selected will be checked
+            if (userInput.ToLower() == "q") 
+            {
                 WantsToExit = true;
-            } else {
+                return;
+            } 
+            else 
+            {
                 selectedAccount = AccountLogic.GetSelectedAccount(LoggedInAccount, userInput);
             }
         } while (selectedAccount == null & !WantsToExit);
-
-        if (!WantsToExit & selectedAccount is not null) {
-            while (true) {
+        
+        //if account selected ask confirmation and delete
+        if (!WantsToExit & selectedAccount is not null) 
+        {
+            while (true) 
+            {
                 Console.WriteLine("================================================================");
-                Console.WriteLine("Are you sure, you want to delete this account (Y = yes, N = no)");
+                AccountLogic.PrintAccounts(selectedAccount);
+                Console.WriteLine("================================================================");
+                Console.WriteLine("Are you sure, you want to delete this account?\n\n");
+                Console.WriteLine("Y - yes");
+                Console.WriteLine("N - no");
+
                 string userInput = Console.ReadLine();
-                if (userInput.ToLower() == "y") {
+                
+                //if yes acc deleted by ID
+                if (userInput.ToLower() == "y") 
+                {
                     AccountLogic.RemoveAccountFromSystem(selectedAccount.ID);
-                } else if (userInput.ToLower() == "n") {
+                } 
+                else if (userInput.ToLower() == "n") 
+                {
                     break;
-                } else {
-                    Console.WriteLine("Invalid response, please enter a valid awnser");
+                } 
+                else 
+                {
+                    Console.WriteLine("Invalid response, please enter a valid option");
                 }
             }
         }
