@@ -44,5 +44,10 @@ public static void CreateAccountDisplay(){
     System.Console.WriteLine($"{FirstName}\n{LastName}\n{PhoneNumber}\n{Email}");
     
 }
+public AccountChangePasswordDisplay(){
+    System.Console.WriteLine("You have selected: Change password");
+    System.Console.WriteLine("Please enter your current password:");
+    ChangePassword.NewPassword(Accounts LoggedInAccount);
+}
 }
 
