@@ -117,9 +117,9 @@ public static class AccountLogic {
         }
     }
 
-    public static bool CreateNewCustomerAccount(string Email, string Password, string FirstName, string LastName, int PhoneNumber)
+    public static bool CreateNewCustomerAccount(string Email, string Password, string FirstName, string LastName, string PhoneNumber)
     {
-        return Database.Insert(new Accounts(Email, Password, FirstName, LastName, PhoneNumber.ToString(), 3));
+        return Database.Insert(new Accounts(Email, Password, FirstName, LastName, PhoneNumber, 3));
     }
 
 

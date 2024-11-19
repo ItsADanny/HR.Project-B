@@ -130,6 +130,22 @@ public static class Functions {
         }
     }
 
+    public static string RequestValidPhonenumber(string request) {
+        while (true) {
+            Display.PrintText(request + ":");
+            string input = Console.ReadLine();
+
+            if (input is not null && input != "" && input.Count() >= 1 && input[0] == '0' && input[1] == '6') {
+                // Console.WriteLine("KOM IK HIER");
+                if (int.TryParse(input, out int output)) {
+                    return input;
+                }
+            }
+            Display.PrintText($"Invalid input, please input a valid {request}");
+            Thread.Sleep(1500);
+        }
+    }
+
     public static string RequestValidEmail() {
         while (true) {
             Display.PrintText("E-mail:");
@@ -187,7 +203,7 @@ public static class Functions {
 
     public static string RequestValidDate() {
         while (true) {
-            Display.PrintText("Date:");
+            Display.PrintText("Date (dd/mm/yyyy) (example: 20/11/2024):");
             string input = Console.ReadLine();
 
             if (DateTime.TryParseExact(input, "dd/MM/yyyy", new CultureInfo("fr-FR"), DateTimeStyles.None, out DateTime output)) {
@@ -211,5 +227,17 @@ public static class Functions {
         }
     }
 
+    public static string RequestValidTime24(string request) {
+        while (true) {
+            Display.PrintText(request + ":");
+            string input = Console.ReadLine();
+
+            if (DateTime.TryParseExact(input, "HH:mm", System.Globalization.CultureInfo.CurrentCulture, System.Globalization.DateTimeStyles.None, out DateTime output)) {
+                return input;
+            }
+            Display.PrintText($"Invalid input, please input a valid {request}");
+            Thread.Sleep(1500);
+        }
+    }
     
 }

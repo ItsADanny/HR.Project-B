@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <Folder Include="Data/Database/Diagrams/" />
+      <Folder Include="Data/Logs/" />
     </ItemGroup>
 
     <ItemGroup>

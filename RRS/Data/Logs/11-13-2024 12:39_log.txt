@@ -1,5 +1,0 @@
-11/13/2024 12:39 AM - Starting Database Check
-11/13/2024 12:39 AM - Connection to database has been succesfully created
-11/13/2024 12:39 AM - Connection to database has been succesfully closed
-11/13/2024 12:39 AM - Database check succesfully ended
-11/13/2024 12:40 AM - Connection to database has been succesfully created

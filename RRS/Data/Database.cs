@@ -196,7 +196,7 @@ public static class Database {
 
             SqliteCommand sqlite_cmd;
             sqlite_cmd = db_conn.CreateCommand();
-            sqlite_cmd.CommandText = $"INSERT INTO ReservationTimeSlots (RestaurantID, ReservationDate, StartTime, EndTime) VALUES ({timeSlot.RestaurantID}, '{timeSlot.GetDate()}', '{timeSlot.GetStartTime()}', '{timeSlot.GetEndTime()}');";
+            sqlite_cmd.CommandText = $"INSERT INTO ReservationTimeSlots (RestaurantID, ReservationDate, StartTime, EndTime) VALUES ({timeSlot.RestaurantID}, '{timeSlot.GetDate()}', '{timeSlot.GetStartTime24()}', '{timeSlot.GetEndTime24()}');";
             sqlite_cmd.ExecuteNonQuery();
 
             //Close the connection to the database
@@ -390,7 +390,6 @@ public static class Database {
             sqlite_datareader = sqlite_cmd.ExecuteReader();
             while (sqlite_datareader.Read())
             {
-                
                 string hashed_password = sqlite_datareader.GetString(2);
                 CloseConn(db_conn);
                 if (hashed_password == Input) {
@@ -638,6 +637,35 @@ public static class Database {
     }
 
     //Select - Reservations
+    public static List<Reservations> SelectReservations(int restaurantID, int accountID) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<Reservations> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Reservations WHERE RestaurantID = {restaurantID} AND AccountID = {accountID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int ReservationID = sqlite_datareader.GetInt32(0);
+                int ReservationRestaurantID = sqlite_datareader.GetInt32(1);
+                int ReservationTimeSlotID = sqlite_datareader.GetInt32(2);
+                int ReservationTableID = sqlite_datareader.GetInt32(3);
+                int ReservationAccountID = sqlite_datareader.GetInt32(4);
+                int ReservationStatus = sqlite_datareader.GetInt32(5);
+
+                results.Add(new Reservations(ReservationID, ReservationRestaurantID, ReservationTimeSlotID, ReservationTableID, ReservationAccountID, ReservationStatus));
+            }
+
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
 
     //Select Everything
     public static List<ReservationTimeSlots> SelectReservationTimeSlots() {
@@ -705,7 +733,7 @@ public static class Database {
 
             SqliteCommand sqlite_cmd;
             sqlite_cmd = db_conn.CreateCommand();
-            sqlite_cmd.CommandText = $"UPDATE Accounts SET Password = {newPassword} WHERE ID = {account.ID} AND Password = {oldPassword};";
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET Password = \"{newPassword}\" WHERE ID = {account.ID};";
             sqlite_cmd.ExecuteNonQuery();
 
             //Close the connection to the database
@@ -824,6 +852,36 @@ public static class Database {
             return "Can't Remove the main superadmin account";
         }
         return "invalid input";
+    }
+
+    public static bool DeleteTimeSlot(int timeslotID) {
+        //Creating a connection to the database
+        SqliteConnection db_conn = CreateConn();
+
+        SqliteCommand sqlite_cmd;
+        sqlite_cmd = db_conn.CreateCommand();
+        sqlite_cmd.CommandText = $"DELETE FROM ReservationTimeSlots WHERE ID = {timeslotID};";
+        sqlite_cmd.ExecuteNonQuery();
+
+        //Close the connection to the database
+        CloseConn(db_conn);
+
+        return true;
+    }
+
+    public static bool DeleteTimeSlot(string timeslotID) {
+        //Creating a connection to the database
+        SqliteConnection db_conn = CreateConn();
+
+        SqliteCommand sqlite_cmd;
+        sqlite_cmd = db_conn.CreateCommand();
+        sqlite_cmd.CommandText = $"DELETE FROM ReservationTimeSlots WHERE ID = {timeslotID};";
+        sqlite_cmd.ExecuteNonQuery();
+
+        //Close the connection to the database
+        CloseConn(db_conn);
+
+        return true;
     }
 
     public static int Temp_GetLastID(string table) {

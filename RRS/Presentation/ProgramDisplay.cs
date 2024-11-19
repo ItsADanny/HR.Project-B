@@ -120,7 +120,7 @@ public static class ProgramDisplay
         string FirstName = Functions.RequestValidString("First name");
         string LastName = Functions.RequestValidString("Last name");
         string Email = Functions.RequestValidEmail();
-        int PhoneNumber = Functions.RequestValidInt("Phonenumber");
+        string PhoneNumber = Functions.RequestValidPhonenumber("Phonenumber");
         Console.WriteLine("Password:");
         string Password = Functions.PasswordReadLine_WithValidCheck();
         
@@ -145,7 +145,7 @@ public static class ProgramDisplay
 
     private static void Display_Admin_Environment() {
         while (true) {
-            // Console.Clear();
+            Console.Clear();
             Console.WriteLine("====================================================================");
             Console.WriteLine(" ▗▄▖ ▗▄▄▄  ▗▖  ▗▖▗▄▄▄▖▗▖  ▗▖\n" +
                                 "▐▌ ▐▌▐▌  █ ▐▛▚▞▜▌  █  ▐▛▚▖▐▌\n" + 
@@ -154,14 +154,26 @@ public static class ProgramDisplay
             Console.WriteLine("====================================================================\n");
             Console.WriteLine($"Welcome {LoggedInAccount.FirstName} {LoggedInAccount.LastName}\nWhat would you like to do?\n");
 
+            // Console.WriteLine("Quick actions");
+            // Console.WriteLine("1 - View reservations");
+            // Console.WriteLine("2 - Customer Lookup");
+            // Console.WriteLine("3 - View dining menu");
+            // Console.WriteLine("Menu's:");
+            // Console.WriteLine("4 - Reservation options");
+            // Console.WriteLine("5 - Dining menu options");
+            // Console.WriteLine("6 - Account options");
+
+            //TEMP
             Console.WriteLine("Quick actions");
             Console.WriteLine("1 - View reservations");
-            Console.WriteLine("2 - Customer Lookup");
-            Console.WriteLine("3 - View dining menu");
-            Console.WriteLine("Menu's:");
-            Console.WriteLine("4 - Reservation options");
-            Console.WriteLine("5 - Dining menu options");
-            Console.WriteLine("6 - Account options");
+            Console.WriteLine("2 - Timeslot options");
+            Console.WriteLine("3 - Account options");
+            // Console.WriteLine("2 - Customer Lookup");
+            // Console.WriteLine("3 - View dining menu");
+            // Console.WriteLine("Menu's:");
+            // Console.WriteLine("2 - Reservation options");
+            // Console.WriteLine("5 - Dining menu options");
+            // Console.WriteLine("3 - Account options");
             Console.WriteLine("\n\nQ - Logout");
             Console.WriteLine("====================================================================\n");
             Console.WriteLine("Choice:");
@@ -173,19 +185,19 @@ public static class ProgramDisplay
                     case "1":
                         ReservationDisplay.DisplayForRestaurant(SelectedRestaurant);
                         break;
-                    // case "2":
-                    // NOTE: Need to implement a menu for making it easy to search for customers
-                    //     break;
+                    case "2":
+                        TimeSlotDisplay.Menu(LoggedInAccount);
+                        break;
                     // case "3":
                     // NOTE: Need to implement a method to display the current menu items available for dinner
                     //     break;
-                    case "4":
-                        ReservationDisplay.ReservationMenu_Admin(SelectedRestaurant, LoggedInAccount);
-                        break;
+                    // case "2":
+                    //     ReservationDisplay.ReservationMenu_Admin(SelectedRestaurant, LoggedInAccount);
+                    //     break;
                     // case "5":
                     // NOTE: Still need to implement this menu in a new Display class for the dining menu
                     //     break;
-                    case "6":
+                    case "3":
                         AccountDisplay.AdminAccountMenu(LoggedInAccount);
                         break;
                     case "q":
@@ -204,7 +216,48 @@ public static class ProgramDisplay
     }
 
     private static void DisplayCustomerEnvironment() {
-        Console.WriteLine("IMPLEMENTATION FOR THIS SCREEN WILL HAPPEN 13/11/2024");
+        while (true) {
+            Console.Clear();
+            Console.WriteLine("====================================================================");
+            Console.WriteLine("▗▄▄▖ ▗▄▄▄▖ ▗▄▄▖▗▄▄▄▖▗▄▖ ▗▖ ▗▖▗▄▄▖  ▗▄▖ ▗▖  ▗▖▗▄▄▄▖\n" +
+                                "▐▌ ▐▌▐▌   ▐▌     █ ▐▌ ▐▌▐▌ ▐▌▐▌ ▐▌▐▌ ▐▌▐▛▚▖▐▌  █  \n" + 
+                                "▐▛▀▚▖▐▛▀▀▘ ▝▀▚▖  █ ▐▛▀▜▌▐▌ ▐▌▐▛▀▚▖▐▛▀▜▌▐▌ ▝▜▌  █  \n" +
+                                "▐▌ ▐▌▐▙▄▄▖▗▄▄▞▘  █ ▐▌ ▐▌▝▚▄▞▘▐▌ ▐▌▐▌ ▐▌▐▌  ▐▌  █  ");
+            Console.WriteLine("====================================================================\n");
+            Console.WriteLine($"Welcome {LoggedInAccount.FirstName} {LoggedInAccount.LastName}\nWhat would you like to do?\n");
+            Console.WriteLine("====================================================================\n");
+            Console.WriteLine("1 - See current reservations");
+            Console.WriteLine("2 - Make a reservation");
+            Console.WriteLine("3 - Account options");
+            Console.WriteLine("\n\nQ - Logout");
+            Console.WriteLine("Choice:");
+            string choice = Console.ReadLine();
+
+            if (choice is not null) {
+                switch (choice.ToLower())
+                {
+                    case "1":
+                        ReservationDisplay.DisplayForRestaurantCustomer(SelectedRestaurant, LoggedInAccount);
+                        break;
+                    case "2":
+                        ReservationDisplay.DisplayCreateReservation_Customer(SelectedRestaurant, LoggedInAccount);
+                        break;
+                    case "3":
+                        AccountDisplay.AccountMenu(LoggedInAccount);
+                        break;
+                    case "q":
+                            Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Please input valid choice");
+                        Thread.Sleep(2000);
+                        break;
+                }
+            } else {
+                Console.WriteLine("Please input valid choice");
+                Thread.Sleep(2000);
+            }
+        }
     }
 
 }

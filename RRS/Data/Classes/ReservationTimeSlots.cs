@@ -1,3 +1,4 @@
+using System.Data;
 using System.Globalization;
 
 public class ReservationTimeSlots {
@@ -36,27 +37,31 @@ public class ReservationTimeSlots {
 
     public override string ToString() {
         string Date = StartDateTime.ToString("dd/MM/yyyy");
-        string startTime = StartDateTime.ToString("hh:mm");
-        string endTime = EndDateTime.ToString("hh:mm");
+        string startTime = StartDateTime.ToString("HH:mm");
+        string endTime = EndDateTime.ToString("HH:mm");
         return $"Reservation Timeslot {Date} | {startTime} - {endTime}";
     }
 
     public static List<string> ConvertToString(DateTime datetime) {
         List<string> returnValue = [];
         //Time
-        returnValue.Add(datetime.ToString("hh:mm"));
+        returnValue.Add(datetime.ToString("HH:mm"));
         //Date
         returnValue.Add(datetime.ToString("dd/MM/yyyy"));
         return returnValue;
     }
 
     public static DateTime ConvertToDateTime(string time, string date) {
-        return DateTime.Parse($"{date} {time}", new CultureInfo("fr-FR", false));
+        return DateTime.ParseExact($"{date} {time}", "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
     }
 
     public string GetStartTime() => StartDateTime.ToString("hh:mm");
 
     public string GetEndTime() => EndDateTime.ToString("hh:mm");
+
+    public string GetStartTime24() => StartDateTime.ToString("HH:mm");
+
+    public string GetEndTime24() => EndDateTime.ToString("HH:mm"); 
 
     public string GetDate() => StartDateTime.ToString("dd/MM/yyyy");
 }

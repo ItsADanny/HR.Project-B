@@ -2,12 +2,32 @@ public static class AccountDisplay {
 
     public static void AccountMenu(Accounts LoggedInAccount) {
         while (true) {
+            Console.Clear();
             Console.WriteLine("====================================================================");
             Console.WriteLine(" ▗▄▖  ▗▄▄▖ ▗▄▄▖ ▗▄▖ ▗▖ ▗▖▗▖  ▗▖▗▄▄▄▖\n" +
                                 "▐▌ ▐▌▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▛▚▖▐▌  █  \n" + 
                                 "▐▛▀▜▌▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌ ▝▜▌  █  \n" +
                                 "▐▌ ▐▌▝▚▄▄▖▝▚▄▄▖▝▚▄▞▘▝▚▄▞▘▐▌  ▐▌  █  ");
             Console.WriteLine("====================================================================\n");
+            Console.WriteLine("1 - Change password\n\n");
+            Console.WriteLine("================================================================");
+            Console.WriteLine("Please select an account to change (enter Q to exit):");
+
+            string userInput = Console.ReadLine();
+            if (userInput.ToLower() == "q") {
+                break;
+            } else {
+                switch (userInput)
+                {
+                    case "1":
+                        NewPassword(LoggedInAccount);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid input, please select an valid option");
+                        Thread.Sleep(1500);
+                        break;
+                }
+            }
         }
     }
     
@@ -15,6 +35,7 @@ public static class AccountDisplay {
         bool CanCreateAdminAccounts = AccountLogic.CanDisplay_CreateAdminAccounts(LoggedInAccount);
 
         while (true) {
+            Console.Clear();
             Console.WriteLine("====================================================================");
             Console.WriteLine(" ▗▄▖ ▗▄▄▄ ▗▖  ▗▖▗▄▄▄▖▗▖  ▗▖     ▗▄▖  ▗▄▄▖ ▗▄▄▖ ▗▄▖ ▗▖ ▗▖▗▖  ▗▖▗▄▄▄▖\n" +
                                 "▐▌ ▐▌▐▌  █▐▛▚▞▜▌  █  ▐▛▚▖▐▌    ▐▌ ▐▌▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▛▚▖▐▌  █  \n" + 
@@ -26,9 +47,11 @@ public static class AccountDisplay {
                 Console.WriteLine("2 - Create an new admin account");
                 Console.WriteLine("3 - Lookup account");
                 Console.WriteLine("4 - Change accountlevels for a account");
-                Console.WriteLine("5 - Delete account\n\n");
+                Console.WriteLine("5 - Delete account");
+                Console.WriteLine("6 - Change password\n\n");
             } else {
-                Console.WriteLine("2 - Lookup account\n\n");
+                Console.WriteLine("2 - Lookup account");
+                Console.WriteLine("3 - Change password\n\n");
             }
             Console.WriteLine("================================================================");
             Console.WriteLine("Please select an account to change (enter Q to exit):");
@@ -55,6 +78,9 @@ public static class AccountDisplay {
                         case "5":
                             DeleteAccount(LoggedInAccount);
                             break;
+                        case "6":
+                            NewPassword(LoggedInAccount);
+                            break;
                         default:
                             Console.WriteLine("Invalid input, please select an valid option");
                             Thread.Sleep(1500);
@@ -68,6 +94,9 @@ public static class AccountDisplay {
                             break;
                         case "2":
                             LookupAccounts(LoggedInAccount);
+                            break;
+                        case "3":
+                            NewPassword(LoggedInAccount);
                             break;
                         default:
                             Console.WriteLine("Invalid input, please select an valid option");
@@ -260,6 +289,7 @@ public static class AccountDisplay {
                 if (userInput.ToLower() == "y") 
                 {
                     AccountLogic.RemoveAccountFromSystem(selectedAccount.ID);
+                    break;
                 } 
                 else if (userInput.ToLower() == "n") 
                 {
@@ -296,5 +326,22 @@ public static class AccountDisplay {
             }
         }
         return selectedAccountLevel;
+    }
+
+    public static void NewPassword(Accounts LoggedInAccount){
+        Console.WriteLine("Please enter your current password");
+        string currentPassword = Functions.PasswordReadLine();
+        // Database.CheckAccountPassword(LoggedInAccount.ID, currentPassword); // CheckAccountPassword(Int Id, String input)
+        if (Database.CheckAccountPassword(LoggedInAccount.ID, currentPassword)){
+            System.Console.WriteLine("\nPlease enter your new password:");
+            string newPassword = Functions.PasswordReadLine();
+            System.Console.WriteLine("\nPlease confirm your new password:");
+            string confirmPassword = Functions.PasswordReadLine();
+            if (newPassword == confirmPassword){
+                Database.UpdatePasswordForAccount(LoggedInAccount, currentPassword, newPassword);
+                Console.WriteLine("Password changed succesfully");
+                Thread.Sleep(1500);
+            }
+        }
     }
 }
