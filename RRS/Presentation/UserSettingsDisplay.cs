@@ -2,7 +2,7 @@ using System;
 
 namespace RRS.Presentation;
 
-public class UserSettingsDisplay
+public static class UserSettingsDisplay
 {
 public static void UserSettingsMenu(Accounts LoggedInAccount){
     Console.Clear();
@@ -16,7 +16,7 @@ public static void UserSettingsMenu(Accounts LoggedInAccount){
     int choice = Convert.ToInt32(Console.ReadLine());
     switch (choice){
         case 1:
-            UpdateProfile();
+            UpdateProfile(LoggedInAccount);
             break;
         case 2:
             AccountChangePasswordDisplay(LoggedInAccount);
@@ -53,8 +53,8 @@ public static void UserSettingsMenu(Accounts LoggedInAccount){
                     string newfirstname = Console.ReadLine();
                     Console.WriteLine("Enter your new last name");
                     string newlastname = Console.ReadLine();
-                    Database.UpdateFirstNameForAccount(Accounts LoggedInAccount, newfirstname)
-                    Database.UpdateLastNameForAccount(Accounts LoggedInAccount, newlastname)
+                    Database.UpdateFirstNameForAccount(LoggedInAccount, newfirstname);
+                    Database.UpdateLastNameForAccount(LoggedInAccount, newlastname);
                     Console.WriteLine("Name updated");}
 
                 
@@ -66,7 +66,7 @@ public static void UserSettingsMenu(Accounts LoggedInAccount){
                 while (!newphonenumber.All(char.IsDigit)){
                 System.Console.WriteLine("Invalid phonenumber. Please enter a valid phonenumber.");
                 }
-                Database.UpdatePhoneNumberForAccount(Accounts LoggedInAccount, newphonenumber);
+                Database.UpdatePhoneNumberForAccount(LoggedInAccount, newphonenumber);
                 System.Console.WriteLine("Phonenumber updated");
 
                 break;
@@ -83,21 +83,29 @@ public static void UserSettingsMenu(Accounts LoggedInAccount){
                 break;
         }
     }
-    public AccountChangePasswordDisplay(){
+    public static void AccountChangePasswordDisplay(string input,string newInput, Accounts LoggedInAccount){
     System.Console.WriteLine("You have selected: Change password");
     System.Console.WriteLine("Please enter your current password:");
-    ChangePassword.NewPassword(Accounts LoggedInAccount);
+    string currentPassword = Functions.PasswordReadLine();
+    input = currentPassword;
+    System.Console.WriteLine("Please enter your new password:");
+      string newPassword = Functions.PasswordReadLine();
+      newInput = newPassword;
+       System.Console.WriteLine("Please confirm your new password:");
+       string confirmPassword = Functions.PasswordReadLine();
+       
+    }}
 
-    public DeleteAccountDisplay(){
+    public static void DeleteAccountDisplay(){
         System.Console.WriteLine("You have selected: Delete account");
         System.Console.WriteLine("Are you sure you want to delete your account? (y to delete n to cancel)");
         string userinput = Console.ReadLine().ToLower();
         if (userinput == "y"){
-            Database.DeleteAccount();
+            Database.DeleteAccount(accountID);
     }
     if (userinput == "n"){
         System.Console.WriteLine("Account has not been deleted");
-        UserSettingsMenu(Accounts LoggedInAccount);
+        UserSettingsMenu();
     }
     else{
         System.Console.WriteLine("Invalid input try again");

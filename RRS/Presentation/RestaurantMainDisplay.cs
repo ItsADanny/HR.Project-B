@@ -5,7 +5,7 @@ namespace RRS.Presentation;
 
 
 public class RestaurantMainDisplay{
-    public void DisplayRestaurantMain(){
+    public void DisplayRestaurantMain(Accounts LoggedInAccount){
     System.Console.WriteLine("================================");
     System.Console.WriteLine("   Welcome to the restaurant");
     System.Console.WriteLine("================================");
@@ -34,7 +34,7 @@ public class RestaurantMainDisplay{
     break;
 
     case 4:
-    UserSettingsDisplay.UserSettingsMenu();
+    UserSettingsDisplay.UserSettingsMenu(LoggedInAccount);
     break;
 
     case 5:
