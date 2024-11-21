@@ -78,7 +78,7 @@ public static class AccountLogic {
                 Console.WriteLine("No results, There were no accounts found with this ID.");
             }
         } else {
-            Console.WriteLine("Invalid input, An ID only consists of number. Please try it again with a valid number");
+            Console.WriteLine("Invalid input, An ID can only consist of numbers. Please try it again with a valid number");
         }
     }
 
@@ -117,9 +117,9 @@ public static class AccountLogic {
         }
     }
 
-    public static bool CreateNewCustomerAccount(string Email, string Password, string FirstName, string LastName, int PhoneNumber)
+    public static bool CreateNewCustomerAccount(string Email, string Password, string FirstName, string LastName, string PhoneNumber)
     {
-        return Database.Insert(new Accounts(Email, Password, FirstName, LastName, PhoneNumber.ToString(), 3));
+        return Database.Insert(new Accounts(Email, Password, FirstName, LastName, PhoneNumber, 3));
     }
 
 
@@ -137,5 +137,6 @@ public static class AccountLogic {
         }
     }
 
+    public static bool CheckCurrPassword(string input, Accounts LoggedInAccount) => Database.CheckAccountPassword(LoggedInAccount.ID, input);
 
 }

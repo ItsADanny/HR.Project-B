@@ -8,9 +8,9 @@ public class Menu
     public string Name;
     public string Description;
     public double Price;
-    public string Foodtype; //alcohol/softdrinks/lunch/dinner
+    public int Foodtype; //alcohol/softdrinks/lunch/dinner
 
-    public Menu(int RestaurantID, string Name, string Description, double Price, string Foodtype) 
+    public Menu(int RestaurantID, string Name, string Description, double Price, int Foodtype) 
     {
         this.RestaurantID = RestaurantID;
         this.Name = Name;
@@ -19,7 +19,7 @@ public class Menu
         this.Foodtype = Foodtype;
     }
 
-    public Menu(int ID, int RestaurantID, string Name, string Description, double Price, string Foodtype)
+    public Menu(int ID, int RestaurantID, string Name, string Description, double Price, int Foodtype)
     {
         this.ID = ID;
         this.RestaurantID = RestaurantID;
@@ -27,6 +27,15 @@ public class Menu
         this.Description = Description;
         this.Price = Price;
         this.Foodtype = Foodtype;
+    }
+
+    public override string ToString() {
+        return $"ID: {ID}\nRestaurantID: {RestaurantID}\nName: {Name}\nDescription: {Description}\nPrice: {Price}\nFoodType: {Foodtype}";
+    }
+
+    public string ToStringDisplay()
+    {
+        return $"Name: {Name}\nDescription: {Description}\nPrice: {Price}\nFoodType: {Database.SelectFoodType(RestaurantID, Foodtype)}";
     }
 
 }
