@@ -139,4 +139,6 @@ public static class AccountLogic {
 
     public static bool CheckCurrPassword(string input, Accounts LoggedInAccount) => Database.CheckAccountPassword(LoggedInAccount.ID, input);
 
+    public static bool DoesAccountEmailExist(string inputEmail) => Database.DoesEmailAlreadyExist(inputEmail);
+
 }

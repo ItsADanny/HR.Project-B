@@ -240,4 +240,229 @@ public static class Functions {
         }
     }
     
+    public static string OptionSelector(string Header, List<string> options) {
+        string selectedOption = null;
+        int pos = 0;
+
+        do {
+            Console.Clear();
+            Console.WriteLine(Header);
+            
+            for (int y = 0; y != options.Count(); y++) {
+                string row = "";
+                if (pos == y) {
+                    row += "\x1b[44m>";
+                } else {
+                    row += " ";
+                }
+
+                row += $" {options[y]}\x1b[49m";
+                Console.WriteLine(row);
+            }
+
+            var input = Console.ReadKey();
+            switch (input.Key) {
+                case ConsoleKey.UpArrow:
+                    if (pos <= 0) {
+                        pos = options.Count() - 1;
+                    } else {
+                        pos -= 1;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (pos >= (options.Count() - 1)) {
+                        pos = 0;
+                    } else {
+                        pos += 1;
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    selectedOption = options[pos];
+                    break;
+            }
+
+        } while (selectedOption == null);
+        return selectedOption;
+    }
+
+    public static string OptionSelector(string Header, string Footer, List<string> options) {
+        string selectedOption = null;
+        int pos = 0;
+
+        do {
+            Console.Clear();
+            Console.WriteLine(Header);
+            
+            for (int y = 0; y != options.Count(); y++) {
+                string row = "";
+                if (pos == y) {
+                    row += "\x1b[44m>";
+                } else {
+                    row += " ";
+                }
+
+                row += $" {options[y]}\x1b[49m";
+                Console.WriteLine(row);
+            }
+
+            Console.WriteLine(Footer);
+
+            var input = Console.ReadKey();
+            switch (input.Key) {
+                case ConsoleKey.UpArrow:
+                    if (pos <= 0) {
+                        pos = options.Count() - 1;
+                    } else {
+                        pos -= 1;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (pos >= (options.Count() - 1)) {
+                        pos = 0;
+                    } else {
+                        pos += 1;
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    selectedOption = options[pos];
+                    break;
+            }
+        } while (selectedOption == null);
+        return selectedOption;
+    }
+
+    // public static Dictionary<string, bool> CheckBoxSelector(Dictionary<string, bool> options) {
+        
+    // }
+
+    public static Dictionary<string, bool> CheckBoxSelector(List<string> options_string, List<bool> options_bool) {
+        bool done = false;
+        int pos = 0;
+
+        do {
+            Console.Clear();
+            for (int y = 0; y != options_string.Count(); y++) {
+                string row = "";
+                if (pos == y) {
+                    row += "\x1b[44m>";
+                } else {
+                    row += " ";
+                }
+
+                if (options_bool[y]) {
+                    row += " [X] ";
+                } else {
+                    row += " [ ] ";
+                }
+
+                row += $" {options_string[y]}\x1b[49m";
+                Console.WriteLine(row);
+            }
+            var input = Console.ReadKey();
+            switch (input.Key) {
+                case ConsoleKey.UpArrow:
+                    if (pos <= 0) {
+                        pos = options_string.Count() - 1;
+                    } else {
+                        pos -= 1;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (pos >= (options_string.Count() - 1)) {
+                        pos = 0;
+                    } else {
+                        pos += 1;
+                    }
+                    break;
+                case ConsoleKey.Spacebar:
+                    if (options_bool[pos]) {
+                        options_bool[pos] = false;
+                    } else {
+                        options_bool[pos] = true;
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    done = true;
+                    break;
+            }
+        } while (!done);
+
+        int curr_pos = 0;
+        Dictionary<string, bool> returnDict = new ();
+        foreach (string option in options_string) {
+            returnDict.Add(option, options_bool[curr_pos]);
+            curr_pos++;
+        }
+        return returnDict;
+    }
+
+    public static Dictionary<string, bool> CheckBoxSelector(List<string> options_string) {
+        List<bool> options_bool = new ();
+        for (int i = 0; i == options_string.Count() - 1; i++) {
+            options_bool.Add(false);
+        }
+        //DEBUG
+        Console.WriteLine(options_string.Count());
+        Console.WriteLine(options_bool.Count());
+
+
+        bool done = false;
+        int pos = 0;
+
+        do {
+            Console.Clear();
+            for (int y = 0; y != options_string.Count(); y++) {
+                string row = "";
+                if (pos == y) {
+                    row += "\x1b[44m>";
+                } else {
+                    row += " ";
+                }
+
+                if (options_bool[y]) {
+                    row += " [X] ";
+                } else {
+                    row += " [ ] ";
+                }
+
+                row += $" {options_string[y]}\x1b[49m";
+                Console.WriteLine(row);
+            }
+            var input = Console.ReadKey();
+            switch (input.Key) {
+                case ConsoleKey.UpArrow:
+                    if (pos <= 0) {
+                        pos = options_string.Count() - 1;
+                    } else {
+                        pos -= 1;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (pos >= (options_string.Count() - 1)) {
+                        pos = 0;
+                    } else {
+                        pos += 1;
+                    }
+                    break;
+                case ConsoleKey.Spacebar:
+                    if (options_bool[pos]) {
+                        options_bool[pos] = false;
+                    } else {
+                        options_bool[pos] = true;
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    done = true;
+                    break;
+            }
+        } while (!done);
+
+        int curr_pos = 0;
+        Dictionary<string, bool> returnDict = new ();
+        foreach (string option in options_string) {
+            returnDict.Add(option, options_bool[curr_pos]);
+            curr_pos++;
+        }
+        return returnDict;
+    }
 }
