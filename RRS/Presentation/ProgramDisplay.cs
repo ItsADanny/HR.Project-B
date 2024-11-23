@@ -7,107 +7,77 @@ public static class ProgramDisplay
 
     public static void Display() 
     {
+        string Header = "       MATCHMAKING RESTAURANT       \n====================================\n\nWelcome to the Matchmaking restaurant\n\n";
+        string Footer = "\n\n An restaurant reservation solution \n     by Black Dawg International    ";
         while (true) 
         {
-            Console.Clear();
-            Console.WriteLine("       MATCHMAKING RESTAURANT       ");
-            Console.WriteLine("====================================\n");
-            Console.WriteLine("\nWelcome to the Matchmaking restaurant");
-            Console.WriteLine("1 - Login");
-            Console.WriteLine("2 - Create a new account\n\n");
-            Console.WriteLine("====================================");
-            Console.WriteLine("Please select an option of what you\nwant to do (enter Q to exit):");
-            int selectedOption = 0;
-            while (true) 
-            {
-                string userInput = Console.ReadLine();
-                switch (userInput.ToLower()) 
-                {
-                    case "1":
-                        selectedOption = 1;
-                        break;
-                    case "2":
-                        selectedOption = 2;
-                        break;
-                    case "q":
-                        selectedOption = 3;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice, please select a valid option");
-                        Thread.Sleep(1500);
-                        break;
-                }
-
-                if (selectedOption != 0) 
-                {
+            switch (Functions.OptionSelector(Header, Footer, ["Login", "Create a new account", "Exit program"])) {
+                case "Login":
+                    DisplayLogin();
                     break;
-                }
-            }
-
-            if (selectedOption == 1) 
-            {
-                //Displays the login page
-                DisplayLogin();
-            }
-
-            if (selectedOption == 2) 
-            {
-                DisplayCreateNewCustomerAccount();
-            }
-
-            if (selectedOption == 3) 
-            {
-                //Exits the program
-                Environment.Exit(0);
+                case "Create a new account":
+                    DisplayCreateNewCustomerAccount();
+                    break;
+                case "Exit program":
+                    Environment.Exit(0);
+                    break;
             }
         }
     }
 
+    private static void DisplayLogin() {
+        int usedAttempts = 0;
+        int allowedAttempts = 3;
+        bool ExitLogin = false;
 
-
-    private static void DisplayLogin() 
-    {
-        int attempts = 0;
-        while (true) 
-        {
+        do {
             Console.Clear();
-            Console.WriteLine("       MATCHMAKING RESTAURANT       ");
-            Console.WriteLine("====================================\n");
-            Console.WriteLine("Login");
-            Console.WriteLine("------------------------------------");
-            Console.WriteLine("E-mail:");
-            string input_email = Console.ReadLine();
-            Console.WriteLine("Password:");
-            string input_password = Functions.PasswordReadLine();
+            Console.WriteLine("       MATCHMAKING RESTAURANT       \n====================================\n\nLogin\n------------------------------------\n(Type: Q to exit the login)");
+            Console.WriteLine("\x1b[35mE-mail: \x1b[39m");
+            string usrInput_Email = Console.ReadLine();
+            if (usrInput_Email.ToLower() == "q") {
+                ExitLogin = true;
+            } else {
+                Console.WriteLine("\x1b[35mPassword: \x1b[39m");
+                string usrInput_password = Functions.PasswordReadLine();
 
-            Accounts account = Functions.Login(input_email, input_password);
+                Accounts account = Functions.Login(usrInput_Email, usrInput_password);
 
-            if (account is not null) 
-            {
-                attempts = 4;
-                Console.WriteLine(Functions.IsAccountAdmin(account));
-                if (Functions.IsAccountAdmin(account)) {
+                if (account is not null) {
                     LoggedInAccount = account;
-                    Display_Admin_Environment();
-                    LoggedInAccount = null;
                 } else {
-                    LoggedInAccount = account;
-                    DisplayCustomerEnvironment();
-                    LoggedInAccount = null;
+                    usedAttempts++;
+                    if (AccountLogic.DoesAccountEmailExist(usrInput_Email)) {
+                        Console.WriteLine($"\nInvalid password, You have {allowedAttempts - usedAttempts} left");
+                    } else {
+                        Console.WriteLine($"\nNo account found with this E-mail, You have {allowedAttempts - usedAttempts} left");
+                    }
+                    Thread.Sleep(1500);
                 }
             }
-            else 
-            {
-                attempts--;
-                Console.WriteLine($"Incorrect login: you have {attempts} left.");
-                Thread.Sleep(1500);
-            }
 
-            if (attempts == 0) 
-            {
-                Console.WriteLine("All attempts have been used, Program shutting down.");
+            if (usedAttempts == allowedAttempts) {
                 break;
             }
+            if (LoggedInAccount is not null) {
+                break;
+            }
+            if (ExitLogin) {
+                break;
+            }
+        } while (true);
+
+        if (usedAttempts != allowedAttempts) {
+            if (Functions.IsAccountAdmin(LoggedInAccount)) {
+                Display_Admin_Environment();
+                LoggedInAccount = null;
+            } else {
+                DisplayCustomerEnvironment();
+                LoggedInAccount = null;
+            }
+        } else {
+            Console.WriteLine("\nAll attempts have been used, Returning to start menu");
+            Thread.Sleep(1500);
         }
     }
 
@@ -146,77 +116,25 @@ public static class ProgramDisplay
     }
 
     private static void Display_Admin_Environment() {
-        while (true) {
-            Console.Clear();
-            Console.WriteLine("====================================================================");
-            Console.WriteLine(" ▗▄▖ ▗▄▄▄  ▗▖  ▗▖▗▄▄▄▖▗▖  ▗▖\n" +
-                                "▐▌ ▐▌▐▌  █ ▐▛▚▞▜▌  █  ▐▛▚▖▐▌\n" + 
-                                "▐▛▀▜▌▐▌  █ ▐▌  ▐▌  █  ▐▌ ▝▜▌\n" +
-                                "▐▌ ▐▌▐▙▄▄▀ ▐▌  ▐▌▗▄█▄▖▐▌  ▐▌");
-            Console.WriteLine("====================================================================\n");
-            Console.WriteLine($"Welcome {LoggedInAccount.FirstName} {LoggedInAccount.LastName}\nWhat would you like to do?\n");
-
-            // Console.WriteLine("Quick actions");
-            // Console.WriteLine("1 - View reservations");
-            // Console.WriteLine("2 - Customer Lookup");
-            // Console.WriteLine("3 - View dining menu");
-            // Console.WriteLine("Menu's:");
-            // Console.WriteLine("4 - Reservation options");
-            // Console.WriteLine("5 - Dining menu options");
-            // Console.WriteLine("6 - Account options");
-
-            //TEMP
-            Console.WriteLine("Quick actions");
-            Console.WriteLine("1 - View reservations");
-            Console.WriteLine("2 - Timeslot options");
-            Console.WriteLine("3 - Account options");
-            Console.WriteLine("4 - Menu options");
-            // Console.WriteLine("2 - Customer Lookup");
-            // Console.WriteLine("3 - View dining menu");
-            // Console.WriteLine("Menu's:");
-            // Console.WriteLine("2 - Reservation options");
-            // Console.WriteLine("5 - Dining menu options");
-            // Console.WriteLine("3 - Account options");
-            Console.WriteLine("\n\nQ - Logout");
-            Console.WriteLine("====================================================================\n");
-            Console.WriteLine("Choice:");
-            string choice = Console.ReadLine();
-
-            if (choice is not null) {
-                switch (choice.ToLower())
-                {
-                    case "1":
-                        ReservationDisplay.DisplayForRestaurant(SelectedRestaurant);
-                        break;
-                    case "2":
-                        TimeSlotDisplay.Menu(LoggedInAccount);
-                        break;
-                    // case "3":
-                    // NOTE: Need to implement a method to display the current menu items available for dinner
-                    //     break;
-                    // case "2":
-                    //     ReservationDisplay.ReservationMenu_Admin(SelectedRestaurant, LoggedInAccount);
-                    //     break;
-                    // case "5":
-                    // NOTE: Still need to implement this menu in a new Display class for the dining menu
-                    //     break;
-                    case "3":
-                        AccountDisplay.AdminAccountMenu(LoggedInAccount);
-                        break;
-                    case "4":
-                        MenuDisplay.MenuItemEditorMenu(SelectedRestaurant, LoggedInAccount);
-                        break;
-                    case "q":
-                            Environment.Exit(0);
-                        break;
-                    default:
-                        Console.WriteLine("Please input valid choice");
-                        Thread.Sleep(2000);
-                        break;
-                }
-            } else {
-                Console.WriteLine("Please input valid choice");
-                Thread.Sleep(2000);
+        bool Logout = false;
+        string Header = $"====================================================================\n ▗▄▖ ▗▄▄▄  ▗▖  ▗▖▗▄▄▄▖▗▖  ▗▖\n▐▌ ▐▌▐▌  █ ▐▛▚▞▜▌  █  ▐▛▚▖▐▌\n▐▛▀▜▌▐▌  █ ▐▌  ▐▌  █  ▐▌ ▝▜▌\n▐▌ ▐▌▐▙▄▄▀ ▐▌  ▐▌▗▄█▄▖▐▌  ▐▌\n====================================================================\n\nWelcome {LoggedInAccount.FirstName} {LoggedInAccount.LastName}\nWhat would you like to do?\n\n";
+        while (!Logout) {
+            switch (Functions.OptionSelector(Header, ["Reservation menu", "Timeslot menu", "Dining menu", "Account menu", "Logout"])) {
+                case "Reservation menu":
+                    ReservationDisplay.DisplayForRestaurant(SelectedRestaurant);
+                    break;
+                case "Timeslot menu":
+                    TimeSlotDisplay.Menu(LoggedInAccount);
+                    break;
+                case "Dining menu":
+                    MenuDisplay.MenuItemEditorMenu(SelectedRestaurant, LoggedInAccount);
+                    break;
+                case "Account menu":
+                    AccountDisplay.AdminAccountMenu(LoggedInAccount);
+                    break;
+                case "Logout":
+                    Logout = true;
+                    break;
             }
         }
     }

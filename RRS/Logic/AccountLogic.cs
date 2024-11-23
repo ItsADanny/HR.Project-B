@@ -150,4 +150,6 @@ public static class AccountLogic {
         //get language pref
     }
 
+    public static bool DoesAccountEmailExist(string inputEmail) => Database.DoesEmailAlreadyExist(inputEmail);
+
 }
