@@ -139,4 +139,15 @@ public static class AccountLogic {
 
     public static bool CheckCurrPassword(string input, Accounts LoggedInAccount) => Database.CheckAccountPassword(LoggedInAccount.ID, input);
 
+
+    public void SetAccountLanguagePref(int accountID, string languagepreference)
+    {
+        //update language preference
+    }
+
+    public void GetAccountLanguagePref(int accountID)
+    {
+        //get language pref
+    }
+
 }

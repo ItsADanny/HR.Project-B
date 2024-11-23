@@ -17,4 +17,10 @@
       <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\en-EN\Resources.en.resx" />
+      <EmbeddedResource Include="Resources\nl-NL\Resources.nl.resx" />
+    </ItemGroup>
+
+
 </Project>

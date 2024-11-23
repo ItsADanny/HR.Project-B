@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/dannydesnoo/Documents/GitHub/HR.Project-B/RRS/RRS.csproj": {}
+    "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\RRS.csproj": {}
   },
   "projects": {
-    "/Users/dannydesnoo/Documents/GitHub/HR.Project-B/RRS/RRS.csproj": {
+    "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\RRS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/dannydesnoo/Documents/GitHub/HR.Project-B/RRS/RRS.csproj",
+        "projectUniqueName": "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\RRS.csproj",
         "projectName": "RRS",
-        "projectPath": "/Users/dannydesnoo/Documents/GitHub/HR.Project-B/RRS/RRS.csproj",
-        "packagesPath": "/Users/dannydesnoo/.nuget/packages/",
-        "outputPath": "/Users/dannydesnoo/Documents/GitHub/HR.Project-B/RRS/obj/",
+        "projectPath": "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\RRS.csproj",
+        "packagesPath": "C:\\Users\\mickd\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/dannydesnoo/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\mickd\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -36,9 +36,8 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+          "auditMode": "direct"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -64,26 +63,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.11, 8.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.osx-arm64",
-              "version": "[8.0.11, 8.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[8.0.11, 8.0.11]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
