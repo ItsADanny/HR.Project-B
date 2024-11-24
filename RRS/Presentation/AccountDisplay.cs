@@ -297,7 +297,7 @@ public static class AccountDisplay {
                 } 
                 else 
                 {
-                    Console.WriteLine("Invalid response, please enter a valid option");
+                    Console.WriteLine("Invalid input, please enter a valid option");
                 }
             }
         }
@@ -322,7 +322,7 @@ public static class AccountDisplay {
             if (selectedAccountLevel != 0) {
                 break;
             } else {
-                Console.WriteLine("Invalid option chosen, please select a valid option");
+                Console.WriteLine("Invalid option, please select a valid option");
             }
         }
         return selectedAccountLevel;

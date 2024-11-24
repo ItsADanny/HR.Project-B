@@ -8,7 +8,7 @@ public static class ProgramDisplay
     public static void Display() 
     {
         string Header = "       MATCHMAKING RESTAURANT       \n====================================\n\nWelcome to the Matchmaking restaurant\n\n";
-        string Footer = "\n\n An restaurant reservation solution \n     by Black Dawg International    ";
+        string Footer = "\n\n A restaurant reservation solution \n     by Black Dawg International    ";
         while (true) 
         {
             switch (Functions.OptionSelector(Header, Footer, ["Login", "Create a new account", "Exit program"])) {

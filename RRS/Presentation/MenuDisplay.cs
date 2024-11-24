@@ -29,29 +29,35 @@ public class MenuDisplay
                 {
                     case "N":
                         Console.WriteLine("Creating new item...");
+                        Thread.Sleep(1500);
                         CreateItem(restaurantID, LoggedinUser);
                         break;
 
                     case "E":
                         Console.WriteLine("Editing existing item...");
+                        Thread.Sleep(1500);
                         EditItem(restaurantID, LoggedinUser);
                         break;
             
                     case "D":
                         Console.WriteLine("Deleting existing item...");
+                        Thread.Sleep(1500);
                         DeleteItem(restaurantID, LoggedinUser);
                         break;
 
                     case "V":
                         Console.WriteLine("Viewing Menu...");
+                        Thread.Sleep(1500);
                         ViewMenuList(restaurantID);
                         break;
                     case "Q":
                         Console.WriteLine("Exiting...");
+                        Thread.Sleep(1500);
                         break;
 
                     default:
                         Console.WriteLine("Invalid option, try again");
+                        Thread.Sleep(1500);
                         break;
                 };
 
@@ -114,6 +120,7 @@ public class MenuDisplay
         string name = Console.ReadLine();
 
         Console.WriteLine("Searching Item....");
+        Thread.Sleep(1500);
         string description = "";
         foreach (Menu item in menuItems)
         {
@@ -157,27 +164,27 @@ public class MenuDisplay
         Console.WriteLine("====================================");
 
         Console.WriteLine("What field would you like to edit?\n");
-        Console.WriteLine("N - Name");
-        Console.WriteLine("D - Description");
-        Console.WriteLine("P - Price");
-        Console.WriteLine("F - FoodType");
-        string Choice = Console.ReadLine().ToUpper();
+        Console.WriteLine("1 - Name");
+        Console.WriteLine("2 - Description");
+        Console.WriteLine("3 - Price");
+        Console.WriteLine("4 - FoodType");
+        int Choice = Convert.ToInt32(Console.ReadLine());
 
         switch (Choice)
         {
-            case "N":
+            case 1:
                 Edit(restaurantID, "name");
                 break;
 
-            case "D":
+            case 2:
                 Edit(restaurantID, "description");
                 break;
             
-            case "P":
+            case 3:
                 Edit(restaurantID, "price");
                 break;
 
-            case "F":
+            case 4:
                 Edit(restaurantID, "foodtype");
                 break;
             default:
@@ -253,17 +260,6 @@ public class MenuDisplay
         Console.WriteLine("\nPress enter to exit the menu preview");
         Console.ReadLine();
 
-            // DANNY NOTE: Waarom wordt dit op deze manier gedaan?, ik snap niet helemaal waarom je het op deze manier zou doen?
-            // var FoodTypes = allitems.Select(item => item.Foodtype).Distinct();
-            // foreach (var type in Foodtype)
-            // {
-            //     Console.WriteLine($"\n {type}\n");
-
-            //     foreach (var item in allitems.Where(item => item.Foodtype == type))
-            //     {
-            //         Console.WriteLine($"- {item.Name}\n {item.Description} \n{item.Price}");
-            //     }
-            // }
         }
     }
 }
