@@ -1,0 +1,19 @@
+public interface ILanguageManager
+{
+    void GetLanguage();
+    void DisplayCreateNewCustomerAccount();
+}
+
+public class ENInterface : ILanguageInterface
+{
+    public void GetLanguage();
+    public void DisplayCreateNewCustomerAccount();
+
+}
+
+public class NLInterface : ILanguageInterface
+{
+    public void GetLanguage();
+    public void DisplayCreateNewCustomerAccount();
+}
+

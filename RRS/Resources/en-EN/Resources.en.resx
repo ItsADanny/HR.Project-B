@@ -147,15 +147,21 @@
   </data>
   <data name="DisplayWelcome" xml:space="preserve">
     <value>Welcome {0} {1}\nWhat would you like to do?\n</value>
-    <comment>lol</comment>
+    <comment>Welkom {0} {1}\nWat wil je doen?\n</comment>
   </data>
   <data name="AdminQuickActions" xml:space="preserve">
     <value>Quick actions</value>
-    <comment>lol</comment>
+    <comment>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+Snelle taken &#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+</comment>
   </data>
   <data name="QuickAction1" xml:space="preserve">
     <value>View reservations</value>
-    <comment>lol</comment>
+    <comment>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+Bekijk reserveringen&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+</comment>
   </data>
   <data name="QuickAction2" xml:space="preserve">
     <value>Timeslot options</value>
@@ -163,7 +169,7 @@
   </data>
   <data name="QuickAction3" xml:space="preserve">
     <value>Account options</value>
-    <comment>lol</comment>
+    <comment>Account opties</comment>
   </data>
   <data name="QuickAction4" xml:space="preserve">
     <value> Menu options</value>
@@ -190,7 +196,7 @@
     <comment>lol</comment>
   </data>
   <data name="SelectLang2" xml:space="preserve">
-    <value>Nederlands</value>
+    <value>Dutch</value>
     <comment>lol</comment>
   </data>
   <data name="InvalidPleaseAgain" xml:space="preserve">
@@ -382,11 +388,11 @@
     <comment>lol</comment>
   </data>
   <data name="FillNameItem" xml:space="preserve">
-    <value>Enter Name: </value>
+    <value>Enter Name:</value>
     <comment>lol</comment>
   </data>
   <data name="FillDescItem" xml:space="preserve">
-    <value>Enter Description: </value>
+    <value>Enter Description:</value>
     <comment>lol</comment>
   </data>
   <data name="FoodtypesHeader" xml:space="preserve">
@@ -394,7 +400,7 @@
     <comment>lol</comment>
   </data>
   <data name="FillFoodType" xml:space="preserve">
-    <value>Enter foodtype: </value>
+    <value>Enter foodtype:</value>
     <comment>lol</comment>
   </data>
   <data name="ItemCreateSuccess" xml:space="preserve">
@@ -410,7 +416,7 @@
     <comment>lol</comment>
   </data>
   <data name="FillItemDelete" xml:space="preserve">
-    <value>\nEnter name of item to delete: </value>
+    <value>\nEnter name of item to delete:</value>
     <comment>lol</comment>
   </data>
   <data name="SearchItemThread" xml:space="preserve">
@@ -470,7 +476,7 @@
     <comment>lol</comment>
   </data>
   <data name="EnterNameItem" xml:space="preserve">
-    <value>Enter the name of the item: </value>
+    <value>Enter the name of the item:</value>
     <comment>lol</comment>
   </data>
   <data name="EnterNewChItem" xml:space="preserve">
@@ -503,6 +509,170 @@
   </data>
   <data name="AdminReservOpt2" xml:space="preserve">
     <value>Cancel reservation</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PlsSelectAccChange" xml:space="preserve">
+    <value>Please select an account to change (enter Q to exit):</value>
+    <comment>lol</comment>
+  </data>
+  <data name="EnterToExit" xml:space="preserve">
+    <value>Press ENTER to exit</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PlsInfoReserv" xml:space="preserve">
+    <value>Please input following information requests to create a reservation.\n</value>
+    <comment>lol</comment>
+  </data>
+  <data name="TableNr" xml:space="preserve">
+    <value>Table number</value>
+    <comment>lol</comment>
+  </data>
+  <data name="CreatingReserv" xml:space="preserve">
+    <value>Creating reservation</value>
+    <comment>lol</comment>
+  </data>
+  <data name="ReservSuccess" xml:space="preserve">
+    <value>Reservation created successfully\n\n</value>
+    <comment>lol</comment>
+  </data>
+  <data name="ReservError" xml:space="preserve">
+    <value>There was an error while trying to create the reservation, please try it again later.\n\n</value>
+    <comment>lol</comment>
+  </data>
+  <data name="TiSloMenuOpt" xml:space="preserve">
+    <value>\nOptions:</value>
+    <comment>lol</comment>
+  </data>
+  <data name="TiSloMenuOpt1" xml:space="preserve">
+    <value>1 - View timeslots</value>
+    <comment>lol</comment>
+  </data>
+  <data name="TiSloMenuOpt2" xml:space="preserve">
+    <value>2 - Create a new timeslot</value>
+    <comment>lol</comment>
+  </data>
+  <data name="TiSloMenuOpt3" xml:space="preserve">
+    <value>3 - Delete timeslot\n\n</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PlsSelectOpt" xml:space="preserve">
+    <value>Please select an option (enter Q to exit):</value>
+    <comment>lol</comment>
+  </data>
+  <data name="DateNewTiSLo" xml:space="preserve">
+    <value>\nDate for the new timeslot:</value>
+    <comment>lol</comment>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Start time</value>
+    <comment>lol</comment>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>End time</value>
+    <comment>lol</comment>
+  </data>
+  <data name="TiSloSuccess" xml:space="preserve">
+    <value>Timeslot created, returning to timeslot menu</value>
+    <comment>lol</comment>
+  </data>
+  <data name="TiSloError" xml:space="preserve">
+    <value>There was a problem while trying to create your timeslot, please try again later</value>
+    <comment>lol</comment>
+  </data>
+  <data name="TiSloDeleteSuccess" xml:space="preserve">
+    <value>Timeslot deleted, returning to timeslot menu</value>
+    <comment>lol</comment>
+  </data>
+  <data name="TiSloDeleteError" xml:space="preserve">
+    <value>There was an error while trying to delete the selected timeslot, please try again later</value>
+    <comment>lol</comment>
+  </data>
+  <data name="TiSloPreview" xml:space="preserve">
+    <value>{0} - date: {1} from {2} until {3}</value>
+    <comment>lol</comment>
+  </data>
+  <data name="selectTiSLoToBook" xml:space="preserve">
+    <value>Please select a Timeslot you want to book:</value>
+    <comment>lol</comment>
+  </data>
+  <data name="SelectTiSloBookError" xml:space="preserve">
+    <value>Invalid input, please input a valid timeslot number</value>
+    <comment>lol</comment>
+  </data>
+  <data name="SelectTiSloToDel" xml:space="preserve">
+    <value>Please select a Timeslot you want to delete:</value>
+    <comment>lol</comment>
+  </data>
+  <data name="SelectTiSloError" xml:space="preserve">
+    <value>Invalid input, please input a valid timeslot number</value>
+    <comment>lol</comment>
+  </data>
+  <data name="ReservFormat" xml:space="preserve">
+    <value>{i} - Reservation for: {accounts.FirstName} {accounts.LastName}, Table: {reservation.TableID}, Date: {reservationTimeSlot.GetDate()}, from {reservationTimeSlot.GetStartTime24()} to {reservationTimeSlot.GetEndTime24()}</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PlsSpecialSymbol" xml:space="preserve">
+    <value>Password does not contain a special symbol, please use atleast 1 special symbol</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PlsPWNumber" xml:space="preserve">
+    <value>Password does not contain a number, please use atleast 1 number</value>
+    <comment>lol</comment>
+  </data>
+  <data name="StringReqError" xml:space="preserve">
+    <value>Invalid input, please input a valid {request}</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PlsValidFN" xml:space="preserve">
+    <value>Invalid input, please input a valid firstname</value>
+    <comment>lol</comment>
+  </data>
+  <data name="UniqueEMError" xml:space="preserve">
+    <value>E-mail is already in use, please enter a different e-mail</value>
+    <comment>lol</comment>
+  </data>
+  <data name="ValidEMError" xml:space="preserve">
+    <value>Invalid input, please input a valid E-mail</value>
+    <comment>lol</comment>
+  </data>
+  <data name="DateExample" xml:space="preserve">
+    <value>Date (dd/mm/yyyy) (example: 20/11/2024):</value>
+    <comment>lol</comment>
+  </data>
+  <data name="ValidDateError" xml:space="preserve">
+    <value>Invalid input, please input a valid Date</value>
+    <comment>lol</comment>
+  </data>
+  <data name="AccLevelSuccess" xml:space="preserve">
+    <value>Accountlevel for the account of {selectedAccount.FirstName} {selectedAccount.LastName} to level {selectedAccountLevel.ID} - {selectedAccountLevel.Name}, has succeeded</value>
+    <comment>lol</comment>
+  </data>
+  <data name="AccLevelError" xml:space="preserve">
+    <value>There was an error trying to change the accountlevel for the account of {selectedAccount.FirstName} {selectedAccount.LastName}, please try it again later</value>
+    <comment>lol</comment>
+  </data>
+  <data name="NoAccFound" xml:space="preserve">
+    <value>No results, There were no accounts found with this ID.</value>
+    <comment>lol</comment>
+  </data>
+  <data name="AccIDError" xml:space="preserve">
+    <value>Invalid input, An ID can only consist of numbers. Please try it again with a valid number</value>
+    <comment>lol</comment>
+  </data>
+  <data name="NoAccByFN" xml:space="preserve">
+    <value>No results, There were no accounts found with this firstname.</value>
+    <comment>lol</comment>
+  </data>
+  <data name="NoAccByLN" xml:space="preserve">
+    <value>No results, There were no accounts found with this lastname.</value>
+    <comment>lol</comment>
+  </data>
+  <data name="NoAccByEM" xml:space="preserve">
+    <value>No results, There were no accounts found with this e-mail.</value>
+    <comment>lol</comment>
+  </data>
+  <data name="DeleteAccError" xml:space="preserve">
+    <value>There was an error while trying to delete the account, please try it again later</value>
     <comment>lol</comment>
   </data>
 </root>

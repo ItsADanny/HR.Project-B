@@ -1000,4 +1000,27 @@ public static class Database {
         return 0;
     }
 
+    //{25-11-2024}-{MICK}
+    public static void UpdateLanguagePreference(int selectedOption)
+    {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null)
+        {
+            SqliteCommand sqlite_command;
+            sqlite_command = db_conn.CreateCommand();
+            switch(selectedOption)
+            {
+                case 1:
+                    sqlite_command.CommandText = $"UPDATE Accounts" //figure this fuck out
+                    break;
+                    
+            }
+            
+
+        }
+
+    }
+
+
 }

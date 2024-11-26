@@ -1,3 +1,4 @@
+using System.Data.Entity.Core.Metadata.Edm;
 using RRS.Logic;
 
 public static class ProgramDisplay
@@ -184,36 +185,5 @@ public static class ProgramDisplay
         }
     }
 
-    public static void LanguageSelectScreen()
-    {
-        while (true)
-        {
-            Console.Clear();
-            Console.WriteLine("      PLEASE SELECT A LANGUAGE      ");
-            Console.WriteLine("====================================\n");
-            Console.WriteLine("1 - English");
-            Console.WriteLine("2 - Nederlands\n\n");
-            int selectedOption = 0;
-            wyhile (true)
-            {
-                string userInput = Console.ReadLine();
-                switch(userInput.ToLower())
-                {
-                    case "1":
-                        selectedOption = 1;
-                        break;
-                    case "2":
-                        selectedOption = 2;
-                        break;
-                     default:
-                        Console.WriteLine("Invalid option, Please try again.");
-                        break;
-
-
-
-                }          
-
-        }
-    }
 
 }

@@ -21,6 +21,7 @@ public static class TimeSlotDisplay {
 
             string userInput = Console.ReadLine();
             if (userInput.ToLower() == "q") {
+
                 break;
             } else {
                 if (canChangeTimeSlots) {
@@ -42,7 +43,7 @@ public static class TimeSlotDisplay {
                             DeleteTimeSlot();
                             break;
                         default:
-                            Console.WriteLine("Invalid input, please enter a valid choice");
+                            Console.WriteLine("Invalid input, please enter a valid option");
                             Thread.Sleep(1500);
                             break;
                     }
@@ -52,7 +53,7 @@ public static class TimeSlotDisplay {
                             ViewTimeSlots();
                             break;
                         default:
-                            Console.WriteLine("Invalid input, please enter a valid choice");
+                            Console.WriteLine("Invalid input, please enter a valid option");
                             Thread.Sleep(1500);
                             break;
                     }

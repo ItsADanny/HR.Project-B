@@ -122,11 +122,11 @@
     <comment>Menu Editor: Please choose an option</comment>
   </data>
   <data name="MenuEditorOptionCreate" xml:space="preserve">
-    <value>N - creeer een nieuw item </value>
+    <value>creeer een nieuw item</value>
     <comment>N - create new item</comment>
   </data>
   <data name="MenuEditorOptionEdit" xml:space="preserve">
-    <value>E - bewerk bestaand item</value>
+    <value>bewerk bestaand item</value>
     <comment>E - edit existing item</comment>
   </data>
   <data name="FirstName" xml:space="preserve">
@@ -148,5 +148,169 @@
   <data name="AdminDisplayWelcome" xml:space="preserve">
     <value>Welkom {0} {1}\nWat wil je doen?\n</value>
     <comment>placeholders are gonna be filled in with expressions</comment>
+  </data>
+  <data name="AdminQuickActions" xml:space="preserve">
+    <value>Snelle taken </value>
+    <comment>Quick actions</comment>
+  </data>
+  <data name="QuickAction1" xml:space="preserve">
+    <value>Bekijk reserveringen</value>
+    <comment>View reservations</comment>
+  </data>
+  <data name="QuickAction2" xml:space="preserve">
+    <value>Tijdslot opties</value>
+    <comment>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+Timeslot options&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+</comment>
+  </data>
+  <data name="QuickAction3" xml:space="preserve">
+    <value>Account opties</value>
+    <comment>Account options</comment>
+  </data>
+  <data name="QuickAction4" xml:space="preserve">
+    <value>Menu opties</value>
+    <comment>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+ Menu options&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+</comment>
+  </data>
+  <data name="QuickActionQ" xml:space="preserve">
+    <value>Uitloggen</value>
+    <comment>lol</comment>
+  </data>
+  <data name="ChoiceInput" xml:space="preserve">
+    <value>Keuze:</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PleaseValidChoice" xml:space="preserve">
+    <value>Voer een geldige keuze in</value>
+    <comment>lol</comment>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Voer een geldige taal in</value>
+    <comment>lol</comment>
+  </data>
+  <data name="SelectLang1" xml:space="preserve">
+    <value>Engels</value>
+    <comment>lol</comment>
+  </data>
+  <data name="SelectLang2" xml:space="preserve">
+    <value>Nederlands</value>
+    <comment>lol</comment>
+  </data>
+  <data name="InvalidPleaseAgain" xml:space="preserve">
+    <value>ongeldige keuze, probeer opnieuw</value>
+    <comment>lol</comment>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Wachtwoord veranderen</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PleaseSelectAcc" xml:space="preserve">
+    <value>Selecteer een account om te wijzigen (voer Q in om af te sluiten):</value>
+    <comment>lol</comment>
+  </data>
+  <data name="SuperAdminMenuOpt1" xml:space="preserve">
+    <value>Maak een nieuw klantaccount aan</value>
+    <comment>lol</comment>
+  </data>
+  <data name="SuperAdminMenuOpt2" xml:space="preserve">
+    <value>Maak een nieuw beheerderaccount aan </value>
+    <comment>lol</comment>
+  </data>
+  <data name="SuperAdminMenuOpt3" xml:space="preserve">
+    <value>Account opzoeken</value>
+    <comment>lol</comment>
+  </data>
+  <data name="SuperAdminMenuOpt4" xml:space="preserve">
+    <value>Verander het level van een account</value>
+    <comment>lol</comment>
+  </data>
+  <data name="SuperAdminMenuOpt5" xml:space="preserve">
+    <value>Account verwijderen</value>
+    <comment>lol</comment>
+  </data>
+  <data name="SuperAdminMenuOpt6" xml:space="preserve">
+    <value>Wachtwoord veranderen</value>
+    <comment>lol</comment>
+  </data>
+  <data name="AdminMenuOpt2" xml:space="preserve">
+    <value>Account opzoeken</value>
+    <comment>lol</comment>
+  </data>
+  <data name="AdminMenuOpt3" xml:space="preserve">
+    <value>Wachtwoord veranderen</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PleaseSelectAccChange" xml:space="preserve">
+    <value>Selecteer een account om te wijzigen (voer Q in om af te sluiten):</value>
+    <comment>ol</comment>
+  </data>
+  <data name="PleaseSelectAccLvlChange" xml:space="preserve">
+    <value>Selecteer een accountniveau waarnaar u wilt wijzigen (voer Q in om af te sluiten):</value>
+    <comment>lol</comment>
+  </data>
+  <data name="SelectOpt" xml:space="preserve">
+    <value>Selectie opties:</value>
+    <comment>lol</comment>
+  </data>
+  <data name="LookAccOpt1" xml:space="preserve">
+    <value>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+Selecteer op ID</value>
+    <comment>lol</comment>
+  </data>
+  <data name="LookAccOpt2" xml:space="preserve">
+    <value>Selecteer op voornaam</value>
+    <comment>lol</comment>
+  </data>
+  <data name="LookAccOpt3" xml:space="preserve">
+    <value>Selecteer op achternaam</value>
+    <comment>lol</comment>
+  </data>
+  <data name="LookAccOpt4" xml:space="preserve">
+    <value>Selecteer per e-mail\n\n</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PleaseSelectSelection" xml:space="preserve">
+    <value>Selecteer een selectiemethode (voer Q in om af te sluiten):</value>
+    <comment>ol</comment>
+  </data>
+  <data name="PlsIDsearch" xml:space="preserve">
+    <value>Voer een ID in voor de gebruiker waarnaar u wilt zoeken:</value>
+    <comment>lol</comment>
+  </data>
+  <data name="IDSearchError" xml:space="preserve">
+    <value>Ongeldige invoer. Gebruik een geldig ID om te zoeken</value>
+    <comment>ol</comment>
+  </data>
+  <data name="EnterToCont" xml:space="preserve">
+    <value>Druk op Enter om door te gaan.</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PlsFNsearch" xml:space="preserve">
+    <value>Please input a firstname for the user you want to search for:</value>
+    <comment>lol</comment>
+  </data>
+  <data name="FNSearchError" xml:space="preserve">
+    <value>Ongeldige invoer. Gebruik een voornaam om te zoeken</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PlsLNSearch" xml:space="preserve">
+    <value>Voer een achternaam in voor de gebruiker waarnaar u wilt zoeken:</value>
+    <comment>lol</comment>
+  </data>
+  <data name="LNSearchError" xml:space="preserve">
+    <value>Ongeldige invoer. Gebruik een achternaam om te zoeken</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PlsEMSearch" xml:space="preserve">
+    <value>Voer een e-mailadres in van de gebruiker waarnaar u wilt zoeken:</value>
+    <comment>lol</comment>
+  </data>
+  <data name="EMSearchError" xml:space="preserve">
+    <value>Ongeldige invoer, gebruik a.u.b. een e-mailadres om te zoeken</value>
+    <comment>lol</comment>
   </data>
 </root>

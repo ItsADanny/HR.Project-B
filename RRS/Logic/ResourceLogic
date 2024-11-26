@@ -1,0 +1,27 @@
+using System.Globalization;
+using System.Resources;
+
+//{21-11-2024}-{MICK}---->
+//Resource manager and localization logic class for everything language
+//
+public class ResourceLogic
+{
+    private readonly ResourceManager _resourcemanager;
+
+    public ResourceLogic
+    {
+        _resourcemanager = new ResourceManager("RRS.Resources", typeof(ResourceLogic).Assembly);
+    }
+
+    public string GetResource(string KeyWord, string CultureID)
+    {
+        CultureInfo cultureInfo = new CultureInfo(CultureID);
+        return _resourcemanager.GetString(KeyWord, cultureInfo);
+    }
+
+    //for in PRESENTATION LAYER
+    //EXAMPLE:
+    //
+
+
+}

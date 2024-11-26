@@ -1,3 +1,5 @@
+using System.Globalization;
+
 public static class AccountLogic {
     public static void PrintAccounts(Accounts LoggedInAccount) {
         foreach (Accounts accounts in Database.SelectAccount()) {
@@ -147,7 +149,10 @@ public static class AccountLogic {
 
     public void GetAccountLanguagePref(int accountID)
     {
-        //get language pref
+        string CulturePreference = "";
+        CultureInfo culture = new CultureInfo(CulturePreference);
+        Thread.CurrentThread.CurrentCulture = culture;
+        Thread.CurrentThread.CurrentUICulture = culture;
     }
 
     public static bool DoesAccountEmailExist(string inputEmail) => Database.DoesEmailAlreadyExist(inputEmail);
