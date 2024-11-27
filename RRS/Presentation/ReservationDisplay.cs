@@ -1,5 +1,30 @@
 public static class ReservationDisplay {
+<<<<<<< Updated upstream
     public static void DisplayForRestaurant(int restaurantID) {
+=======
+
+    public static void ReservationMenu_Customer(int restaurantID, Accounts LoggedInAccount) {
+        PrintHeader();
+    }
+
+    public static void ReservationMenu_Admin (int restaurantID, Accounts LoggedInAccount) {
+        bool CanChangeReservations = AccountLogic.CanDisplay("cancelReservations", LoggedInAccount);
+        // THIS NEEDS TO BE IMPLEMENTED
+        // bool CanCancelReservations = AccountLogic.CanDisplay_CancelReservations(LoggedInAccount);
+        while (true) {
+            PrintHeader();
+            Console.WriteLine("1 - View reservations");
+                if (CanChangeReservations) {
+                    Console.WriteLine("2 - Cancel reservation");
+                }
+                Console.WriteLine("================================================================");
+                Console.WriteLine("Please select an account to change (enter Q to exit):");
+        }
+    }
+
+    public static void DisplayForRestaurant(int restaurantID) 
+    {
+>>>>>>> Stashed changes
         PrintHeader();
         Console.WriteLine(ReservationLogic.RetrieveReservations(restaurantID));
         Console.WriteLine("====================================================================\n\n");

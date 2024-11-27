@@ -33,6 +33,11 @@ public static void CreateAccountDisplay(){
     int ID = AccountId;
 
     
+<<<<<<< Updated upstream
+=======
+    public static void AdminAccountMenu(Accounts LoggedInAccount) {
+        bool CanCreateAdminAccounts = AccountLogic.CanDisplay("createAdmins", LoggedInAccount);
+>>>>>>> Stashed changes
 
 
 

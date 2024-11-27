@@ -167,7 +167,7 @@ public static class Database {
 
             SqliteCommand sqlite_cmd;
             sqlite_cmd = db_conn.CreateCommand();
-            sqlite_cmd.CommandText = $"INSERT INTO Accounts (Email, Password, FirstName, LastName, PhoneNumber, AccountLevel) VALUES ('{account.Email}', '{account.GetPassword()}', '{account.FirstName}', '{account.LastName}', '{account.PhoneNumber}', {account.AccountLevel});";
+            sqlite_cmd.CommandText = $"INSERT INTO Accounts (Email, Password, FirstName, LastName, PhoneNumber, Language, AccountLevel) VALUES ('{account.Email}', '{account.GetPassword()}', '{account.FirstName}', '{account.LastName}', '{account.PhoneNumber}', EN, {account.AccountLevel});";
             sqlite_cmd.ExecuteNonQuery();
 
             //Close the connection to the database
@@ -240,10 +240,11 @@ public static class Database {
                 string AccountFirstName = sqlite_datareader.GetString(3);
                 string AccountLastName = sqlite_datareader.GetString(4);
                 string AccountPhoneNumber = sqlite_datareader.GetString(5);
-                int AccountAccountLevel = sqlite_datareader.GetInt32(6);
+                string AccountLanguage = sqlite_datareader.GetString(6);
+                int AccountAccountLevel = sqlite_datareader.GetInt32(7);
 
                 CloseConn(db_conn);
-                return new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountAccountLevel);
+                return new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountLanguage, AccountAccountLevel);
             }
         }
         return null;
@@ -267,10 +268,11 @@ public static class Database {
                 string AccountFirstName = sqlite_datareader.GetString(3);
                 string AccountLastName = sqlite_datareader.GetString(4);
                 string AccountPhoneNumber = sqlite_datareader.GetString(5);
-                int AccountAccountLevel = sqlite_datareader.GetInt32(6);
+                string AccountLanguage = sqlite_datareader.GetString(6);
+                int AccountAccountLevel = sqlite_datareader.GetInt32(7);
 
                 CloseConn(db_conn);
-                return new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountAccountLevel);
+                return new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountLanguage, AccountAccountLevel);
             }
         }
         return null;
@@ -295,9 +297,10 @@ public static class Database {
                 string AccountFirstName = sqlite_datareader.GetString(3);
                 string AccountLastName = sqlite_datareader.GetString(4);
                 string AccountPhoneNumber = sqlite_datareader.GetString(5);
-                int AccountAccountLevel = sqlite_datareader.GetInt32(6);
+                string AccountLanguage = sqlite_datareader.GetString(6);
+                int AccountAccountLevel = sqlite_datareader.GetInt32(7);
 
-                results.Add(new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountAccountLevel));
+                results.Add(new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountLanguage, AccountAccountLevel));
             }
             CloseConn(db_conn);
             return results;
@@ -329,9 +332,10 @@ public static class Database {
                     string AccountFirstName = sqlite_datareader.GetString(3);
                     string AccountLastName = sqlite_datareader.GetString(4);
                     string AccountPhoneNumber = sqlite_datareader.GetString(5);
-                    int AccountAccountLevel = sqlite_datareader.GetInt32(6);
+                    string AccountLanguage = sqlite_datareader.GetString(6);
+                    int AccountAccountLevel = sqlite_datareader.GetInt32(7);
 
-                    results.Add(new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountAccountLevel));
+                    results.Add(new Accounts(AccountID, AccountEmail, AccountFirstName, AccountLastName, AccountPhoneNumber, AccountLanguage, AccountAccountLevel));
                 }
                 CloseConn(db_conn);
                 return results;
@@ -476,13 +480,22 @@ public static class Database {
             {                
                 int AccountLevel_ID = sqlite_datareader.GetInt32(0);
                 string AccountLevel_Name = sqlite_datareader.GetString(1);
+<<<<<<< Updated upstream
                 int AccountLevel_CanChangeReservations = sqlite_datareader.GetInt32(0);
                 int AccountLevel_CanChangeTimeSlots = sqlite_datareader.GetInt32(0);
                 int AccountLevel_CanCancelReservations = sqlite_datareader.GetInt32(0);
                 int AccountLevel_IsAnAdmin = sqlite_datareader.GetInt32(0);
                 int AccountLevel_CanCreateAdmins = sqlite_datareader.GetInt32(0);
+=======
+                int AccountLevel_CanChangeReservations = sqlite_datareader.GetInt32(2);
+                int AccountLevel_CanChangeTimeSlots = sqlite_datareader.GetInt32(3);
+                int AccountLevel_CanCancelReservations = sqlite_datareader.GetInt32(4);
+                int AccountLevel_IsAnAdmin = sqlite_datareader.GetInt32(5);
+                int AccountLevel_CanCreateAdmins = sqlite_datareader.GetInt32(6);
+                int AccountLevel_CanViewLogs = sqlite_datareader.GetInt32(7);
+>>>>>>> Stashed changes
 
-                results.Add(new AccountLevel(AccountLevel_ID, AccountLevel_Name, AccountLevel_CanChangeReservations, AccountLevel_CanChangeTimeSlots, AccountLevel_CanCancelReservations, AccountLevel_IsAnAdmin, AccountLevel_CanCreateAdmins));
+                results.Add(new AccountLevel(AccountLevel_ID, AccountLevel_Name, AccountLevel_CanChangeReservations, AccountLevel_CanChangeTimeSlots, AccountLevel_CanCancelReservations, AccountLevel_IsAnAdmin, AccountLevel_CanCreateAdmins, AccountLevel_CanViewLogs));
             }
             CloseConn(db_conn);
             return results;
@@ -505,14 +518,15 @@ public static class Database {
             {                
                 int AccountLevel_ID = sqlite_datareader.GetInt32(0);
                 string AccountLevel_Name = sqlite_datareader.GetString(1);
-                int AccountLevel_CanChangeReservations = sqlite_datareader.GetInt32(0);
-                int AccountLevel_CanChangeTimeSlots = sqlite_datareader.GetInt32(0);
-                int AccountLevel_CanCancelReservations = sqlite_datareader.GetInt32(0);
-                int AccountLevel_IsAnAdmin = sqlite_datareader.GetInt32(0);
-                int AccountLevel_CanCreateAdmins = sqlite_datareader.GetInt32(0);
+                int AccountLevel_CanChangeReservations = sqlite_datareader.GetInt32(2);
+                int AccountLevel_CanChangeTimeSlots = sqlite_datareader.GetInt32(3);
+                int AccountLevel_CanCancelReservations = sqlite_datareader.GetInt32(4);
+                int AccountLevel_IsAnAdmin = sqlite_datareader.GetInt32(5);
+                int AccountLevel_CanCreateAdmins = sqlite_datareader.GetInt32(6);
+                int AccountLevel_CanViewLogs = sqlite_datareader.GetInt32(7);
 
                 CloseConn(db_conn);
-                return new AccountLevel(AccountLevel_ID, AccountLevel_Name, AccountLevel_CanChangeReservations, AccountLevel_CanChangeTimeSlots, AccountLevel_CanCancelReservations, AccountLevel_IsAnAdmin, AccountLevel_CanCreateAdmins);
+                return new AccountLevel(AccountLevel_ID, AccountLevel_Name, AccountLevel_CanChangeReservations, AccountLevel_CanChangeTimeSlots, AccountLevel_CanCancelReservations, AccountLevel_IsAnAdmin, AccountLevel_CanCreateAdmins, AccountLevel_CanViewLogs);
             }
         }
         return null;
@@ -703,8 +717,37 @@ public static class Database {
         return null;
     }
 
+    public static List<ReservationTimeSlots> SelectReservationTimeSlots(int restaurantID) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<ReservationTimeSlots> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM ReservationTimeSlots WHERE RestaurantID = {restaurantID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int ReservationTimeSlotsID = sqlite_datareader.GetInt32(0);
+                int ReservationTimeSlotsRestaurantID = sqlite_datareader.GetInt32(1);
+                string ReservationTimeSlotsDate = sqlite_datareader.GetString(2);
+                string ReservationTimeSlotsStartTime = sqlite_datareader.GetString(3);
+                string ReservationTimeSlotsEndTime = sqlite_datareader.GetString(4);
+
+                results.Add(new ReservationTimeSlots(ReservationTimeSlotsID, ReservationTimeSlotsRestaurantID, ReservationTimeSlotsDate, ReservationTimeSlotsStartTime, ReservationTimeSlotsEndTime));
+            }
+
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
+
     //Select by ID
-    public static ReservationTimeSlots SelectReservationTimeSlots(int timeSlotID) {
+    public static ReservationTimeSlots SelectReservationTimeSlot(int timeSlotID) {
         SqliteConnection db_conn = CreateConn();
 
         if (db_conn is not null) {
@@ -732,6 +775,171 @@ public static class Database {
         return null;
     }
 
+<<<<<<< Updated upstream
+=======
+    public static List<Review> Reviews(int restaurantID) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<Review> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Review WHERE RestaurantID = {restaurantID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int ReviewID = sqlite_datareader.GetInt32(0);
+                int ReviewRestaurantID = sqlite_datareader.GetInt32(1);
+                int ReviewUserID = sqlite_datareader.GetInt32(2);
+                int ReviewReservationID = sqlite_datareader.GetInt32(3);
+                int ReviewRating = sqlite_datareader.GetInt32(4);
+                string ReviewComment = sqlite_datareader.GetString(5);
+
+                results.Add(new Review(ReviewID, ReviewRestaurantID, ReviewUserID, ReviewReservationID, ReviewRating, ReviewComment));
+            }
+            
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
+
+    public static List<Review> Reviews(int restaurantID, Accounts account) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<Review> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Review WHERE RestaurantID = {restaurantID} AND UserID = {account.ID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int ReviewID = sqlite_datareader.GetInt32(0);
+                int ReviewRestaurantID = sqlite_datareader.GetInt32(1);
+                int ReviewUserID = sqlite_datareader.GetInt32(2);
+                int ReviewReservationID = sqlite_datareader.GetInt32(3);
+                int ReviewRating = sqlite_datareader.GetInt32(4);
+                string ReviewComment = sqlite_datareader.GetString(5);
+
+                results.Add(new Review(ReviewID, ReviewRestaurantID, ReviewUserID, ReviewReservationID, ReviewRating, ReviewComment));
+            }
+            
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
+
+    public static List<Review> Reviews (Accounts account) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<Review> results = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Review WHERE UserID = {account.ID}";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                int ReviewID = sqlite_datareader.GetInt32(0);
+                int ReviewRestaurantID = sqlite_datareader.GetInt32(1);
+                int ReviewUserID = sqlite_datareader.GetInt32(2);
+                int ReviewReservationID = sqlite_datareader.GetInt32(3);
+                int ReviewRating = sqlite_datareader.GetInt32(4);
+                string ReviewComment = sqlite_datareader.GetString(5);
+
+                results.Add(new Review(ReviewID, ReviewRestaurantID, ReviewUserID, ReviewReservationID, ReviewRating, ReviewComment));
+            }
+            
+            CloseConn(db_conn);
+            return results;
+        }
+        return null;
+    }
+
+    public static bool UpdatePasswordForAccount(Accounts account, string oldPassword, string newPassword) {
+        if (account is not null && oldPassword is not null && newPassword is not null) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET Password = \"{newPassword}\" WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool UpdateFirstNameForAccount(Accounts account, string firstname) {
+        if (account is not null && firstname is not null && firstname != "") {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET FirstName = {firstname} WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool UpdateLastNameForAccount(Accounts account, string lastname) {
+        if (account is not null && lastname is not null && lastname != "") {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET LastName = {lastname} WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool UpdatePhoneNumberForAccount(Accounts account, string phonenumber) {
+        if (account is not null && phonenumber is not null && phonenumber != "") {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET PhoneNumber = {phonenumber} WHERE ID = {account.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+>>>>>>> Stashed changes
     public static bool UpdateAccountLevelForAccount(Accounts account, AccountLevel accountLevel, Accounts adminAccount) {
         if (account is not null && accountLevel is not null && adminAccount is not null) {
             //Creating a connection to the database
@@ -750,6 +958,103 @@ public static class Database {
         return false;
     }
 
+<<<<<<< Updated upstream
+=======
+    public static bool UpdateLanguagePreference(Accounts account, int selectedOption)
+    {
+        if (account is not null && selectedOption == 0)
+        {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            if (selectedOption == 1)
+            {
+                sqlite_cmd.CommandText = $"UPDATE Accounts SET Language = \"NL\" WHERE ID = {account.ID};";
+            }
+            else
+            {
+                sqlite_cmd.CommandText = $"UPDATE Accounts SET Language = \"EN\" WHERE ID = {account.ID};";
+            }
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool UpdateMenuItem(int restaurantID, string choice, string itemname, string input) {
+        if (choice is not null && itemname is not null && input is not null) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            switch (choice) {
+                case "name":
+                    sqlite_cmd.CommandText = $"UPDATE Menu SET Name = {input} WHERE Name = {itemname};";
+                    break;
+                case "description":
+                    sqlite_cmd.CommandText = $"UPDATE Menu SET Description = {input} WHERE Name = {itemname};";
+                    break;
+                case "price":
+                    sqlite_cmd.CommandText = $"UPDATE Menu SET Price = {input} WHERE Name = {itemname};";
+                    break;
+                case "foodtype":
+                    sqlite_cmd.CommandText = $"UPDATE Menu SET FoodType = {input} WHERE Name = {itemname};";
+                    break;
+            }
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool UpdateReservationStatus(int TimeSlotID, int StatusCode) {
+        if (TimeSlotID != 0 && StatusCode == 0) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE ReservationTimeSlots SET Status = {StatusCode} WHERE TimeSlotID = {TimeSlotID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool ConfirmInformationShare(Accounts ShareToAccount, Accounts ShareFromAccount) {
+        if (ShareToAccount is not null && ShareFromAccount is not null) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Accounts SET Confirmation = 1 WHERE AccountID_One = {ShareFromAccount.ID} AND AccountID_Two = {ShareToAccount.ID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+>>>>>>> Stashed changes
     public static string DeleteAccount(int accountID) {
         if (accountID != 0 | accountID != 1) {
             //Creating a connection to the database

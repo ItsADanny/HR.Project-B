@@ -51,24 +51,22 @@ public static class AccountLogic {
         }
     }
 
-    public static bool CanDisplay_CreateAdminAccounts(Accounts LoggedInAccount) {
+    public static bool CanDisplay(string lookupReqeust, Accounts LoggedInAccount) {
         AccountLevel LoggedInAccountsAccountLevel = Database.SelectAccountLevel(LoggedInAccount.AccountLevel);
-        return LoggedInAccountsAccountLevel.CanCreateAdmins;
-    }
-
-    public static bool CanDisplay_CancelReservations(Accounts LoggedInAccount) {
-        AccountLevel LoggedInAccountsAccountLevel = Database.SelectAccountLevel(LoggedInAccount.AccountLevel);
-        return LoggedInAccountsAccountLevel.CanCancelReservations;
-    }
-
-    public static bool CanDisplay_ChangeReservations(Accounts LoggedInAccount) {
-        AccountLevel LoggedInAccountsAccountLevel = Database.SelectAccountLevel(LoggedInAccount.AccountLevel);
-        return LoggedInAccountsAccountLevel.CanChangeReservation;
-    }
-
-    public static bool CanDisplay_ChangeTimeSlots(Accounts LoggedInAccount) {
-        AccountLevel LoggedInAccountsAccountLevel = Database.SelectAccountLevel(LoggedInAccount.AccountLevel);
-        return LoggedInAccountsAccountLevel.CanChangeTimeSlots;
+        switch (lookupReqeust) {
+            case "createAdmins":
+                return LoggedInAccountsAccountLevel.CanCreateAdmins;
+            case "cancelReservations":
+                return LoggedInAccountsAccountLevel.CanCancelReservations;
+            case "changeReservations":
+                return LoggedInAccountsAccountLevel.CanChangeReservation;
+            case "changeTimeslots":
+                return LoggedInAccountsAccountLevel.CanChangeTimeSlots;
+            case "logs":
+                return LoggedInAccountsAccountLevel.CanViewLogs;
+            default:
+                return false;
+        }
     }
 
     public static void SearchForUser_ByID(string userInput) {

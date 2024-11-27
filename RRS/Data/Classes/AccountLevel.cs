@@ -6,9 +6,10 @@ public class AccountLevel {
     public bool CanCancelReservations;
     public bool IsAnAdmin;
     public bool CanCreateAdmins;
+    public bool CanViewLogs;
 
     public AccountLevel(string name, int canChangeReservation, int canChangeTimeSlots, int canCancelReservations, 
-                        int isAnAdmin, int canCreateAdmins) {
+                        int isAnAdmin, int canCreateAdmins, int canViewLogs) {
         ID = 999999999;
         Name = name;
         CanChangeReservation = ConvertToBool(canChangeReservation);
@@ -16,10 +17,11 @@ public class AccountLevel {
         CanCancelReservations = ConvertToBool(canCancelReservations);
         IsAnAdmin = ConvertToBool(isAnAdmin);
         CanCreateAdmins = ConvertToBool(canCreateAdmins);
+        CanViewLogs = ConvertToBool(canViewLogs);
     }
 
     public AccountLevel(string name, bool canChangeReservation, bool canChangeTimeSlots, bool canCancelReservations, 
-                        bool isAnAdmin, bool canCreateAdmins) {
+                        bool isAnAdmin, bool canCreateAdmins, bool canViewLogs) {
         ID = 999999999;
         Name = name;
         CanChangeReservation = canChangeReservation;
@@ -27,10 +29,11 @@ public class AccountLevel {
         CanCancelReservations = canCancelReservations;
         IsAnAdmin = isAnAdmin;
         CanCreateAdmins = canCreateAdmins;
+        CanViewLogs = canViewLogs;
     }
 
     public AccountLevel(int id, string name, int canChangeReservation, int canChangeTimeSlots, int canCancelReservations, 
-                        int isAnAdmin, int canCreateAdmins) {
+                        int isAnAdmin, int canCreateAdmins, int canViewLogs) {
         ID = id;
         Name = name;
         CanChangeReservation = ConvertToBool(canChangeReservation);
@@ -38,10 +41,11 @@ public class AccountLevel {
         CanCancelReservations = ConvertToBool(canCancelReservations);
         IsAnAdmin = ConvertToBool(isAnAdmin);
         CanCreateAdmins = ConvertToBool(canCreateAdmins);
+        CanViewLogs = ConvertToBool(canViewLogs);
     }
 
     public AccountLevel(int id, string name, bool canChangeReservation, bool canChangeTimeSlots, 
-                        bool canCancelReservations, bool isAnAdmin, bool canCreateAdmins) {
+                        bool canCancelReservations, bool isAnAdmin, bool canCreateAdmins, bool canViewLogs) {
         ID = id;
         Name = name;
         CanChangeReservation = canChangeReservation;
@@ -49,16 +53,17 @@ public class AccountLevel {
         CanCancelReservations = canCancelReservations;
         IsAnAdmin = isAnAdmin;
         CanCreateAdmins = canCreateAdmins;
+        CanViewLogs = canViewLogs;
     }
 
-    public bool ConvertToBool(int input) {
+    private bool ConvertToBool(int input) {
         if (input == 1) {
             return true;
         }
         return false;
     }
 
-    public static int ConvertToInt(bool input) {
+    private static int ConvertToInt(bool input) {
         if (input) {
             return 1;
         }

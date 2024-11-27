@@ -6,7 +6,13 @@ public static class ReservationLogic {
         List<Reservations> reservations = Database.SelectReservations(restaurantID);
         foreach (Reservations reservation in reservations) {
             i++;
+<<<<<<< Updated upstream
             ReservationTimeSlots reservationTimeSlot = Database.SelectReservationTimeSlots(reservation.TimeSlotID);
+=======
+            //grab reservation timeslot
+            ReservationTimeSlots reservationTimeSlot = Database.SelectReservationTimeSlot(reservation.TimeSlotID);
+            //retrieve acc info
+>>>>>>> Stashed changes
             Accounts accounts = Database.SelectAccount(reservation.AccountID);
 
             string reservation_status = "";
@@ -34,8 +40,23 @@ public static class ReservationLogic {
         int DB_accountID = Database.Temp_GetLastID("Accounts");
         int DB_TimeslotID = Database.Temp_GetLastID("ReservationTimeSlots");
 
+<<<<<<< Updated upstream
         Reservations reservation = new Reservations(restaurantID, DB_TimeslotID, table, DB_accountID, 0);
+=======
+        foreach (Reservations reservation in reservations) 
+        {
+            i++;
+            //grab reservation timeslot
+            ReservationTimeSlots reservationTimeSlot = Database.SelectReservationTimeSlot(reservation.TimeSlotID);
+            //retrieve acc info
+            Accounts accounts = Database.SelectAccount(reservation.AccountID);
+>>>>>>> Stashed changes
 
         return Database.Insert(reservation);
+    }
+
+    public static bool CancelReservation(int timeslotID, Accounts LoggedAccount) {
+        //1 defines that a reservation has been cancelled
+        return Database.UpdateReservationStatus(timeslotID, 1);
     }
 }
