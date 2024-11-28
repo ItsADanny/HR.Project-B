@@ -1,4 +1,5 @@
 using Microsoft.Data.Sqlite;
+namespace RRS.Data;
 
 public static class Database {
     //[16-10-2024] - [82924077] – [ItsDanny]

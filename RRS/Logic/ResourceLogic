@@ -39,7 +39,7 @@ public class ENInterface : ILanguageInterface
 
 }
 
-public class NLInterface : ILanguageManager
+public class NLInterface : ILanguageInterface
 {
     private readonly ResourceManager _resourcemanager;
 

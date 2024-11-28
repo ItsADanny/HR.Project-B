@@ -1,4 +1,4 @@
-
+namespace RSS.Data;
 //interfaces
 
 public interface ILanguageInterface

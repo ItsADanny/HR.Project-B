@@ -1,11 +1,13 @@
 using System.Globalization;
 using System.Resources;
+using System.Security.Cryptography;
 //UI layer
 public class LanguageDisplay
 {
 
     //{23/11/2024}-{MICK}-created a language display    private ILanguageInterface _languageInterface;
     private ILanguageInterface _languageInterface;
+    
 
     public void LanguageSet(ILanguageInterface languageInterface)
     {
