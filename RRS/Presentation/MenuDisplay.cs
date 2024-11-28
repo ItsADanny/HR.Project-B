@@ -4,59 +4,72 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.Design;
 
 namespace RRS.Logic;
-
 public class MenuDisplay
 { 
+    private ILanguageInterface _languageInterface;
+
     public static void MenuItemEditorMenu(int restaurantID, Accounts LoggedinUser)
     {
         while (true)
         {
+            string Header = languageInterface.GetString("MenuEditor");
+            string Opt1 = languageInterface.GetString("MenuEditorOptionCreate");
+            string Opt2 = languageInterface.GetString("MenuEditorOptionEdit");
+            string Opt3 = languageInterface.GetString("MenuEditorOptionDelete");
+            string Opt4 = languageInterface.GetString("MenuEditorOptionView");
+
             Console.WriteLine("====================================");
-            Console.WriteLine("Menu Editor: Please choose an option");
+            Console.WriteLine(Header); //Menu Editor: Please choose an option
             Console.WriteLine("====================================");
-            Console.WriteLine("N - create new item");
-            Console.WriteLine("E - edit existing item");
+            Console.WriteLine(Opt1); //create new item
+            Console.WriteLine(Opt2);//edit item
             //edit item, what item would you like to edit?
             //item sleected, what info box would you like to edit?
             //call method
-            Console.WriteLine("D - delete existing item");
-            Console.WriteLine("V - view full menu");
+            Console.WriteLine(Opt3);//delete existing item
+            Console.WriteLine(Opt4);//view full menu
             string optionChoice = Console.ReadLine().ToUpper();
-
+            string switchText = "";
             try
             {
                 switch (optionChoice)
                 {
                     case "N":
-                        Console.WriteLine("Creating new item...");
+                        switchText = languageInterface.GetString("SwitchCreate");
+                        Console.WriteLine(switchText);
                         Thread.Sleep(1500);
                         CreateItem(restaurantID, LoggedinUser);
                         break;
 
                     case "E":
-                        Console.WriteLine("Editing existing item...");
+                        switchText = languageInterface.GetString("SwitchEdit");
+                        Console.WriteLine(switchText);
                         Thread.Sleep(1500);
                         EditItem(restaurantID, LoggedinUser);
                         break;
             
                     case "D":
-                        Console.WriteLine("Deleting existing item...");
+                        switchText = languageInterface.GetString("SwitchDelete");
+                        Console.WriteLine(switchText);
                         Thread.Sleep(1500);
                         DeleteItem(restaurantID, LoggedinUser);
                         break;
 
                     case "V":
-                        Console.WriteLine("Viewing Menu...");
+                        switchText = languageInterface.GetString("SwitchView");
+                        Console.WriteLine(switchText);
                         Thread.Sleep(1500);
                         ViewMenuList(restaurantID);
                         break;
                     case "Q":
-                        Console.WriteLine("Exiting...");
+                        switchText = languageInterface.GetString("SwitchExit");
+                        Console.WriteLine(switchText);
                         Thread.Sleep(1500);
                         break;
 
                     default:
-                        Console.WriteLine("Invalid option, try again");
+                        switchText = languageInterface.GetString("SwitchError");
+                        Console.WriteLine(switchText);
                         Thread.Sleep(1500);
                         break;
                 };

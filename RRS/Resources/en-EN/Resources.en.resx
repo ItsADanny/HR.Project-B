@@ -151,16 +151,16 @@
   </data>
   <data name="AdminQuickActions" xml:space="preserve">
     <value>Quick actions</value>
-    <comment>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
-&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
-Snelle taken &#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+    <comment>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+Snelle taken &#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
 </comment>
   </data>
   <data name="QuickAction1" xml:space="preserve">
     <value>View reservations</value>
-    <comment>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
-&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
-Bekijk reserveringen&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+    <comment>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+Bekijk reserveringen&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
 </comment>
   </data>
   <data name="QuickAction2" xml:space="preserve">
@@ -673,6 +673,22 @@ Bekijk reserveringen&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
   </data>
   <data name="DeleteAccError" xml:space="preserve">
     <value>There was an error while trying to delete the account, please try it again later</value>
+    <comment>lol</comment>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Language set successfully, you will be redirected to the start menu</value>
+    <comment>lol</comment>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+    <comment>lol</comment>
+  </data>
+  <data name="CreateNewAccount" xml:space="preserve">
+    <value>Create a new account</value>
+    <comment>lol</comment>
+  </data>
+  <data name="ExitProg" xml:space="preserve">
+    <value>Exit program</value>
     <comment>lol</comment>
   </data>
 </root>

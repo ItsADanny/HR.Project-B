@@ -1,4 +1,12 @@
+using System.Resources;
+
 public static class AccountDisplay {
+    private ILanguageInterface _languageInterface;
+
+    public void LanguageSet(ILanguageInterface languageInterface)
+    {
+        _languageInterface = languageInterface;
+    }
 
     public static void AccountMenu(Accounts LoggedInAccount) {
         while (true) {
@@ -9,7 +17,7 @@ public static class AccountDisplay {
                                 "▐▛▀▜▌▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌ ▝▜▌  █  \n" +
                                 "▐▌ ▐▌▝▚▄▄▖▝▚▄▄▖▝▚▄▞▘▝▚▄▞▘▐▌  ▐▌  █  ");
             Console.WriteLine("====================================================================\n");
-            Console.WriteLine("1 - Change password\n\n");
+            Console.WriteLine(_languageInterface.GetString("ChangePassword"));     //("1 - Change password\n\n");
             Console.WriteLine("================================================================");
             Console.WriteLine("Please select an account to change (enter Q to exit):");
 

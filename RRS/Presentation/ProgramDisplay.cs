@@ -6,13 +6,24 @@ public static class ProgramDisplay
     private static int SelectedRestaurant = 0;
     private static Accounts LoggedInAccount = null;
 
+    private ILanguageInterface _languageInterface;
+
+    public void LanguageSet(ILanguageInterface languageInterface)
+    {
+        _languageInterface = languageInterface;
+    }
+
     public static void Display() 
     {
         string Header = "       MATCHMAKING RESTAURANT       \n====================================\n\nWelcome to the Matchmaking restaurant\n\n";
         string Footer = "\n\n A restaurant reservation solution \n     by Black Dawg International    ";
+        string Opt1 = _languageInterface.GetString("Login");
+        string Opt2 = _languageInterface.GetString("CreateNewAccount");
+        string Opt3 = _languageInterface.GetString("ExitProg");
+        
         while (true) 
         {
-            switch (Functions.OptionSelector(Header, Footer, ["Login", "Create a new account", "Exit program"])) {
+            switch (Functions.OptionSelector(Header, Footer, Opt1, Opt2, Opt3])) {
                 case "Login":
                     DisplayLogin();
                     break;

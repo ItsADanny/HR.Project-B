@@ -2,26 +2,75 @@ using System.Globalization;
 using System.Resources;
 
 //{21-11-2024}-{MICK}---->
-//Resource manager and localization logic class for everything language
-//
-public class ResourceLogic
+//Resource manager and localization logic class for everything language interface
+//logic layer
+public class ENInterface : ILanguageInterface
 {
     private readonly ResourceManager _resourcemanager;
 
-    public ResourceLogic
+    public ENInterface()
     {
-        _resourcemanager = new ResourceManager("RRS.Resources", typeof(ResourceLogic).Assembly);
+        _resourcemanager = new ResourceManager("Resources.en.resx", typeof(ENInterface).Assembly);
     }
 
-    public string GetResource(string KeyWord, string CultureID)
+    public void SetCulture(string culture)
     {
-        CultureInfo cultureInfo = new CultureInfo(CultureID);
-        return _resourcemanager.GetString(KeyWord, cultureInfo);
+        string LanguagePreference = cultures[selectedOption];
+        CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+
+        try
+        {
+            CultureInfo newCulture = new CultureInfo(LanguagePreference);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            Console.WriteLine("Current Language has been set to English Succesfully");
+        }
+        catch (CultureNotFoundException ex)
+        {
+            
+            Console.WriteLine("Unable to change current language to English", ex.InvalidCultureName);        }
+        }
     }
 
-    //for in PRESENTATION LAYER
-    //EXAMPLE:
-    //
-
+    public string GetString(string key)
+    {
+        return _resourcemanager.GetString(key, Thread.CurrentThread.CurrentCulture) ?? key;
+    }
 
 }
+
+public class NLInterface : ILanguageManager
+{
+    private readonly ResourceManager _resourcemanager;
+
+    public NLInterface()
+    {
+        _resourcemanager = new ResourceManager("Resources.nl.resx", typeof(ENInterface).Assembly);
+    }
+
+    public void SetCulture(string culture)
+    {
+        string LanguagePreference = cultures[selectedOption];
+        CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+
+        try
+        {
+            CultureInfo newCulture = new CultureInfo(LanguagePreference);
+            Thread.CurrentThread.CurrentCulture = newCulture;
+            Thread.CurrentThread.CurrentUICulture = newCulture;
+            Console.WriteLine("Current Language has been set to Dutch Succesfully");
+        }
+        catch (CultureNotFoundException ex)
+        {
+            
+            Console.WriteLine("Unable to change current language to Dutch", ex.InvalidCultureName);        }
+        }
+    }
+
+
+    public string GetString(string key)
+    {
+        return _resourcemanager.GetString(key, Thread.CurrentThread.CurrentCulture) ?? key;
+    }
+}
+
