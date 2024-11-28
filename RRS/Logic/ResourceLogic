@@ -10,7 +10,7 @@ public class ENInterface : ILanguageInterface
 
     public ENInterface()
     {
-        _resourcemanager = new ResourceManager("Resources.en.resx", typeof(ENInterface).Assembly);
+        _resourcemanager = new ResourceManager("Resources.Resources", typeof(ENInterface).Assembly);
     }
 
     public void SetCulture(string culture)
@@ -45,7 +45,7 @@ public class NLInterface : ILanguageManager
 
     public NLInterface()
     {
-        _resourcemanager = new ResourceManager("Resources.nl.resx", typeof(ENInterface).Assembly);
+        _resourcemanager = new ResourceManager("Resources.Resources", typeof(NLInterface).Assembly);
     }
 
     public void SetCulture(string culture)

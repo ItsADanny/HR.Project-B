@@ -1,4 +1,6 @@
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Globalization;
+using System.Resources;
 using RRS.Logic;
 
 public static class ProgramDisplay

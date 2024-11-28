@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Resources;
 
 public static class AccountDisplay {

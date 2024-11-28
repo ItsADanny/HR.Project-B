@@ -18,8 +18,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="Resources\en-EN\Resources.en.resx" />
-      <EmbeddedResource Include="Resources\nl-NL\Resources.nl.resx" />
+      <EmbeddedResource Include="Resources\Resources.en.resx" />
+      <EmbeddedResource Include="Resources\Resources.nl.resx" />
     </ItemGroup>
 
 

@@ -8,6 +8,11 @@ public class MenuDisplay
 { 
     private ILanguageInterface _languageInterface;
 
+    public void LanguageSet(ILanguageInterface languageInterface)
+    {
+        _languageInterface = languageInterface;
+    }
+
     public static void MenuItemEditorMenu(int restaurantID, Accounts LoggedinUser)
     {
         while (true)
