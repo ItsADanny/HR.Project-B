@@ -17,6 +17,7 @@ public class MenuDisplay
     {
         while (true)
         {
+            //{MICK}- Resource/EN/NL insertion
             string Header = languageInterface.GetString("MenuEditor");
             string Opt1 = languageInterface.GetString("MenuEditorOptionCreate");
             string Opt2 = languageInterface.GetString("MenuEditorOptionEdit");
@@ -89,43 +90,70 @@ public class MenuDisplay
 
     public static void CreateItem(int restaurantID, Accounts LoggedinUser)
     {
+        //{MICK}- Resource/EN/NL insertion
+        string Header = languageInterface.GetString("FillMenuFields");
+        string Name = languageInterface.GetString("FillNameItem");
+        string Desc = languageInterface.GetString("FillDescItem");
+        string Price = languageInterface.GetString("FillPriceItem");
+
+
+
         Console.WriteLine("====================================");
-        Console.WriteLine("    Fill in the Menu item fields    ");
+        Console.WriteLine(Header);
         Console.WriteLine("====================================");
 
-        Console.WriteLine("Enter Name: ");
+        Console.WriteLine(Name);
         string Name = Console.ReadLine();
 
-        Console.WriteLine("Enter Description: ");
+        Console.WriteLine(Desc);
         string Description = Console.ReadLine();
         
-        Console.WriteLine("Enter Price: ");
+        Console.WriteLine(Price);
         double Price = Convert.ToDouble(Console.ReadLine());
 
-        Console.WriteLine("              Foodtypes:            ");
+        //{MICK}- Resource/EN/NL insertion
+        string FTHeader = languageInterface.GetString("FoodtypesHeader");
+        string EntFood = languageInterface.GetString("FillFoodType");
+        string success = languageInterface.GetString("ItemCreateSuccess");
+        string error = languageInterface.GetString("ItemCreateError");
+
+        Console.WriteLine("              " + FTHeader + "            ");
         Console.WriteLine("====================================");
         foreach (string foodtype in MenuLogic.RetrieveFoodTypes(restaurantID)) {
             Console.WriteLine(foodtype);
         }
 
-        Console.WriteLine("Enter foodtype: ");
+        Console.WriteLine(EntFood)
         string foodType = Console.ReadLine();
 
         if (MenuLogic.AddMenuItem(restaurantID, Name, Description, Price, foodType))
         {
-            Console.WriteLine("Menu Item has been added successfully");
+            Console.WriteLine(success);
         }
         else
         {
-            Console.WriteLine("Menu Item could not be added, try again");
+            Console.WriteLine(error);
            
         }
     }
 
     public static void DeleteItem(int restaurantID, Accounts LoggedinUser)
     {
+        //{MICK}- Resource/EN/NL insertion
+        string Header = languageInterface.GetString("DeleteItemHeader");
+        string DeleteInput = languageInterface.GetString("FillItemDelete");
+        string Thread = languageInterface.GetString("SearchItemThread");
+        string Confirm = languageInterface.GetString("ItemDelConfirm");
+
+        string Success = languageInterface.GetString("ItemDelSuccess");
+        string Error = languageInterface.GetString("ItemDelError");
+        string ErrorCancel = languageInterface.GetString("ItemDelError2");
+        string ErrorNotFound = languageInterface.GetString("ItemDelNotFound");
+
+
+
         Console.WriteLine("====================================");
-        Console.WriteLine("           Deleting an item         ");
+        Console.WriteLine("           " + Header + "         ");
         Console.WriteLine("====================================");
 
         List<Menu> menuItems =  MenuLogic.RetrieveItems(restaurantID);
@@ -134,10 +162,10 @@ public class MenuDisplay
             Console.WriteLine(item.ToStringDisplay());
         }
 
-        Console.WriteLine("\nEnter name of item to delete: ");
+        Console.WriteLine(DeleteInput);
         string name = Console.ReadLine();
 
-        Console.WriteLine("Searching Item....");
+        Console.WriteLine(Thread);
         Thread.Sleep(1500);
         string description = "";
         foreach (Menu item in menuItems)
@@ -150,42 +178,57 @@ public class MenuDisplay
 
         if (description != "")
         {
-            Console.WriteLine("Is this the item you want to delete? Confirm Y/N");
-            Console.WriteLine($"Name: {name}, Description: {description}");
+            //{MICK}- Resource/EN/NL insertion
+            string FormatString = languageInterface.GetString("ItemDeleteInfo");
+            string FormattedString = string.Format(FormatString, name, description);
+
+            Console.WriteLine(Confirm);
+            Console.WriteLine(FormattedString);
             string Choice = Console.ReadLine().ToUpper();
 
             if (Choice == "Y")
             {
                 if(MenuLogic.Deletemenuitem(restaurantID, name))
                 {
-                    Console.WriteLine("Item deleted Successfully.");
+                    Console.WriteLine(Success);
                 }
                 else
                 {
-                    Console.WriteLine("Item could not be deleted");               
+                    Console.WriteLine(Error);               
                 }
             }
             else
             {
-                Console.WriteLine("Deletion Cancelled");
+                Console.WriteLine(ErrorCancel);
             }
         } else {
-            Console.WriteLine("No item has been found");
+            Console.WriteLine(ErrorNotFound);
         }
     }
 
     
     public static void EditItem(int restaurantID, Accounts LoggedinUser)
     {
+        //{MICK}- Resource/EN/NL insertion
+        string Header = languageInterface.GetString("EditItemHeader");
+        string Question = languageInterface.GetString("ItemFieldEditQ");
+        string Opt1 = languageInterface.GetString("ItemFieldEditOpt1");
+        string Opt2 = languageInterface.GetString("ItemFieldEditOpt2");
+        string Opt3 = languageInterface.GetString("ItemFieldEditOpt3");
+        string Opt4 = languageInterface.GetString("ItemFieldEditOpt4");
+        string Error = languageInterface.GetString("InvalidPleaseAgain");
+
+
+
         Console.WriteLine("====================================");
-        Console.WriteLine("           Editing an item          ");
+        Console.WriteLine("           " + Header + "          ");
         Console.WriteLine("====================================");
 
-        Console.WriteLine("What field would you like to edit?\n");
-        Console.WriteLine("1 - Name");
-        Console.WriteLine("2 - Description");
-        Console.WriteLine("3 - Price");
-        Console.WriteLine("4 - FoodType");
+        Console.WriteLine(Question);
+        Console.WriteLine(Opt1);
+        Console.WriteLine(Opt2);
+        Console.WriteLine(Opt3);
+        Console.WriteLine(Opt4);
         int Choice = Convert.ToInt32(Console.ReadLine());
 
         switch (Choice)
@@ -206,16 +249,26 @@ public class MenuDisplay
                 Edit(restaurantID, "foodtype");
                 break;
             default:
-                Console.WriteLine("Invalid option, try again");
+                Console.WriteLine(Error);
                 break;       
         };        
     }
 
     public static void Edit(int restaurantID, string choice)
     {
+        //{MICK}- Resource/EN/NL insertion
+        string FormatString = languageInterface.GetString("EditItemHeader");
+        string FormattedString = string.Format(FormatString, choice);
+        string EnterInput = languageInterface.GetString("EnterNameItem");
+        string FormatString2 = languageInterface.GetString("EnterNewChItem");
+        string FormattedString2 = string.Format(FormatString2, choice);
+        string FormatString3 = languageInterface.GetString("EditItemSuccess");
+        string FormattedString3 = string.Format(FormatString3, name);
+        string FormatString4 = languageInterface.GetString("EditItemError");
+        string FormattedString4 = string.Format(FormatString4, name);
 
         Console.WriteLine("====================================");
-        Console.WriteLine($"       Editing an item: {choice}");
+        Console.WriteLine("    " + FormattedString + "    ");
         Console.WriteLine("====================================");
 
         List<Menu> menuItems =  MenuLogic.RetrieveItems(restaurantID);
@@ -224,19 +277,19 @@ public class MenuDisplay
             Console.WriteLine(item.ToStringDisplay());
         }
 
-        Console.WriteLine("Enter the name of the item: ");
+        Console.WriteLine(EnterInput);
         string name = Console.ReadLine();
-        Console.WriteLine($"Enter the new {choice} of the item: ");
+        Console.WriteLine(FormattedString2);
         string input = Console.ReadLine();
 
         //TODO: Implement the EditMenuItem function in the Logic layer so that it updates the correct fields in the database
         if (MenuLogic.EditMenuItem(restaurantID, choice, name, input))
         {
-            Console.WriteLine($"Menu Item \"{name}\" has been added successfully");
+            Console.WriteLine(FormattedString3);
         }
         else
         {
-            Console.WriteLine($"Menu Item \"{name}\" could not be changed, try again");
+            Console.WriteLine(FormattedString4);
            
         }
     }
@@ -244,14 +297,18 @@ public class MenuDisplay
     public static void ViewMenuList(int restaurantID)
     {
         Dictionary<string, List<Menu>> menuItems = MenuLogic.RetrieveOrderedItems(restaurantID);
+        
+        string Header = languageInterface.GetString("MenuViewHeader");
+        string NotFound = languageInterface.GetString("NoItemsFound");
+        string Exit = languageInterface.GetString("ExitMenuPreview");
 
         Console.WriteLine("====================================");
-        Console.WriteLine("            Menu Preview            ");
+        Console.WriteLine("         " + Header + "         ");
         Console.WriteLine("====================================");
 
         if (menuItems.Count == 0)
         {
-            Console.WriteLine("No items found.");
+            Console.WriteLine(NotFound);
         }
         else
         {
@@ -275,7 +332,7 @@ public class MenuDisplay
                 }
             }
 
-        Console.WriteLine("\nPress enter to exit the menu preview");
+        Console.WriteLine(Exit);
         Console.ReadLine();
 
         }
