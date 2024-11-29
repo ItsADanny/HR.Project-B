@@ -69,4 +69,9 @@ public class AccountLevel {
         }
         return 0;
     }
+
+    public override string ToString()
+    {
+        return $"{ID} - {Name}";
+    }
 }

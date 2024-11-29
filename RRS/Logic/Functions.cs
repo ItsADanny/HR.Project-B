@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Globalization;
 using System.Text;
+using System.Linq;
 
 public static class Functions {
 
@@ -23,6 +24,42 @@ public static class Functions {
             }
         } while (key.Key != ConsoleKey.Enter);
         
+        return HashPassword(pass);
+    }
+
+    public static string PasswordReadLine_WithValidCheck() {
+        string pass = "";
+        ConsoleKeyInfo key;
+
+        while (true) {
+            do {
+                key = Console.ReadKey(true);
+
+                // Backspace Should Not Work
+                if (!char.IsControl(key.KeyChar)) {
+                    pass += key.KeyChar;
+                    Console.Write("*");
+                } else {
+                    if (key.Key == ConsoleKey.Backspace && pass.Length > 0) {
+                        pass = pass.Remove(pass.Length - 1);
+                        Console.Write("\b \b");
+                    }
+                }
+            } while (key.Key != ConsoleKey.Enter);
+            
+            //This checks to see if the password atleast contains a integer/digit
+            if (pass.Any(char.IsDigit)) {
+                //This checks to see if the password atleast contains a special symbol
+                if (pass.Any(c => !char.IsLetterOrDigit(c))) {
+                    break;
+                } else {
+                    Display.PrintText("Password does not contain a special symbol, please use atleast 1 special symbol");
+                }
+            } else {
+                Display.PrintText("Password does not contain a number, please use atleast 1 number");
+            }
+        }
+
         return HashPassword(pass);
     }
 
@@ -65,8 +102,6 @@ public static class Functions {
         }
     }
 
-<<<<<<< Updated upstream
-=======
     public static string RequestValidString() {
         while (true) {
             Display.PrintText("Firstname:");
@@ -99,7 +134,6 @@ public static class Functions {
         }
     }
 
->>>>>>> Stashed changes
     public static int RequestValidInt(string request) {
         while (true) {
             Display.PrintText(request + ":");
@@ -115,8 +149,6 @@ public static class Functions {
         }
     }
 
-<<<<<<< Updated upstream
-=======
     public static double RequestValidDouble(string request) {
         while (true) {
             Display.PrintText(request + ":");
@@ -167,10 +199,39 @@ public static class Functions {
         }
     }
 
->>>>>>> Stashed changes
     public static string RequestValidEmail() {
         while (true) {
             Display.PrintText("E-mail:");
+            string input = Console.ReadLine();
+
+            bool containsAt = false;
+            bool constainsDot = false;
+
+            foreach (char letter in input) {
+                if (letter == '@') {
+                    containsAt = true;
+                }
+                if (letter == '.') {
+                    constainsDot = true;
+                }
+            }
+
+            if (input is not null && input != "" && input.Count() >= 1 && containsAt && constainsDot) {
+                if (!Database.DoesEmailAlreadyExist(input)) {
+                    return input;
+                } else {
+                    Display.PrintText("E-mail is already in use, please enter a different e-mail");
+                }
+            } else {
+                Display.PrintText("Invalid input, please input a valid E-mail");
+            }
+            Thread.Sleep(1500);
+        }
+    }
+
+    public static string RequestValidEmail(string message) {
+        while (true) {
+            Display.PrintText(message + ":");
             string input = Console.ReadLine();
 
             bool containsAt = false;
@@ -195,7 +256,7 @@ public static class Functions {
 
     public static string RequestValidDate() {
         while (true) {
-            Display.PrintText("Date:");
+            Display.PrintText("Date (dd/mm/yyyy) (example: 20/11/2024):");
             string input = Console.ReadLine();
 
             if (DateTime.TryParseExact(input, "dd/MM/yyyy", new CultureInfo("fr-FR"), DateTimeStyles.None, out DateTime output)) {
@@ -218,8 +279,6 @@ public static class Functions {
             Thread.Sleep(1500);
         }
     }
-<<<<<<< Updated upstream
-=======
 
     public static string RequestValidTime24(string request) {
         while (true) {
@@ -234,7 +293,7 @@ public static class Functions {
         }
     }
 
-    public static string OptionSelector(string Header, List<string> options) {
+    public static string OptionSelector(string Header, List<string> options, bool returnStringValue) {
         string selectedOption = null;
         int pos = 0;
 
@@ -275,11 +334,11 @@ public static class Functions {
                     break;
             }
 
-        } while (selectedOption == null);
+        } while (selectedOption is null);
         return selectedOption;
     }
 
-    public static string OptionSelector(string Header, string Footer, List<string> options) {
+    public static string OptionSelector(string Header, string Footer, List<string> options, bool returnStringValue) {
         string selectedOption = null;
         int pos = 0;
 
@@ -321,11 +380,102 @@ public static class Functions {
                     selectedOption = options[pos];
                     break;
             }
-        } while (selectedOption == null);
+        } while (selectedOption is null);
         return selectedOption;
     }
 
-    public static Dictionary<string, bool> CheckBoxSelector(List<string> options_string, List<bool> options_bool) {
+    public static int OptionSelector(string Header, List<string> options) {
+        int selectedOption = 999999999;
+        int pos = 0;
+
+        do {
+            Console.Clear();
+            Console.WriteLine(Header);
+            
+            for (int y = 0; y != options.Count(); y++) {
+                string row = "";
+                if (pos == y) {
+                    row += "\x1b[44m>";
+                } else {
+                    row += " ";
+                }
+
+                row += $" {options[y]}\x1b[49m";
+                Console.WriteLine(row);
+            }
+
+            var input = Console.ReadKey();
+            switch (input.Key) {
+                case ConsoleKey.UpArrow:
+                    if (pos <= 0) {
+                        pos = options.Count() - 1;
+                    } else {
+                        pos -= 1;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (pos >= (options.Count() - 1)) {
+                        pos = 0;
+                    } else {
+                        pos += 1;
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    selectedOption = pos;
+                    break;
+            }
+
+        } while (selectedOption == 999999999);
+        return selectedOption;
+    }
+
+    public static int OptionSelector(string Header, string Footer, List<string> options) {
+        int selectedOption = 999999999;
+        int pos = 0;
+
+        do {
+            Console.Clear();
+            Console.WriteLine(Header);
+            
+            for (int y = 0; y != options.Count(); y++) {
+                string row = "";
+                if (pos == y) {
+                    row += "\x1b[44m>";
+                } else {
+                    row += " ";
+                }
+
+                row += $" {options[y]}\x1b[49m";
+                Console.WriteLine(row);
+            }
+
+            Console.WriteLine(Footer);
+
+            var input = Console.ReadKey();
+            switch (input.Key) {
+                case ConsoleKey.UpArrow:
+                    if (pos <= 0) {
+                        pos = options.Count() - 1;
+                    } else {
+                        pos -= 1;
+                    }
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (pos >= (options.Count() - 1)) {
+                        pos = 0;
+                    } else {
+                        pos += 1;
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    selectedOption = pos;
+                    break;
+            }
+        } while (selectedOption == 999999999);
+        return selectedOption;
+    }
+
+    public static Dictionary<int, bool> CheckBoxSelector(List<string> options_string, List<bool> options_bool) {
         bool done = false;
         int pos = 0;
 
@@ -378,9 +528,9 @@ public static class Functions {
         } while (!done);
 
         int curr_pos = 0;
-        Dictionary<string, bool> returnDict = new ();
+        Dictionary<int, bool> returnDict = new ();
         foreach (string option in options_string) {
-            returnDict.Add(option, options_bool[curr_pos]);
+            returnDict.Add(curr_pos, options_bool[curr_pos]);
             curr_pos++;
         }
         return returnDict;
@@ -822,5 +972,4 @@ public static class Functions {
 
         return time;
     }
->>>>>>> Stashed changes
 }

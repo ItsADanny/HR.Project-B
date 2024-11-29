@@ -7,387 +7,199 @@ namespace RRS.Logic;
 
 public class MenuDisplay
 { 
-    // private Menu MenuManager = new Menu();
+    public static void MenuItemEditorMenu(int restaurantID, Accounts LoggedinUser)
+    {
+        bool exit = false;
+        string header = "====================================\nMenu Editor: Please choose an option\n====================================\n";
+        while (!exit) {
+            switch (Functions.OptionSelector(header, ["create new item", "edit existing item", "delete existing item", "view full menu", "Exit"]))
+            {
+                case 0:
+                    Console.WriteLine("Creating new item...");
+                    Thread.Sleep(1000);
+                    CreateItem(restaurantID, LoggedinUser);
+                    break;
+                case 1:
+                    Console.WriteLine("Editing existing item...");
+                    Thread.Sleep(1000);
+                    EditItem(restaurantID, LoggedinUser);
+                    break;
+                case 2:
+                    Console.WriteLine("Deleting existing item...");
+                    Thread.Sleep(1000);
+                    DeleteItem(restaurantID, LoggedinUser);
+                    break;
+                case 3:
+                    Console.WriteLine("Viewing Menu...");
+                    Thread.Sleep(1000);
+                    ViewMenuList(restaurantID);
+                    break;
+                case 4:
+                    Console.WriteLine("Exiting...");
+                    Thread.Sleep(1000);
+                    exit = true;
+                    break;
+            }
+        }
+    }
 
-//     public static string MenuItemEditorMenu()
-//     {
-//         while (true)
-//         {
-//             Console.WriteLine("====================================");
-//             Console.WriteLine("Menu Editor: Please choose an option");
-//             Console.WriteLine("====================================");
-//             Console.WriteLine("N - create new item");
-//             Console.WriteLine("E - edit existing item");
-//             //edit item, what item would you like to edit?
-//             //item sleected, what info box would you like to edit?
-//             //call method
-//             Console.WriteLine("D - delete existing item");
-//             Console.WriteLine("V - view full menu");
-//             string optionChoice = Console.ReadLine().ToUpper();
+    public static void CreateItem(int restaurantID, Accounts LoggedinUser)
+    {
+        string header = "====================================\n    Fill in the Menu item fields    \n====================================\n";
+        Console.Clear();
+        Console.WriteLine(header);
 
-//             try
-//             {
-//                 switch (optionChoice)
-//                 {
-//                     case "N":
-//                         Console.WriteLine("Creating new item...");
-//                         CreateItem();
-//                         break;
+        Console.WriteLine("Enter Name: ");
+        string Name = Console.ReadLine();
 
-//                     case "E":
-//                         Console.WriteLine("Editing existing item...");
-//                         EditMenuItem();
-//                         break;
-            
-//                     case "D":
-//                         Console.WriteLine("Deleting existing item...");
-//                         DeleteItem();
-//                         break;
-
-//                     case "V":
-//                         Console.WriteLine("Viewing Menu...");
-//                         ViewMenuList();
-//                         break;
-//                     case "Q":
-//                         Console.WriteLine("Exiting...");
-//                         break;
-
-//                     default:
-//                         Console.WriteLine("Invalid option, try again");
-//                         break;
-                       
-//                 };
-
-//             }
-
-//         }
+        Console.WriteLine("Enter Description: ");
+        string Description = Console.ReadLine();
         
+        Console.WriteLine("Enter Price: ");
+        double Price = Convert.ToDouble(Console.ReadLine());
 
+        string foodType = Functions.OptionSelector(header + "\n              Foodtypes:            \n====================================\n", MenuLogic.RetrieveFoodTypes(restaurantID), true);
 
+        if (MenuLogic.AddMenuItem(restaurantID, Name, Description, Price, foodType))
+        {
+            Console.WriteLine("Menu Item has been added successfully");
+        }
+        else
+        {
+            Console.WriteLine("Menu Item could not be added, try again");
+           
+        }
+    }
 
-
-
-
-
-//     public string CreateItem(int ID, string Name, string Description, double price, string Foodtype)
-//     {
-//         Menu Item = new Menu();
-
-//         Console.WriteLine("====================================");
-//         Console.WriteLine("    Fill in the Menu item fields    ");
-//         Console.WriteLine("====================================");
-
-//         Console.WriteLine("Enter Name: ");
-//         AddMenuItem.Name = Console.ReadLine();
-
-//         Console.WriteLine("Enter Description: ");
-//         AddMenuItem.Description = Console.ReadLine();
+    public static void DeleteItem(int restaurantID, Accounts LoggedinUser)
+    {
+        string header = "====================================\n           Deleting an item         \n====================================\n";
+        Dictionary<string, bool> slotsToDelete = Functions.CheckBoxSelector(header, MenuLogic.ToDisplayString(MenuLogic.RetrieveItems(restaurantID)));
         
-//         Console.WriteLine("Enter Price: ");
-//         AddMenuItem.Price = double.Parse(Console.ReadLine());
-
-//         Console.WriteLine("Enter foodtype: ");
-//         AddMenuItem.Foodtype = Console.ReadLine();
-        
-
-//         //ask for a name put in var
-//         //ask for a desc put in var
-//         //ask for a price put in var
-//         //ask for a type put in var
-//     }
-    
-//     public string DeleteItem(string Name, string description)
-//     {
-//         Console.WriteLine("====================================");
-//         Console.WriteLine("           Deleting an item         ");
-//         Console.WriteLine("====================================");
-
-//         Console.WriteLine("Enter name of item to delete: ");
-//         Name = Console.ReadLine();
-
-//         Console.WriteLine("Searching Item....");
-
-//         Console.WriteLine("Is this the item you want to delete? Confirm Y/N");
-//         Console.WriteLine($"Name: {Name}, Description: {description}");
-//         string Choice = Console.ReadLine().ToUpper();
-
-//         if (Choice == "Y")
-//         {
-//             DeleteMenuItem();
-//         }
-//         else
-//         {
-//             Console.WriteLine("Deletion Cancelled");
-//         }
-
-//         // ask an id to retrieve an item
-//         //ask if theyre really sure they want to delete
-//         //add method deletion
-//     }
+        foreach (KeyValuePair<string, bool> row in slotsToDelete) {
+            if (row.Value) {
+                int menuItemID = MenuLogic.GetIDFromDisplayString(row.Key, restaurantID);
+                if (MenuLogic.Deletemenuitem(restaurantID, menuItemID, LoggedinUser)) {
+                    Console.WriteLine($"Timeslot \"{row.Key}\" deleted, associated reservations have been cancelled");
+                } else {
+                    Console.WriteLine($"There was an error while trying to delete timeslot \"{row.Key}\", please try again later");
+                }
+            }
+        }
+    }
 
     
-//     public string EditItem(int ID, string Name, string Description, double price, string Foodtype)
-//     {
-//         Console.WriteLine("====================================");
-//         Console.WriteLine("           Editing an item          ");
-//         Console.WriteLine("====================================");
+    public static void EditItem(int restaurantID, Accounts LoggedinUser)
+    {
+        bool exit = false;
+        string header = "====================================\n           Editing an item          \n====================================\n\nWhat field would you like to edit?\n";
+        while (!exit) {
+            switch (Functions.OptionSelector(header, ["Name", "Description", "Price", "FoodType", "Exit"]))
+            {
+                case 0:
+                    Edit(restaurantID, "name");
+                    exit = true;
+                    break;
+                case 1:
+                    Edit(restaurantID, "description");
+                    exit = true;
+                    break;
+                case 2:
+                    Edit(restaurantID, "price");
+                    exit = true;
+                    break;
+                case 3:
+                    Edit(restaurantID, "foodtype");
+                    exit = true;
+                    break;
+                case 4:
+                    Console.WriteLine("Exiting...");
+                    Thread.Sleep(1000);
+                    exit = true;
+                    break;
+            }
+        }
+    }
 
-//         Console.WriteLine("What field would you like to edit?\n");
-//         Console.WriteLine("N - Name");
-//         Console.WriteLine("D - Description");
-//         Console.WriteLine("P - Price");
-//         Console.WriteLine("F - FoodType");
-//         string Choice = Console.ReadLine().ToUpper();
+    public static void Edit(int restaurantID, string choice)
+    {
+        Console.Clear();
+        Console.WriteLine("====================================");
+        Console.WriteLine($"       Editing an item: {choice}");
+        Console.WriteLine("====================================");
 
-//         switch (Choice)
-//         {
-//             case "N":
-//                 Console.WriteLine("Editing Name...");
-//                 EditMenuItemName();
-//                 break;
+        List<Menu> menuItems =  MenuLogic.RetrieveItems(restaurantID);
+        foreach (Menu item in menuItems)
+        {
+            Console.WriteLine(item.ToStringDisplay());
+        }
 
-//             case "D":
-//                 Console.WriteLine("Editing Description...");
-//                 EditMenuItemDescription();
-//                 break;
-            
-//             case "P":
-//                 Console.WriteLine("Editing Price...");
-//                 EditMenuItemPrice();
-//                 break;
+        Console.WriteLine("Enter the name of the item: ");
+        string name = Console.ReadLine();
+        Console.WriteLine($"Enter the new {choice} of the item: ");
+        string input = Console.ReadLine();
 
-//             case "F":
-//                 Console.WriteLine("Editing Foodtype...");
-//                 EditMenuItemType();
-//                 break;
-//         case default:
-                
-                
-                       
-//         };        
+        //TODO: Implement the EditMenuItem function in the Logic layer so that it updates the correct fields in the database
+        if (MenuLogic.EditMenuItem(restaurantID, choice, name, input))
+        {
+            Console.WriteLine($"Menu Item \"{name}\" has been added successfully");
+        }
+        else
+        {
+            Console.WriteLine($"Menu Item \"{name}\" could not be changed, try again");
+           
+        }
+    }
 
+    public static void ViewMenuList(int restaurantID)
+    {
+        Dictionary<string, List<Menu>> menuItems = MenuLogic.RetrieveOrderedItems(restaurantID);
 
+        Console.Clear();
+        Console.WriteLine("====================================");
+        Console.WriteLine("            Menu Preview            ");
+        Console.WriteLine("====================================");
 
+        if (menuItems.Count == 0)
+        {
+            Console.WriteLine("No items found.");
+        }
+        else
+        {
+            bool firstCat = true;
+            foreach(KeyValuePair<string, List<Menu>> entry in menuItems)
+            {
+                if (!firstCat)
+                {
+                    Console.WriteLine("\n");
+                }
+                else
+                {
+                    firstCat = false;
+                }
 
+                Console.WriteLine($"{entry.Key}");
+                Console.WriteLine("====================================");
+                foreach (Menu item in entry.Value)
+                {
+                    Console.WriteLine($"- {item.Name}\n {item.Description} \n{item.Price}");
+                }
+            }
 
+        Console.WriteLine("\nPress enter to exit the menu preview");
+        Console.ReadLine();
 
+            // DANNY NOTE: Waarom wordt dit op deze manier gedaan?, ik snap niet helemaal waarom je het op deze manier zou doen?
+            // var FoodTypes = allitems.Select(item => item.Foodtype).Distinct();
+            // foreach (var type in Foodtype)
+            // {
+            //     Console.WriteLine($"\n {type}\n");
 
-//         //in presentation layer ask the info which info needs to be edited
-//         //add a switch case for what info will be edited 
-//         //for each case add the method needed
-
-//     }
-
-//     public string ViewMenuList(int ID, string Name, string Description, double price, string Foodtype)
-//     {
-//         Console.WriteLine("====================================");
-//         Console.WriteLine("            Menu Preview            ");
-//         Console.WriteLine("====================================");
-
-//         //Print Menu by foodtype  
-
-
-//     }
-
-
-
-// }
-
-
-// //as an admin I want my menu items to be stored so I can remove and delete any menu items as wished
-//  //have a menu class
-//  //add functions to remove and add items
-//  //add function to view the list
-
-//  //addmenuitem method
-//  //deletemenuitem method
-//  //editmenuiteminfo
-//  //editmenuitemname
-//  //viewmenulist
-// }
-
-// public class MenuDisplay
-// { 
-//     private Menu MenuManager = new Menu();
-
-//     public static string MenuItemEditorMenu()
-//     {
-//         Console.WriteLine("====================================");
-//         Console.WriteLine("Menu Editor: Please choose an option");
-//         Console.WriteLine("====================================");
-//         Console.WriteLine("N - create new item");
-//         Console.WriteLine("E - edit existing item");
-//         //edit item, what item would you like to edit?
-//         //item sleected, what info box would you like to edit?
-//         //call method
-//         Console.WriteLine("D - delete existing item");
-//         Console.WriteLine("V - view full menu");
-//         string optionChoice = Console.ReadLine().ToUpper();
-
-//         switch (optionChoice)
-//         {
-//             case "N":
-//                 Console.WriteLine("Creating new item...");
-//                 CreateItem();
-//                 break;
-
-//             case "E":
-//                 Console.WriteLine("Editing existing item...");
-//                 EditMenuItem();
-//                 break;
-            
-//             case "D":
-//                 Console.WriteLine("Deleting existing item...");
-//                 DeleteItem();
-//                 break;
-
-//             case "V":
-//                 Console.WriteLine("Viewing Menu...");
-//                 ViewMenuList();
-//                 break;
-                       
-//         };
-
-
-//     public string CreateItem(int ID, string Name, string Description, double price, string Foodtype)
-//     {
-//         Menu Item = new Menu();
-
-//         Console.WriteLine("====================================");
-//         Console.WriteLine("    Fill in the Menu item fields    ");
-//         Console.WriteLine("====================================");
-
-//         Console.WriteLine("Enter Name: ");
-//         AddMenuItem.Name = Console.ReadLine();
-
-//         Console.WriteLine("Enter Description: ");
-//         AddMenuItem.Description = Console.ReadLine();
-        
-//         Console.WriteLine("Enter Price: ");
-//         AddMenuItem.Price = double.Parse(Console.ReadLine());
-
-//         Console.WriteLine("Enter foodtype: ");
-//         AddMenuItem.Foodtype = Console.ReadLine();
-        
-
-//         //ask for a name put in var
-//         //ask for a desc put in var
-//         //ask for a price put in var
-//         //ask for a type put in var
-//     }
-    
-//     public string DeleteItem(string Name, string description)
-//     {
-//         Console.WriteLine("====================================");
-//         Console.WriteLine("           Deleting an item         ");
-//         Console.WriteLine("====================================");
-
-//         Console.WriteLine("Enter name of item to delete: ");
-//         Name = Console.ReadLine();
-
-//         Console.WriteLine("Searching Item....");
-
-//         Console.WriteLine("Is this the item you want to delete? Confirm Y/N");
-//         Console.WriteLine($"Name: {Name}, Description: {description}");
-//         string Choice = Console.ReadLine().ToUpper();
-
-//         if (Choice == "Y")
-//         {
-//             DeleteMenuItem();
-//         }
-//         else
-//         {
-//             Console.WriteLine("Deletion Cancelled");
-//         }
-
-//         // ask an id to retrieve an item
-//         //ask if theyre really sure they want to delete
-//         //add method deletion
-//     }
-
-    
-//     public string EditItem(int ID, string Name, string Description, double price, string Foodtype)
-//     {
-//         Console.WriteLine("====================================");
-//         Console.WriteLine("           Editing an item          ");
-//         Console.WriteLine("====================================");
-
-//         Console.WriteLine("What field would you like to edit?\n");
-//         Console.WriteLine("N - Name");
-//         Console.WriteLine("D - Description");
-//         Console.WriteLine("P - Price");
-//         Console.WriteLine("F - FoodType");
-//         string Choice = Console.ReadLine().ToUpper();
-
-//         switch (Choice)
-//         {
-//             case "N":
-//                 Console.WriteLine("Editing Name...");
-//                 EditMenuItemName();
-//                 break;
-
-//             case "D":
-//                 Console.WriteLine("Editing Description...");
-//                 EditMenuItemDescription();
-//                 break;
-            
-//             case "P":
-//                 Console.WriteLine("Editing Price...");
-//                 EditMenuItemPrice();
-//                 break;
-
-//             case "F":
-//                 Console.WriteLine("Editing Foodtype...");
-//                 EditMenuItemType();
-//                 break;
-//         case default:
-                
-                
-                       
-//         };        
-
-
-
-
-
-
-
-//         //in presentation layer ask the info which info needs to be edited
-//         //add a switch case for what info will be edited 
-//         //for each case add the method needed
-
-//     }
-
-//     public string ViewMenuList(int ID, string Name, string Description, double price, string Foodtype)
-//     {
-//         Console.WriteLine("====================================");
-//         Console.WriteLine("            Menu Preview            ");
-//         Console.WriteLine("====================================");
-
-//         //Print Menu by foodtype  
-
-
-//     }
-
+            //     foreach (var item in allitems.Where(item => item.Foodtype == type))
+            //     {
+            //         Console.WriteLine($"- {item.Name}\n {item.Description} \n{item.Price}");
+            //     }
+            // }
+        }
+    }
 }
-
-
-//as an admin I want my menu items to be stored so I can remove and delete any menu items as wished
- //have a menu class
- //add functions to remove and add items
- //add function to view the list
-
- //addmenuitem method
- //deletemenuitem method
- //editmenuiteminfo
- //editmenuitemname
- //viewmenulist
-
-/*
-reservations dashboard (presentation layer)
-
-- [ ]  reservation name (timeslot, people amount, language)
-- [ ] look through the list and input if you wanna join them
-- [ ] if not add a table for others to join
-*/
-

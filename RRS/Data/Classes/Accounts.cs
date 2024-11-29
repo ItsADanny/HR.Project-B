@@ -60,8 +60,6 @@ public class Accounts {
     {
         return $"ID: {ID}\nEmail: {Email}\nFirstName: {FirstName}\nLastName: {LastName}\nPhoneNumber: {PhoneNumber}\nLanguage: {Language}\nAccountLevel: {AccountLevel}";
     }
-<<<<<<< Updated upstream
-=======
 
     public string ToString_WithAccountLevelName()
     {
@@ -77,5 +75,4 @@ public class Accounts {
     {
         return $"ID           : {ID}\nEmail        : {Email}\nFirstName    : {FirstName}\nLastName     : {LastName}\nPhoneNumber  : {PhoneNumber}\nAccountLevel : {Database.SelectAccountLevel(AccountLevel).Name}";
     }
->>>>>>> Stashed changes
 }

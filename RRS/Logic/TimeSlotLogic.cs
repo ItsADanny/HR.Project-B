@@ -16,7 +16,7 @@ public static class TimeSlotLogic {
         List<ReservationTimeSlots> timeSlots = Database.SelectReservationTimeSlots();
         while (true) {
             foreach (ReservationTimeSlots timeslot in timeSlots) {
-                Console.WriteLine($"{timeslot.ID} - date: {timeslot.GetDate()} from {timeslot.GetStartTime24()} until {timeslot.GetEndTime24()}");
+                Console.WriteLine($"date: {timeslot.GetDate()} from {timeslot.GetStartTime24()} until {timeslot.GetEndTime24()}");
             }
             Display.PrintText("Please select a Timeslot you want to book:");
             string input = Console.ReadLine();
@@ -62,8 +62,8 @@ public static class TimeSlotLogic {
 
         TimeOnly nextTime = starttimeday;
         for (int i = 0; i != timeslotAmount; i++) {
-            Console.WriteLine($"GenerateTimeSlots {i}");
-            Thread.Sleep(1500);
+            // Console.WriteLine($"GenerateTimeSlots {i}");
+            // Thread.Sleep(1500);
 
             List<string> addValue = new ();
 

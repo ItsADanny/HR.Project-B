@@ -3,25 +3,29 @@ public static class TimeSlotDisplay {
     private readonly static string Header = "====================================================================\n▗▄▄▄▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄▖ ▗▄▄▖▗▖    ▗▄▖▗▄▄▄▖▗▄▄▖\n  █    █  ▐▛▚▞▜▌▐▌   ▐▌   ▐▌   ▐▌ ▐▌ █ ▐▌   \n  █    █  ▐▌  ▐▌▐▛▀▀▘ ▝▀▚▖▐▌   ▐▌ ▐▌ █  ▝▀▚▖\n  █  ▗▄█▄▖▐▌  ▐▌▐▙▄▄▖▗▄▄▞▘▐▙▄▄▖▝▚▄▞▘ █ ▗▄▄▞▘\n====================================================================";
     
     public static void Menu(int restaurantID, Accounts LoggedInAccount) {
-        List<string> options = ["View timeslots"];
-        if (AccountLogic.CanDisplay("changeTimeslots", LoggedInAccount)) {
-            options.Add("Create a new timeslot");
-            options.Add("Delete timeslot");
-        }
-        options.Add("Exit");
+        bool exitScreen = false;
+        while (!exitScreen) {
+            List<string> options = ["View timeslots"];
+            if (AccountLogic.CanDisplay("changeTimeslots", LoggedInAccount)) {
+                options.Add("Create a new timeslot");
+                options.Add("Delete timeslot");
+            }
+            options.Add("Exit");
 
-        switch(Functions.OptionSelector(Header, options)) {
-            case "View timeslots":
-                View(restaurantID);
-                break;
-            case "Create a new timeslot":
-                Create(restaurantID, LoggedInAccount);
-                break;
-            case "Delete timeslot":
-                Delete(restaurantID, LoggedInAccount);
-                break;
-            case "Exit":
-                break;
+            switch(Functions.OptionSelector(Header, options)) {
+                case 0:
+                    View(restaurantID);
+                    break;
+                case 1:
+                    Create(restaurantID, LoggedInAccount);
+                    break;
+                case 2:
+                    Delete(restaurantID, LoggedInAccount);
+                    break;
+                case 3:
+                    exitScreen = true;
+                    break;
+            }
         }
     }
     
@@ -29,7 +33,7 @@ public static class TimeSlotDisplay {
         Console.Clear();
         Console.WriteLine(Header);
         foreach (ReservationTimeSlots timeslot in TimeSlotLogic.FilterUpcoming(TimeSlotLogic.GetTimeSlots(restaurantID), false)) {
-            Console.WriteLine($"{timeslot.ID} - date: {timeslot.GetDate()} from {timeslot.GetStartTime24()} until {timeslot.GetEndTime24()}");
+            Console.WriteLine($"date: {timeslot.GetDate()} from {timeslot.GetStartTime24()} until {timeslot.GetEndTime24()}");
         }
         Console.WriteLine("====================================================================\n\n");
         Console.WriteLine("Press ENTER to exit");
@@ -41,7 +45,7 @@ public static class TimeSlotDisplay {
         Console.WriteLine(Header);
         Console.WriteLine("\nDate for the new timeslot:");
         string date = Functions.RequestValidDate();
-        if (Functions.OptionSelector($"{Header}\nDate for the new timeslot:\n{date}", ["Yes", "No"]) == "Yes") {
+        if (Functions.OptionSelector($"{Header}\nDo you want to create bulk timeslots for this date: {date}", ["Yes", "No"]) == 0) {
             TimeOnly startTimeDay = Functions.TimeSelector("Please select the opening time of the restaurant\n");
             TimeOnly TimeSlotSize = Functions.TimeSelector("Please select an timeslot size\n");
             Console.Clear();

@@ -13,4 +13,9 @@ public class FoodType {
         RestaurantID = restaurantID;
         Name = name;
     }
+
+    public override string ToString()
+    {
+        return $"ID: {ID}\nRestaurantID: {RestaurantID}\nName: {Name}";
+    }
 }
