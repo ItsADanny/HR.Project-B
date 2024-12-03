@@ -4,10 +4,16 @@ public static class ReviewLogic
         List<string> reviews = new ();
         foreach (Review review in Database.Reviews(restaurantID, LoggedInAccount)) {   
             Accounts ReviewerAccount = AccountLogic.GetSelectedAccount(review.AccountID);
+
+            string stars = "";
+            for (int i = 0; i != review.Rating; i++) {
+                stars += "⭐️";
+            }
+
             if (review.Comment != "") {
-                reviews.Add($"review from: {ReviewerAccount.FirstName} {ReviewerAccount.LastName}\n             stars: {review.Rating}\n             comment: {review.Comment}");
+                reviews.Add($"review from: {ReviewerAccount.FirstName} {ReviewerAccount.LastName}\n      stars: {stars}\n    comment: {review.Comment}");
             } else {
-                reviews.Add($"review from: {ReviewerAccount.FirstName} {ReviewerAccount.LastName}\n             stars: {review.Rating}");
+                reviews.Add($"review from: {ReviewerAccount.FirstName} {ReviewerAccount.LastName}\n      stars: {stars}");
             }
         }
         return reviews;
@@ -17,10 +23,16 @@ public static class ReviewLogic
         List<string> reviews = new ();
         foreach (Review review in Database.Reviews(restaurantID)) {   
             Accounts ReviewerAccount = AccountLogic.GetSelectedAccount(review.AccountID);
+
+            string stars = "";
+            for (int i = 0; i != review.Rating; i++) {
+                stars += "⭐️";
+            }
+
             if (review.Comment != "") {
-                reviews.Add($"review from: {ReviewerAccount.FirstName} {ReviewerAccount.LastName}\n             stars: {review.Rating}\n             comment: {review.Comment}");
+                reviews.Add($"review from: {ReviewerAccount.FirstName} {ReviewerAccount.LastName}\n      stars: {stars}\n    comment: {review.Comment}");
             } else {
-                reviews.Add($"review from: {ReviewerAccount.FirstName} {ReviewerAccount.LastName}\n             stars: {review.Rating}");
+                reviews.Add($"review from: {ReviewerAccount.FirstName} {ReviewerAccount.LastName}\n      stars: {stars}");
             }
         }
         return reviews;

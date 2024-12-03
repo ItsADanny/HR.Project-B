@@ -16,10 +16,10 @@ public static class ReviewDisplay {
                 case 2:
                     Add(restaurantID, LoggedInAccount);
                     break;
-                case 3:
+                // case 3:// Temp off
                     // Delete(restaurantID, LoggedInAccount);
-                    break; 
-                case 4:
+                    // break; 
+                case 3:
                     exit = true;
                     break;
             }
@@ -96,7 +96,7 @@ public static class ReviewDisplay {
         }
         
         foreach (string review in reviews) {
-            Console.WriteLine(review);
+            Console.WriteLine(review + "\n");
         }
         Console.WriteLine("====================================================================\n\n");
         Console.WriteLine("Press ENTER to exit");

@@ -1,11 +1,18 @@
 using RRS.Logic;
+using System.Drawing;
+using Colorful;
+//If you want to use the normal console tool, then you can just call the regular console
+using Console = System.Console;
+//If you want to use the colorful console tools, then you can ColorfulConsole instead of Console
+using ColorfulConsole = Colorful.Console;
+
 
 public static class ProgramDisplay
 {
     private static int SelectedRestaurant = 0;
     private static Accounts LoggedInAccount = null;
 
-    public static void Display() 
+    public static void Display()
     {
         string Header = "       MATCHMAKING RESTAURANT       \n====================================\n\nWelcome to the Matchmaking restaurant\n\n";
         string Footer = "\n\n An restaurant reservation solution \n     by Black Dawg International    ";
@@ -172,5 +179,37 @@ public static class ProgramDisplay
                     break;
             }
         }
+    }
+
+    public static void Bootup() {
+        UIColor[] logoColors = [
+            new UIColor(255, 0, 0), new UIColor(0, 255, 0),
+            new UIColor(0, 0, 255), new UIColor(255, 0, 255),
+            new UIColor(255, 255, 255), new UIColor(255, 255, 255),
+            new UIColor(255, 255, 255), new UIColor(255, 255, 255),
+            new UIColor(255, 255, 255), new UIColor(255, 255, 255), 
+            new UIColor(255, 255, 255)
+        ];
+
+        string[] logoStrings = [
+            "▗▄▄▖ ▗▖    ▗▄▖  ▗▄▄▖▗▖ ▗▖    ▗▄▄▄  ▗▄▖ ▗▖ ▗▖ ▗▄▄▖",
+            "▐▌ ▐▌▐▌   ▐▌ ▐▌▐▌   ▐▌▗▞▘    ▐▌  █▐▌ ▐▌▐▌ ▐▌▐▌   ",
+            "▐▛▀▚▖▐▌   ▐▛▀▜▌▐▌   ▐▛▚▖     ▐▌  █▐▛▀▜▌▐▌ ▐▌▐▌▝▜▌",
+            "▐▙▄▞▘▐▙▄▄▖▐▌ ▐▌▝▚▄▄▖▐▌ ▐▌    ▐▙▄▄▀▐▌ ▐▌▐▙█▟▌▝▚▄▞▘",
+            "=================================================",
+            "Black Dawg International, copyright (2024-2024)",
+            "RRS Application version 1.0.2 - December build",
+            " ",
+            $"Machine operating system: {System.Runtime.InteropServices.RuntimeInformation.OSDescription}",
+            " ",
+            "Loading application"
+        ];
+        
+        for (int i = 0; i != logoStrings.Length; i++) {
+            UIColor UIC = logoColors[i];
+            ColorfulConsole.WriteLine(logoStrings[i], Color.FromArgb(UIC.R, UIC.G, UIC.B));
+        }
+
+        Thread.Sleep(2500);
     }
 }
