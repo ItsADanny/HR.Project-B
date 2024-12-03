@@ -1,6 +1,8 @@
 using System.Globalization;
 using System.Resources;
 using System.Security.Cryptography;
+using RRS.interfaces;
+
 //UI layer
 public class LanguageDisplay
 {

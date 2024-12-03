@@ -151,16 +151,16 @@
   </data>
   <data name="AdminQuickActions" xml:space="preserve">
     <value>Quick actions</value>
-    <comment>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
-&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
-Snelle taken &#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+    <comment>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+Snelle taken &#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
 </comment>
   </data>
   <data name="QuickAction1" xml:space="preserve">
     <value>View reservations</value>
-    <comment>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
-&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
-Bekijk reserveringen&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+    <comment>&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
+Bekijk reserveringen&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
 </comment>
   </data>
   <data name="QuickAction2" xml:space="preserve">
@@ -689,6 +689,46 @@ Bekijk reserveringen&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;&#xD;
   </data>
   <data name="FillPriceItem" xml:space="preserve">
     <value>Enter Price:</value>
+    <comment>lol</comment>
+  </data>
+  <data name="AllAttempts" xml:space="preserve">
+    <value>\nAll attempts have been used, Returning to start menu</value>
+    <comment>lol</comment>
+  </data>
+  <data name="TitleRest" xml:space="preserve">
+    <value>MATCHMAKING RESTAURANT</value>
+    <comment>lol</comment>
+  </data>
+  <data name="ExitLogin" xml:space="preserve">
+    <value>(Type: Q to exit the login)</value>
+    <comment>lol</comment>
+  </data>
+  <data name="ValidOpt" xml:space="preserve">
+    <value>Invalid input, please select a valid option</value>
+    <comment>lol</comment>
+  </data>
+  <data name="WelcomeTo" xml:space="preserve">
+    <value>Welcome to the Matchmaking restaurant</value>
+    <comment>lol</comment>
+  </data>
+  <data name="RestSolution" xml:space="preserve">
+    <value>A restaurant reservation solution</value>
+    <comment>lol</comment>
+  </data>
+  <data name="BlkDwg" xml:space="preserve">
+    <value>by Black Dawgg International</value>
+    <comment>lol</comment>
+  </data>
+  <data name="MaxAttempts" xml:space="preserve">
+    <value>All attempts have been used, Returning to start menu</value>
+    <comment>lol</comment>
+  </data>
+  <data name="CreaAcc" xml:space="preserve">
+    <value>Create an account:</value>
+    <comment>lol</comment>
+  </data>
+  <data name="PW" xml:space="preserve">
+    <value>Password:</value>
     <comment>lol</comment>
   </data>
 </root>

@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Resources;
+namespace RRS.interfaces;
 
 public static class AccountDisplay {
     private ILanguageInterface _languageInterface;
@@ -11,6 +12,10 @@ public static class AccountDisplay {
 
     public static void AccountMenu(Accounts LoggedInAccount) {
         while (true) {
+            string Changepass = _languageInterface.GetString("ChangePassword");
+            string Select = _languageInterface.GetString("PleaseSelectAcc");
+            string Error = _languageInterface.GetString("ValidOpt");
+
             Console.Clear();
             Console.WriteLine("====================================================================");
             Console.WriteLine(" ▗▄▖  ▗▄▄▖ ▗▄▄▖ ▗▄▖ ▗▖ ▗▖▗▖  ▗▖▗▄▄▄▖\n" +
@@ -18,9 +23,9 @@ public static class AccountDisplay {
                                 "▐▛▀▜▌▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌ ▝▜▌  █  \n" +
                                 "▐▌ ▐▌▝▚▄▄▖▝▚▄▄▖▝▚▄▞▘▝▚▄▞▘▐▌  ▐▌  █  ");
             Console.WriteLine("====================================================================\n");
-            Console.WriteLine(_languageInterface.GetString("ChangePassword"));     //("1 - Change password\n\n");
+            Console.WriteLine(Changepass);     //("1 - Change password\n\n");
             Console.WriteLine("================================================================");
-            Console.WriteLine("Please select an account to change (enter Q to exit):");
+            Console.WriteLine(Select);
 
             string userInput = Console.ReadLine();
             if (userInput.ToLower() == "q") {
@@ -32,7 +37,7 @@ public static class AccountDisplay {
                         NewPassword(LoggedInAccount);
                         break;
                     default:
-                        Console.WriteLine("Invalid input, please select a valid option");
+                        Console.WriteLine(Error);
                         Thread.Sleep(1500);
                         break;
                 }
@@ -44,6 +49,17 @@ public static class AccountDisplay {
         bool CanCreateAdminAccounts = AccountLogic.CanDisplay_CreateAdminAccounts(LoggedInAccount);
 
         while (true) {
+            string Opt1 = _languageInterface.GetString("SuperAdminMenuOpt1");
+            string Opt2 = _languageInterface.GetString("SuperAdminMenuOpt2");
+            string Opt3 = _languageInterface.GetString("SuperAdminMenuOpt3");
+            string Opt4 = _languageInterface.GetString("SuperAdminMenuOpt4");
+            string Opt5 = _languageInterface.GetString("SuperAdminMenuOpt5");
+            string Opt6 = _languageInterface.GetString("SuperAdminMenuOpt6");
+            string Opt2Ad = _languageInterface.GetString("AdminMenuOpt2");
+            string Opt3Ad = _languageInterface.GetString("AdminMenuOpt3");
+            string Please = _languageInterface.GetString("PleaseSelectAccChange");
+            string Error = _languageInterface.GetString("ValidOpt");
+
             Console.Clear();
             Console.WriteLine("====================================================================");
             Console.WriteLine(" ▗▄▖ ▗▄▄▄ ▗▖  ▗▖▗▄▄▄▖▗▖  ▗▖     ▗▄▖  ▗▄▄▖ ▗▄▄▖ ▗▄▖ ▗▖ ▗▖▗▖  ▗▖▗▄▄▄▖\n" +
@@ -51,19 +67,19 @@ public static class AccountDisplay {
                                 "▐▛▀▜▌▐▌  █▐▌  ▐▌  █  ▐▌ ▝▜▌    ▐▛▀▜▌▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌ ▝▜▌  █  \n" +
                                 "▐▌ ▐▌▐▙▄▄▀▐▌  ▐▌▗▄█▄▖▐▌  ▐▌    ▐▌ ▐▌▝▚▄▄▖▝▚▄▄▖▝▚▄▞▘▝▚▄▞▘▐▌  ▐▌  █  ");
             Console.WriteLine("====================================================================\n");
-            Console.WriteLine("1 - Create a new customer account");
+            Console.WriteLine(Opt1); //1 - Create a new customer account
             if (CanCreateAdminAccounts) {
-                Console.WriteLine("2 - Create a new admin account");
-                Console.WriteLine("3 - Lookup account");
-                Console.WriteLine("4 - Change accountlevels for an account");
-                Console.WriteLine("5 - Delete account");
-                Console.WriteLine("6 - Change password\n\n");
+                Console.WriteLine(Opt2); //2 - Create a new admin account
+                Console.WriteLine(Opt3); //3 - Lookup account
+                Console.WriteLine(Opt4); //4 - Change accountlevels for an account
+                Console.WriteLine(Opt5); //5 - Delete account
+                Console.WriteLine(Opt6);//6 - Change password\n\n
             } else {
-                Console.WriteLine("2 - Lookup account");
-                Console.WriteLine("3 - Change password\n\n");
+                Console.WriteLine(Opt2Ad); //2 - Lookup account
+                Console.WriteLine(Opt3Ad);//3 - Change password\n\n
             }
             Console.WriteLine("================================================================");
-            Console.WriteLine("Please select an account to change (enter Q to exit):");
+            Console.WriteLine(Please); //Please select an account to change (enter Q to exit):
             
             string userInput = Console.ReadLine();
             if (userInput.ToLower() == "q") {
@@ -91,7 +107,7 @@ public static class AccountDisplay {
                             NewPassword(LoggedInAccount);
                             break;
                         default:
-                            Console.WriteLine("Invalid input, please select a valid option");
+                            Console.WriteLine(Error); //Invalid input, please select a valid option
                             Thread.Sleep(1500);
                             break;
                     }
@@ -108,7 +124,7 @@ public static class AccountDisplay {
                             NewPassword(LoggedInAccount);
                             break;
                         default:
-                            Console.WriteLine("Invalid input, please select a valid option");
+                            Console.WriteLine(Error);
                             Thread.Sleep(1500);
                             break;
                     }
@@ -122,9 +138,10 @@ public static class AccountDisplay {
         AccountLevel selectedAccountLevel = null;
         bool WantsToExit = false;
         do {
+            string Please = _languageInterface.GetString("PleaseSelectAccChange");
             AccountLogic.PrintAccounts(LoggedInAccount);
             Console.WriteLine("================================================================");
-            Console.WriteLine("Please select an account to change (enter Q to exit):");
+            Console.WriteLine(Please); //Please select an account to change (enter Q to exit):
             string userInput = Console.ReadLine();
             if (userInput.ToLower() == "q") {
                 WantsToExit = true;
@@ -137,9 +154,10 @@ public static class AccountDisplay {
 
         if (!WantsToExit) {
             do {
+                string Please = _languageInterface.GetString("PleaseSelectAccChange");
                 AccountLogic.PrintAccountLevels();
                 Console.WriteLine("================================================================");
-                Console.WriteLine("Please select an accountlevel to change to (enter Q to exit):");
+                Console.WriteLine(Please); //Please select an account to change (enter Q to exit):
                 string userInput = Console.ReadLine();
                 if (userInput.ToLower() == "q") {
                     WantsToExit = true;
@@ -166,16 +184,25 @@ public static class AccountDisplay {
 
     public static void LookupAccounts(Accounts LoggedInAccount) {
         while (true) {
+            string SelectHeader = _languageInterface.GetString("SelectOpt");
+            string Opt1 = _languageInterface.GetString("LookAccOpt1");
+            string Opt2 = _languageInterface.GetString("LookAccOpt2");
+            string Opt3 = _languageInterface.GetString("LookAccOpt3");
+            string Opt4 = _languageInterface.GetString("LookAccOpt4");
+            string Please = _languageInterface.GetString("PleaseSelectSelection");
+            string Error = _languageInterface.GetString("ValidOpt");
+
+
             Console.Clear();
             AccountLogic.PrintAccounts(LoggedInAccount);
             Console.WriteLine("====================================================================\n");
-            Console.WriteLine("Selection options:");
-            Console.WriteLine("1 - Select by ID");
-            Console.WriteLine("2 - Select by Firstname");
-            Console.WriteLine("3 - Select by Lastname");
-            Console.WriteLine("4 - Select by E-mail\n\n");
+            Console.WriteLine(SelectHeader); //Selection options:
+            Console.WriteLine(Opt1); //1 - Select by ID
+            Console.WriteLine(Opt2); //2 - Select by Firstname
+            Console.WriteLine(Opt3); //3 - Select by Lastname
+            Console.WriteLine(Opt4); //4 - Select by E-mail\n\n
             Console.WriteLine("====================================================================");
-            Console.WriteLine("Please select a selection method (enter Q to exit):");
+            Console.WriteLine(Please); //Please select a selection method (enter Q to exit):
 
             string userInput = Console.ReadLine();
             if (userInput.ToLower() == "q") {
@@ -195,7 +222,7 @@ public static class AccountDisplay {
                         LookupAccounts_Email(LoggedInAccount);
                         break;
                     default:
-                        Console.WriteLine("Invalid input, please select a valid option");
+                        Console.WriteLine(Error);
                         break;
                 }
             }
@@ -203,20 +230,27 @@ public static class AccountDisplay {
     }
 
     public static void LookupAccounts_ID (Accounts LoggedInAccount) {
-        Console.WriteLine("Please input an ID for the user you want to search for:");
+        string PlsID = _languageInterface.GetString("PlsIDsearch");
+        string Error = _languageInterface.GetString("IDSearchError");
+        string Enter = _languageInterface.GetString("EnterToCont");
+
+        Console.WriteLine(PlsID);//Please input an ID for the user you want to search for:
         string userInput = Console.ReadLine();
         if (userInput is not null && userInput != "") {
             AccountLogic.SearchForUser_ByID(userInput);
         } else {
-            Console.WriteLine("Invalid input, please use a valid ID for searching");
+            Console.WriteLine(Error); //Invalid input, please use a valid ID for searching
         }
-        Console.WriteLine("Press enter to continue.");
+        Console.WriteLine(Enter); //Press enter to continue.
         Console.ReadLine();
     }
 
     public static void LookupAccounts_Firstname (Accounts LoggedInAccount) {
-        Console.WriteLine("Please input a firstname for the user you want to search for:");
-        string userInput = Console.ReadLine();
+        string PlsFN = _languageInterface.GetString("PlsIDsearch");
+        string Error = _languageInterface.GetString("IDSearchError");
+        string Enter = _languageInterface.GetString("EnterToCont");
+
+        Console.WriteLine("Please input a firstname for the user you want to search for:"); //Please input a firstname for the user you want to search for:        string userInput = Console.ReadLine();
         if (userInput is not null && userInput != "") {
             AccountLogic.SearchForUser_ByFirstName(userInput);
         } else {

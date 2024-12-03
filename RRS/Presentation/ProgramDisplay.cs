@@ -2,7 +2,7 @@ using System.Data.Entity.Core.Metadata.Edm;
 using System.Globalization;
 using System.Resources;
 using RRS.Logic;
-
+namespace RRS.Presentation;
 public static class ProgramDisplay
 {
     private static int SelectedRestaurant = 0;
@@ -17,15 +17,26 @@ public static class ProgramDisplay
 
     public static void Display() 
     {
-        string Header = "       MATCHMAKING RESTAURANT       \n====================================\n\nWelcome to the Matchmaking restaurant\n\n";
-        string Footer = "\n\n A restaurant reservation solution \n     by Black Dawg International    ";
         string Opt1 = _languageInterface.GetString("Login");
         string Opt2 = _languageInterface.GetString("CreateNewAccount");
         string Opt3 = _languageInterface.GetString("ExitProg");
+        string Title =  _languageInterface.GetString("TitleRest");
+        string Welcome1 =  _languageInterface.GetString("WelcomeTo");
+        string Welcome2 =  _languageInterface.GetString("RestSolution");
+        string Welcome3 =  _languageInterface.GetString("BlkDwg");
+        //Console.WriteLine("       " + Title + "       ");
+        //Console.WriteLine("====================================");
+        //Console.WriteLine("Welcome to the Matchmaking restaurant")
+        //Console.WriteLine("A restaurant reservation solution")
+        //Console.WriteLine("By Black Dawg International")
+
+
+        string Header = $"       {Title}       \n====================================\n{Welcome1}"
+        string Footer = $"{Welcome2}\n{Welcome3}";
         
         while (true) 
         {
-            switch (Functions.OptionSelector(Header, Footer, Opt1, Opt2, Opt3])) {
+            switch (Functions.OptionSelector(Header, Footer)) {
                 case "Login":
                     DisplayLogin();
                     break;
@@ -43,16 +54,24 @@ public static class ProgramDisplay
         int usedAttempts = 0;
         int allowedAttempts = 3;
         bool ExitLogin = false;
+        string Attempts = languageInterface.GetString("AllAttempts");
+        string Title = languageInterface.GetString("TitleRest");
+        string Login = languageInterface.GetString("Login");
+        string Exit = languageInterface.GetString("ExitLogin");
 
         do {
             Console.Clear();
-            Console.WriteLine("       MATCHMAKING RESTAURANT       \n====================================\n\nLogin\n------------------------------------\n(Type: Q to exit the login)");
+            Console.WriteLine("       " + Title + "       "); //MATCHMAKING RESTAURANT
+            Console.WriteLine("====================================");
+            Console.WriteLine(Login); //Login
+            Console.WriteLine("------------------------------------");
+            Console.WriteLine(Exit); //(Type: Q to exit the login)
             Console.WriteLine("\x1b[35mE-mail: \x1b[39m");
             string usrInput_Email = Console.ReadLine();
             if (usrInput_Email.ToLower() == "q") {
                 ExitLogin = true;
             } else {
-                Console.WriteLine("\x1b[35mPassword: \x1b[39m");
+                Console.WriteLine("\x1b[35m Password: \x1b[39m");
                 string usrInput_password = Functions.PasswordReadLine();
 
                 Accounts account = Functions.Login(usrInput_Email, usrInput_password);
@@ -62,9 +81,9 @@ public static class ProgramDisplay
                 } else {
                     usedAttempts++;
                     if (AccountLogic.DoesAccountEmailExist(usrInput_Email)) {
-                        Console.WriteLine($"\nInvalid password, You have {allowedAttempts - usedAttempts} left");
+                        Console.WriteLine($"\nInvalid password, You have {allowedAttempts - usedAttempts} left"); //EDIT MATH TO ONE VARIABLE STR
                     } else {
-                        Console.WriteLine($"\nNo account found with this E-mail, You have {allowedAttempts - usedAttempts} left");
+                        Console.WriteLine($"\nNo account found with this E-mail, You have {allowedAttempts - usedAttempts} left"); //EDIT MATH TO ONE AVAILABLE STRING
                     }
                     Thread.Sleep(1500);
                 }
@@ -81,6 +100,8 @@ public static class ProgramDisplay
             }
         } while (true);
 
+        string MaxAttempts = languageInterface.GetString("MaxAttempts");
+   
         if (usedAttempts != allowedAttempts) {
             if (Functions.IsAccountAdmin(LoggedInAccount)) {
                 Display_Admin_Environment();
@@ -90,24 +111,30 @@ public static class ProgramDisplay
                 LoggedInAccount = null;
             }
         } else {
-            Console.WriteLine("\nAll attempts have been used, Returning to start menu");
+            Console.WriteLine(MaxAttempts);
             Thread.Sleep(1500);
         }
     }
 
     private static void DisplayCreateNewCustomerAccount() 
     {
+        string Title = languageInterface.GetString("TitleRest");
+        string Prompt = languageInterface.GetString("CreaAcc");
+        string Pass = languageInterface.GetString("PW");
+        string Success = languageInterface.GetString("CreateNewCustSuccess");
+        string Error = languageInterface.GetString("CreateNewCustError");
+
         Console.Clear(); //empty screen
-        Console.WriteLine("       MATCHMAKING RESTAURANT       ");
+        Console.WriteLine("       " + Title + "       "); //MATCHMAKING RESTAURANT
         Console.WriteLine("====================================\n");
-        Console.WriteLine("Create an account:");
+        Console.WriteLine(Prompt);
 
         //request needed information from user to create new account
         string FirstName = Functions.RequestValidString("First name");
         string LastName = Functions.RequestValidString("Last name");
         string Email = Functions.RequestValidEmail();
         string PhoneNumber = Functions.RequestValidPhonenumber("Phonenumber");
-        Console.WriteLine("Password:");
+        Console.WriteLine(Pass);
         string Password = Functions.PasswordReadLine_WithValidCheck();
         
 
@@ -118,11 +145,11 @@ public static class ProgramDisplay
         //account success or error message
         if (AccountLogic.CreateNewCustomerAccount(Email, Password, FirstName, LastName, PhoneNumber)) 
         {
-            Console.WriteLine("New account created!\n You will be sent back to the start screen");
+            Console.WriteLine(Success);
         } 
         else 
         {
-            Console.WriteLine("There was an error while trying to create your account\nplease try again later\nyou will be sent back to the start screen");
+            Console.WriteLine(Error);
         }
 
         //1.5 sec wait
