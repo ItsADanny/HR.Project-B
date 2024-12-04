@@ -26,9 +26,8 @@ public class ENInterface : ILanguageInterface
             Console.WriteLine("Current Language has been set to English Succesfully");
         }
         catch (CultureNotFoundException ex)
-        {
-            
-            Console.WriteLine("Unable to change current language to English", ex.InvalidCultureName);        }
+        {    
+            Console.WriteLine("Unable to change current language to English", ex.InvalidCultureName);
         }
     }
 
@@ -62,8 +61,7 @@ public class NLInterface : ILanguageInterface
         }
         catch (CultureNotFoundException ex)
         {
-            
-            Console.WriteLine("Unable to change current language to Dutch", ex.InvalidCultureName);        }
+            Console.WriteLine("Unable to change current language to Dutch", ex.InvalidCultureName);
         }
     }
 

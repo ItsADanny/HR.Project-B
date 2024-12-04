@@ -1013,7 +1013,7 @@ public static class Database {
             switch(selectedOption)
             {
                 case 1:
-                    sqlite_command.CommandText = $"UPDATE Accounts" //figure this fuck out
+                    sqlite_command.CommandText = $"UPDATE Accounts"; //figure this fuck out
                     break;
                     
             }
