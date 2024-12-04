@@ -32,13 +32,13 @@ public static class ReviewDisplay {
         while (!exit) {
             switch (Functions.OptionSelector(header, ["View reviews", "Exit"]))
             {
-                case 1:
+                case 0:
                     ViewReviews(restaurantID, LoggedInAccount, true);
                     break;
-                case 2:
+                // case 2:
                     // Delete(restaurantID, LoggedInAccount);
-                    break;
-                case 3:
+                    // break;
+                case 1:
                     exit = true;
                     break;
             }
