@@ -130,7 +130,7 @@ public class MenuDisplay
             Console.WriteLine(foodtype);
         }
 
-        Console.WriteLine(EntFood)
+        Console.WriteLine(EntFood);
         string foodType = Console.ReadLine();
 
         if (MenuLogic.AddMenuItem(restaurantID, Name, Description, Price, foodType))

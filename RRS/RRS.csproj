@@ -15,12 +15,8 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.10" />
       <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
+      <!-- <EmbeddedResource Include="Resources\Resources.en.resx" /> -->
+      <!-- <EmbeddedResource Include="Resources\Resources.nl.resx" /> -->
     </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Include="Resources\Resources.en.resx" />
-      <EmbeddedResource Include="Resources\Resources.nl.resx" />
-    </ItemGroup>
-
 
 </Project>
