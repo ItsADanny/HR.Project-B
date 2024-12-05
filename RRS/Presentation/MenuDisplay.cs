@@ -6,6 +6,8 @@ using System.ComponentModel.Design;
 namespace RRS.Logic;
 public class MenuDisplay
 { 
+    //-{18/11/2024}-{MICK}
+    //added all language interface fields and constructors
     private ILanguageInterface _languageInterface;
 
     public void LanguageSet(ILanguageInterface languageInterface)
@@ -13,11 +15,16 @@ public class MenuDisplay
         _languageInterface = languageInterface;
     }
 
+    //-{18/10/2024}-{MICK}
+    //created the menu display methods setup
+    //-{21/10/2024}-{MICK}
+    //added some logic connections 
+
     public static void MenuItemEditorMenu(int restaurantID, Accounts LoggedinUser)
     {
         while (true)
         {
-            //{MICK}- Resource/EN/NL insertion
+            //{MICK}- Resource/EN/NL insertion on all strings
             string Header = languageInterface.GetString("MenuEditor");
             string Opt1 = languageInterface.GetString("MenuEditorOptionCreate");
             string Opt2 = languageInterface.GetString("MenuEditorOptionEdit");
@@ -90,7 +97,7 @@ public class MenuDisplay
 
     public static void CreateItem(int restaurantID, Accounts LoggedinUser)
     {
-        //{MICK}- Resource/EN/NL insertion
+        //{27-11}-{MICK}- Resource/EN/NL insertion
         string Header = languageInterface.GetString("FillMenuFields");
         string Name = languageInterface.GetString("FillNameItem");
         string Desc = languageInterface.GetString("FillDescItem");
@@ -282,7 +289,7 @@ public class MenuDisplay
         Console.WriteLine(FormattedString2);
         string input = Console.ReadLine();
 
-        //TODO: Implement the EditMenuItem function in the Logic layer so that it updates the correct fields in the database
+        
         if (MenuLogic.EditMenuItem(restaurantID, choice, name, input))
         {
             Console.WriteLine(FormattedString3);

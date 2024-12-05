@@ -1,7 +1,12 @@
-public static class MenuLogic {
+public static class MenuLogic 
+{
+    //-{4/11/2024}-{MICK}
+    //Created the Menu logic, added in add delete and edit first
+    //-{11/11/2024}-{MICK}
+    //
     public static bool AddMenuItem(int restaurantID, string Name,string Description, double Price,string Foodtype)
     {
-        var newMenuItem = new Menu(restaurantID, Name, Description, Price, Database.SelectFoodType(restaurantID, Foodtype));
+        Menu newMenuItem = new Menu(restaurantID, Name, Description, Price, Database.SelectFoodType(restaurantID, Foodtype));
 
         return Database.Insert(newMenuItem);
 

@@ -387,4 +387,11 @@ public static class AccountDisplay {
             }
         }
     }
+
+    public static void NewPhoneNumber(Accounts LoggedInAccount)
+    {
+        Console.WriteLine("Enter your old phonenumber: ");
+        string oldPhoneNumber = Functions.RequestValidPhonenumber();
+        
+    }
 }

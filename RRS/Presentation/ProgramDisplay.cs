@@ -31,7 +31,7 @@ public static class ProgramDisplay
         //Console.WriteLine("By Black Dawg International")
 
 
-        string Header = $"       {Title}       \n====================================\n{Welcome1}"
+        string Header = $"       {Title}       \n====================================\n{Welcome1}";
         string Footer = $"{Welcome2}\n{Welcome3}";
         
         while (true) 

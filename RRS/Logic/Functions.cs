@@ -135,8 +135,8 @@ public static class Functions {
             Display.PrintText(request + ":");
             string input = Console.ReadLine();
 
-            if (input is not null && input != "" && input.Count() >= 1 && input[0] == '0' && input[1] == '6') {
-                // Console.WriteLine("KOM IK HIER");
+            if (input is not null && input != "" && input.Count() >= 1 && input.Count() == 10  &&input[0] == '0' && input[1] == '6') {
+                
                 if (int.TryParse(input, out int output)) {
                     return input;
                 }
@@ -146,6 +146,21 @@ public static class Functions {
         }
     }
 
+    public static string RequestValidPhonenumber(string request, int ) {
+        while (true) {
+            Display.PrintText(request + ":");
+            string input = Console.ReadLine();
+
+            if (input is not null && input != "" && input.Count() >= 1 && input.Length == 10  &&input[0] == '0' && input[1] == '6') {
+                
+                if (int.TryParse(input, out int output)) {
+                    return input;
+                }
+            }
+            Display.PrintText($"Invalid input, please input a valid {request}");
+            Thread.Sleep(1500);
+        }
+    }
     public static string RequestValidEmail() {
         while (true) {
             Display.PrintText("E-mail:");
