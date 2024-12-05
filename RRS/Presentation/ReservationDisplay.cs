@@ -1,6 +1,7 @@
 public static class ReservationDisplay {
 
     public static void ReservationMenu_Customer(int restaurantID, Accounts LoggedInAccount) {
+        Console.Clear();
         PrintHeader();
     }
 
@@ -9,6 +10,7 @@ public static class ReservationDisplay {
         // THIS NEEDS TO BE IMPLEMENTED
         // bool CanCancelReservations = AccountLogic.CanDisplay_CancelReservations(LoggedInAccount);
         while (true) {
+            Console.Clear();
             PrintHeader();
             Console.WriteLine("1 - View reservations");
                 if (CanChangeReservations) {
@@ -21,6 +23,7 @@ public static class ReservationDisplay {
 
     public static void DisplayForRestaurant(int restaurantID) 
     {
+        Console.Clear();
         PrintHeader();
         Console.WriteLine(ReservationLogic.RetrieveReservations(restaurantID));
         Console.WriteLine("====================================================================\n\n");
@@ -29,6 +32,7 @@ public static class ReservationDisplay {
     }
 
     public static void DisplayForRestaurantCustomer(int restaurantID, Accounts LoggedInAccount) {
+        Console.Clear();
         PrintHeader();
         Console.WriteLine(ReservationLogic.RetrieveReservations(restaurantID, LoggedInAccount.ID));
         Console.WriteLine("====================================================================\n\n");

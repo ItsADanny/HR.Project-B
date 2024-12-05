@@ -29,9 +29,15 @@ class UIColor {
                 exceptionMessage += "Invalid R value, value must be in the range of 0/255";
             }
             if (!valid_G_value) {
+                if (exceptionMessage != "") {
+                        exceptionMessage += "\n";
+                }
                 exceptionMessage += "Invalid G value, value must be in the range of 0/255";
             }
             if (!valid_B_value) {
+                if (exceptionMessage != "") {
+                        exceptionMessage += "\n";
+                }
                 exceptionMessage += "Invalid B value, value must be in the range of 0/255";
             }
 
@@ -85,9 +91,15 @@ class UIColor {
                     exceptionMessage += "Invalid R value, value must be in the range of 0/255";
                 }
                 if (!valid_G_value) {
+                    if (exceptionMessage != "") {
+                        exceptionMessage += "\n";
+                    }
                     exceptionMessage += "Invalid G value, value must be in the range of 0/255";
                 }
                 if (!valid_B_value) {
+                    if (exceptionMessage != "") {
+                        exceptionMessage += "\n";
+                    }
                     exceptionMessage += "Invalid B value, value must be in the range of 0/255";
                 }
 
@@ -99,9 +111,15 @@ class UIColor {
                 exceptionMessage += "Invalid R value string, value must be a number in the range of 0/255";
             }
             if (!gParsingSucces) {
+                if (exceptionMessage != "") {
+                        exceptionMessage += "\n";
+                }
                 exceptionMessage += "Invalid G value string, value must be a number in the range of 0/255";
             }
             if (!bParsingSucces) {
+                if (exceptionMessage != "") {
+                        exceptionMessage += "\n";
+                }
                 exceptionMessage += "Invalid B value string, value must be a number in the range of 0/255";
             }
 

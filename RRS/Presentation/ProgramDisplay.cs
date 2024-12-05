@@ -182,13 +182,16 @@ public static class ProgramDisplay
     }
 
     public static void Bootup() {
+        Console.Clear();
+
         UIColor[] logoColors = [
             new UIColor(255, 0, 0), new UIColor(0, 255, 0),
             new UIColor(0, 0, 255), new UIColor(255, 0, 255),
             new UIColor(255, 255, 255), new UIColor(255, 255, 255),
-            new UIColor(255, 255, 255), new UIColor(255, 255, 255),
-            new UIColor(255, 255, 255), new UIColor(255, 255, 255), 
-            new UIColor(255, 255, 255)
+            new UIColor(255, 255, 255), new UIColor(0, 0, 0),
+            new UIColor(255, 255, 255), new UIColor(68, 68, 68),
+            new UIColor(255, 255, 255), new UIColor(68, 68, 68),
+            new UIColor(0, 0, 0), new UIColor(255, 255, 255)
         ];
 
         string[] logoStrings = [
@@ -200,7 +203,10 @@ public static class ProgramDisplay
             "Black Dawg International, copyright (2024-2024)",
             "RRS Application version 1.0.2 - December build",
             " ",
-            $"Machine operating system: {System.Runtime.InteropServices.RuntimeInformation.OSDescription}",
+            $"Machine operating system:",
+            $"{System.Runtime.InteropServices.RuntimeInformation.OSDescription}",
+            $"Machine operating system Architecture:",
+            $"{System.Runtime.InteropServices.RuntimeInformation.OSArchitecture}",
             " ",
             "Loading application"
         ];

@@ -1,0 +1,4 @@
+12/05/2024 2:50 PM - Starting Database Check
+12/05/2024 2:50 PM - Connection to database has been succesfully created
+12/05/2024 2:50 PM - Connection to database has been succesfully closed
+12/05/2024 2:50 PM - Database check succesfully ended
