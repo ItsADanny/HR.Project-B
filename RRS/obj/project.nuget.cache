@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "DNtxG3McTSs=",
+  "dgSpecHash": "Q5rclAJvKjU=",
   "success": true,
   "projectFilePath": "/Users/dannydesnoo/Documents/GitHub/HR.Project-B/RRS/RRS.csproj",
   "expectedPackageFiles": [
@@ -13,6 +13,7 @@
     "/Users/dannydesnoo/.nuget/packages/microsoft.netcore.targets/1.0.1/microsoft.netcore.targets.1.0.1.nupkg.sha512",
     "/Users/dannydesnoo/.nuget/packages/microsoft.win32.registry/4.7.0/microsoft.win32.registry.4.7.0.nupkg.sha512",
     "/Users/dannydesnoo/.nuget/packages/microsoft.win32.systemevents/4.7.0/microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "/Users/dannydesnoo/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
     "/Users/dannydesnoo/.nuget/packages/runtime.native.system.data.sqlclient.sni/4.7.0/runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "/Users/dannydesnoo/.nuget/packages/runtime.win-arm64.runtime.native.system.data.sqlclient.sni/4.4.0/runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "/Users/dannydesnoo/.nuget/packages/runtime.win-x64.runtime.native.system.data.sqlclient.sni/4.4.0/runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
