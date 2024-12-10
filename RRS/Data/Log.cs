@@ -1,6 +1,6 @@
 public static class Log {
     private static string currentLogTimestamp {get;} = GetFileTimeStamp();
-    private static string logfileLocation = $"Data/Logs/{currentLogTimestamp}_log.txt";
+    private static string logfileLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent + $"/Data/Logs/{currentLogTimestamp}_log.txt";
 
     public static string GetFileTimeStamp() => DateTime.Now.ToString("MM-dd-yyyy h\\:mm");
     public static string GetTimeStamp() => DateTime.Now.ToString("MM\\/dd\\/yyyy h\\:mm tt");

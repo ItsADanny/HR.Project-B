@@ -6,7 +6,7 @@ public static class Database {
     //This function will create a connection to the SQLite database
     public static SqliteConnection CreateConn() {
         //Create a new database connection
-        SqliteConnection db_conn = new SqliteConnection("Data Source=Data/Database/rrs.db");
+        SqliteConnection db_conn = new SqliteConnection($"Data Source={Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent}/Data/Database/rrs.db");
 
         //Try to open the connection, if its not possible then we return a null
         try {
