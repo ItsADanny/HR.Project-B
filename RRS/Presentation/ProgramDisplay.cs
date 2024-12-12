@@ -158,7 +158,7 @@ public static class ProgramDisplay
         bool Logout = false;
         string Header = $"====================================================================\n▗▄▄▖ ▗▄▄▄▖ ▗▄▄▖▗▄▄▄▖▗▄▖ ▗▖ ▗▖▗▄▄▖  ▗▄▖ ▗▖  ▗▖▗▄▄▄▖\n▐▌ ▐▌▐▌   ▐▌     █ ▐▌ ▐▌▐▌ ▐▌▐▌ ▐▌▐▌ ▐▌▐▛▚▖▐▌  █  \n▐▛▀▚▖▐▛▀▀▘ ▝▀▚▖  █ ▐▛▀▜▌▐▌ ▐▌▐▛▀▚▖▐▛▀▜▌▐▌ ▝▜▌  █  \n▐▌ ▐▌▐▙▄▄▖▗▄▄▞▘  █ ▐▌ ▐▌▝▚▄▞▘▐▌ ▐▌▐▌ ▐▌▐▌  ▐▌  █  \n====================================================================\nWelcome {LoggedInAccount.FirstName} {LoggedInAccount.LastName}\nWhat would you like to do?\n====================================================================\n\n";
         while (!Logout) {
-            switch (Functions.OptionSelector(Header, ["See current reservations", "Make a reservation", "View dining menu", "Reviews", "Account options", "Logout"])) {
+            switch (Functions.OptionSelector(Header, ["See current reservations", "Make a reservation", "View dining menu", "Reviews", "View restaurant layout", "Account options", "Logout"])) {
                 case 0:
                     ReservationDisplay.DisplayForRestaurantCustomer(SelectedRestaurant, LoggedInAccount);
                     break;
@@ -172,9 +172,12 @@ public static class ProgramDisplay
                     ReviewDisplay.ReviewDisplayCustomer(SelectedRestaurant, LoggedInAccount);
                     break;
                 case 4:
-                    AccountDisplay.AccountMenu(LoggedInAccount);
+                    ReservationDisplay.PrintFloorPlan();
                     break;
                 case 5:
+                    AccountDisplay.AccountMenu(LoggedInAccount);
+                    break;
+                case 6:
                     Logout = true;
                     break;
             }

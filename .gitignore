@@ -1,4 +1,5 @@
-
+.idea
+.DS_Store
 /RRS/Data/Logs
 RRS/RRS.sln
 /RRS/obj
