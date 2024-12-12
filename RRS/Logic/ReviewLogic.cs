@@ -53,4 +53,36 @@ public static class ReviewLogic
     public static bool DeleteReview(int ReviewID, Accounts LoggedInAccount) {
         return Database.DeleteReview(ReviewID);
     }
+
+    public static List<string> ToDisplayString(List<Review> reviews) {
+        List<string> returnValue = new ();
+        foreach (Review review in reviews) {
+            returnValue.Add(ToDisplayString(review));
+        }
+        return returnValue;
+    }
+
+    public static string ToDisplayString(Review review) {
+        Accounts ReviewerAccount = AccountLogic.GetSelectedAccount(review.AccountID);
+
+        string stars = "";
+        for (int i = 0; i != review.Rating; i++) {
+            stars += "⭐️";
+        }
+
+        if (review.Comment != "") {
+            return $"review from: {ReviewerAccount.FirstName} {ReviewerAccount.LastName}\n      stars: {stars}\n    comment: {review.Comment}";
+        } else {
+            return $"review from: {ReviewerAccount.FirstName} {ReviewerAccount.LastName}\n      stars: {stars}";
+        }
+    }
+
+    public static Review ReviewFromDisplayString(string DisplayString, List<Review> reviews) {
+        foreach (Review review in reviews) {
+            if (DisplayString == ToDisplayString(review)) {
+                return review;
+            }
+        }
+        throw new Exception("Review couldn't be found");
+    }
 }

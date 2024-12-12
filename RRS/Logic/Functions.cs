@@ -542,8 +542,8 @@ public static class Functions {
             options_bool.Add(false);
         }
         //DEBUG
-        Console.WriteLine(options_string.Count());
-        Console.WriteLine(options_bool.Count());
+        // Console.WriteLine(options_string.Count());
+        // Console.WriteLine(options_bool.Count());
 
 
         bool done = false;
@@ -971,5 +971,81 @@ public static class Functions {
         } while (!Done);
 
         return time;
+    }
+
+    public static int IntSelector(string header, int minValue=1, int maxValue=5, int startInAmount=999999999, string icon=null) {
+        bool done = false;
+        int returnValue = 0;
+        if (startInAmount == 999999999) {
+            startInAmount = minValue;
+        }
+        int selectedAmount = startInAmount;
+        int pos = 0;
+        
+        do {
+            Console.Clear();
+            Console.WriteLine(header);
+            string row = "";
+
+            if (icon is not null) {
+                string icons = "";
+                for (int x = 0; x != selectedAmount; x++) {
+                    icons += icon;
+                }
+                Console.WriteLine(icons);
+                
+                row += "   ";
+            }
+
+            for (int x = 0; x != 3; x++) {
+                if (x == pos) {
+                    row += "\x1b[44m";
+                }
+
+                if (x == 0) {
+                    row += "<\x1b[49m";
+                } else if (x == 2) {
+                    row += ">\x1b[49m";
+                } else {
+                    row += $" {selectedAmount} ";
+                }
+            }
+            Console.WriteLine(row);
+
+            var input = Console.ReadKey();
+            switch (input.Key) {
+                case ConsoleKey.LeftArrow:
+                    if (pos == 2) {
+                        pos = 0;
+                    } else {
+                        pos = 2;
+                    }
+                    break;
+                case ConsoleKey.RightArrow:
+                    if (pos == 2) {
+                        pos = 0;
+                    } else {
+                        pos = 2;
+                    }
+                    break;
+                case ConsoleKey.Spacebar:
+                    if (pos == 0) {
+                        if (selectedAmount > minValue) {
+                            selectedAmount--;
+                        }
+                    } else {
+                        if (selectedAmount < maxValue) {
+                            selectedAmount++;
+                        }
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    done = true;
+                    returnValue = selectedAmount;
+                    break;
+            }
+        } while (!done);
+
+        return returnValue;
     }
 }

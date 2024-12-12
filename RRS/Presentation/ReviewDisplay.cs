@@ -5,7 +5,7 @@ public static class ReviewDisplay {
         bool exit = false;
         string header = "====================================\nReviews: Please choose an option\n====================================\n";
         while (!exit) {
-            switch (Functions.OptionSelector(header, ["View my reviews", "View all reviews", "Leave a review", "Exit"]))
+            switch (Functions.OptionSelector(header, ["View my review(s)", "View all review(s)", "Leave a review", "Delete review(s)", "Exit"]))
             {
                 case 0:
                     ViewReviews(restaurantID, LoggedInAccount, false);
@@ -16,10 +16,10 @@ public static class ReviewDisplay {
                 case 2:
                     Add(restaurantID, LoggedInAccount);
                     break;
-                // case 3:// Temp off
-                    // Delete(restaurantID, LoggedInAccount);
-                    // break; 
                 case 3:
+                    Delete(restaurantID, LoggedInAccount);
+                    break; 
+                case 4:
                     exit = true;
                     break;
             }
@@ -30,15 +30,15 @@ public static class ReviewDisplay {
         bool exit = false;
         string header = "====================================\nReviews: Please choose an option\n====================================\n";
         while (!exit) {
-            switch (Functions.OptionSelector(header, ["View reviews", "Exit"]))
+            switch (Functions.OptionSelector(header, ["View review(s)", "Delete review(s)", "Exit"]))
             {
                 case 0:
                     ViewReviews(restaurantID, LoggedInAccount, true);
                     break;
-                // case 2:
-                    // Delete(restaurantID, LoggedInAccount);
-                    // break;
                 case 1:
+                    Delete(restaurantID, LoggedInAccount);
+                    break;
+                case 2:
                     exit = true;
                     break;
             }
@@ -47,12 +47,14 @@ public static class ReviewDisplay {
 
     private static void Add(int restaurantID, Accounts LoggedInAccount) {
         Console.Clear();
-        Console.WriteLine("====================================================================");
-        Console.WriteLine("Reviews");
-        Console.WriteLine("====================================================================\n\n");
-        Console.WriteLine("Enter the rating you want to give (1-5): ");
-        int rating = Convert.ToInt32(Console.ReadLine());
-
+        string header = "====================================================================\nReviews\n====================================================================\n\n";
+        int rating = Functions.IntSelector(header + "Enter the rating you want to give (1-5): ", 1, 5, 3, "⭐️");
+        string stars = "";
+        for (int i = 0; i != rating; i++) {
+            stars += "⭐️";
+        }
+        Console.Clear();
+        Console.WriteLine($"{header}Enter the rating you want to give (1-5):\n{stars}");
         Console.WriteLine("Please add a comment about you experience (This is not required)");
         string comment = Console.ReadLine();
 
@@ -65,23 +67,54 @@ public static class ReviewDisplay {
         }
     }
 
-    // private static void Delete(int restaurantID, Accounts LoggedInAccount) {
-    //     List<Review> reviews;
-    //     if (Functions.IsAccountAdmin(LoggedInAccount)) {
-    //         reviews = ReviewLogic.GetReviews(restaurantID);
-    //     } else {
-    //         reviews = ReviewLogic.GetReviews(restaurantID, LoggedInAccount);
-    //     }
+    private static void Delete(int restaurantID, Accounts LoggedInAccount) {
+        bool isAdmin = Functions.IsAccountAdmin(LoggedInAccount);
 
-    //     string header = "";
-    //     Dictionary<string, bool> slotsToDelete = Functions.CheckBoxSelector(header, ReviewLogic.ToDisplayString(reviews));
-        
-    //     foreach (KeyValuePair<string, bool> row in slotsToDelete) {
-    //         if (row.Value) {
-                
-    //         }
-    //     }
-    // }
+        List<Review> reviews;
+        if (isAdmin) {
+            reviews = ReviewLogic.GetReviews(restaurantID);
+        } else {
+            reviews = ReviewLogic.GetReviews(restaurantID, LoggedInAccount);
+        }
+
+        string header = "====================================================================\nReviews\n====================================================================\n\n";
+        if (reviews.Count() > 0) {
+            header += "Please select the reviews you want to delete (or press ENTER without selecting reviews to cancel):\n\n";
+            Dictionary<string, bool> slotsToDelete = Functions.CheckBoxSelector(header, ReviewLogic.ToDisplayString(reviews));
+            
+            int succes = 0;
+            int failed = 0;
+
+            foreach (KeyValuePair<string, bool> row in slotsToDelete) {
+                if (row.Value) {
+                    if (ReviewLogic.DeleteReview(ReviewLogic.ReviewFromDisplayString(row.Key, reviews).ID, LoggedInAccount)) {
+                        succes++;
+                    } else {
+                        failed++;
+                    }
+                }
+            }
+
+            if (succes == 0 && failed == 0) {
+                Console.WriteLine($"\nExiting");
+            } else if (failed == 0) {
+                Console.WriteLine($"\n{succes} review(s) succefully deleted");
+            } else {
+                Console.WriteLine($"\n{succes} review(s) succefully deleted, But failed to delete {failed} review(s)");
+            }
+        } else {
+            Console.Clear();
+            if (isAdmin) {
+                header += "There are 0 reviews, It's only possible to delete reviews when there are any reviews\n\nExiting";
+                Console.WriteLine(header);
+            } else {
+                header += "You have 0 reviews, you can only delete reviews if you have reviews.\n\nExiting";
+                Console.WriteLine(header);
+            }  
+        }
+
+        Thread.Sleep(1500);
+    }
 
     private static void ViewReviews (int restaurantID, Accounts LoggedInAccount, bool viewAll) {
         Console.Clear();

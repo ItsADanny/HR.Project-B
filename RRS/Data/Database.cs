@@ -5,8 +5,16 @@ public static class Database {
     //[Created a function for connecting to our database]
     //This function will create a connection to the SQLite database
     public static SqliteConnection CreateConn() {
+        //This is purely to make this part work with Windows and MacOS
+        string dbLocation;
+        // if (System.Runtime.InteropServices.RuntimeInformation.OSDescription.Contains("Darwin")) {
+        //     dbLocation = $"Data/Database/rrs.db";
+        // } else {
+            dbLocation = $"{Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent}/Data/Database/rrs.db";
+        // }
+
         //Create a new database connection
-        SqliteConnection db_conn = new SqliteConnection($"Data Source={Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent}/Data/Database/rrs.db");
+        SqliteConnection db_conn = new SqliteConnection($"Data Source={dbLocation}");
 
         //Try to open the connection, if its not possible then we return a null
         try {
@@ -1075,19 +1083,23 @@ public static class Database {
             switch (choice) {
                 case "name":
                     sqlite_cmd.CommandText = $"UPDATE Menu SET Name = \"{input}\" WHERE Name = \"{itemname}\";";
-                    Console.WriteLine($"name: UPDATE Menu SET Name = \"{input}\" WHERE Name = \"{itemname}\";");
+                    //DEBUG
+                    // Console.WriteLine($"name: UPDATE Menu SET Name = \"{input}\" WHERE Name = \"{itemname}\";");
                     break;
                 case "description":
                     sqlite_cmd.CommandText = $"UPDATE Menu SET Description = \"{input}\" WHERE Name = \"{itemname}\";";
-                    Console.WriteLine($"description: UPDATE Menu SET Description = \"{input}\" WHERE Name = \"{itemname}\";");
+                    //DEBUG
+                    // Console.WriteLine($"description: UPDATE Menu SET Description = \"{input}\" WHERE Name = \"{itemname}\";");
                     break;
                 case "price":
                     sqlite_cmd.CommandText = $"UPDATE Menu SET Price = {input} WHERE Name = \"{itemname}\";";
-                    Console.WriteLine($"price: UPDATE Menu SET Price = {input} WHERE Name = \"{itemname}\";");
+                    //DEBUG
+                    // Console.WriteLine($"price: UPDATE Menu SET Price = {input} WHERE Name = \"{itemname}\";");
                     break;
                 case "foodtype":
                     sqlite_cmd.CommandText = $"UPDATE Menu SET FoodType = {input} WHERE Name = \"{itemname}\";";
-                    Console.WriteLine($"foodtype: UPDATE Menu SET FoodType = {input} WHERE Name = \"{itemname}\";");
+                    //DEBUG
+                    // Console.WriteLine($"foodtype: UPDATE Menu SET FoodType = {input} WHERE Name = \"{itemname}\";");
                     break;
             }
             sqlite_cmd.ExecuteNonQuery();
@@ -1222,7 +1234,7 @@ public static class Database {
 
         SqliteCommand sqlite_cmd;
         sqlite_cmd = db_conn.CreateCommand();
-        sqlite_cmd.CommandText = $"DELETE FROM Reviews WHERE ID = {ReviewID};";
+        sqlite_cmd.CommandText = $"DELETE FROM Review WHERE ID = {ReviewID};";
         sqlite_cmd.ExecuteNonQuery();
 
         //Close the connection to the database
@@ -1237,7 +1249,7 @@ public static class Database {
 
         SqliteCommand sqlite_cmd;
         sqlite_cmd = db_conn.CreateCommand();
-        sqlite_cmd.CommandText = $"DELETE FROM Reviews WHERE ID = {ReviewID};";
+        sqlite_cmd.CommandText = $"DELETE FROM Review WHERE ID = {ReviewID};";
         sqlite_cmd.ExecuteNonQuery();
 
         //Close the connection to the database

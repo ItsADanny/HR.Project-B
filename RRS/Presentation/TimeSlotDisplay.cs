@@ -49,7 +49,8 @@ public static class TimeSlotDisplay {
             TimeOnly startTimeDay = Functions.TimeSelector("Please select the opening time of the restaurant\n");
             TimeOnly TimeSlotSize = Functions.TimeSelector("Please select an timeslot size\n");
             Console.Clear();
-            int timeslotAmount = Functions.RequestValidInt("Timeslot amount (Max 5)", 1, 5);
+            // int timeslotAmount = Functions.RequestValidInt("Timeslot amount (Max 5)", 1, 5); //THIS IS NOT TO BE USED ANYMORE, PLEASE USE THE METHOD Functions.IntSelector -ItsDanny
+            int timeslotAmount = Functions.IntSelector("Please select an amount of timeslots you want to generate (min: 1, max: 5)", 1, 5);
             Console.Clear();
             List<List<string>> timeslots = TimeSlotLogic.GenerateTimeSlots(startTimeDay, TimeSlotSize, timeslotAmount);
             Dictionary<string, bool> successes = new ();
