@@ -866,6 +866,69 @@ public static class Database {
         return null;
     }
 
+    public static List<Table> GetOpenTables(int timeslotID, int restaurantID) {
+        SqliteConnection db_conn = CreateConn();
+
+        if (db_conn is not null) {
+            List<Table> returnValue = [];
+
+            SqliteDataReader sqlite_datareader;
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"SELECT * FROM Tables";
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read()) {
+                int tableID = sqlite_datareader.GetInt32(0);
+                int tableRestauratnID = sqlite_datareader.GetInt32(1);
+                string tableName = sqlite_datareader.GetString(2);
+                int tableMaxSize = sqlite_datareader.GetInt32(3);
+
+                Table table = new Table(tableID, tableRestauratnID, tableName, tableMaxSize);
+                int ReservationsForTable = RowCount("Reservations", $"TimeSlotID = {timeslotID} AND TableID = {table.ID}");
+
+                if (ReservationsForTable < table.MaxSize) {
+                    returnValue.Add(table);
+                }
+            }
+
+            CloseConn(db_conn);
+        }
+
+        return null;
+    }
+
+    public static int RowCount(string table, string where_sql) {
+        string sql = "";
+        if (table is not null & where_sql is null) {
+            sql = $"SELECT COUNT(*) FROM {table}";
+        } else if (table is not null & where_sql is not null) {
+            sql = $"SELECT COUNT(*) FROM {table} WHERE {where_sql}";
+        }
+
+        if (sql != "") {
+            SqliteConnection db_conn = CreateConn();
+
+            if (db_conn is not null) {
+                SqliteDataReader sqlite_datareader;
+                SqliteCommand sqlite_cmd;
+                sqlite_cmd = db_conn.CreateCommand();
+                sqlite_cmd.CommandText = $"SELECT * FROM Tables";
+
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                sqlite_datareader.Read();
+                int returnValue = sqlite_datareader.GetInt32(0);
+                CloseConn(db_conn);
+
+                return returnValue;
+            } else {
+                throw new Exception("An error occured and a connection couldn't be made to the database");
+            }
+        } else {
+            throw new Exception("No, table selected, to use this feature please select an table");
+        }
+    }
+
     public static List<Review> Reviews(int restaurantID) {
         SqliteConnection db_conn = CreateConn();
 

@@ -1,10 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-public class Menu
+public class Menu : IDBRestaurantClass
 {
-    public int ID;
-    public int RestaurantID;
+    public int ID {get;}
+    public int RestaurantID {get;}
     public string Name;
     public string Description;
     public double Price;

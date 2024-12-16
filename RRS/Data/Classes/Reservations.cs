@@ -1,6 +1,6 @@
-public class Reservations {
-    public int ID {get; private set;}
-    public int RestaurantID;
+public class Reservations : IDBRestaurantClass {
+    public int ID {get;}
+    public int RestaurantID {get;}
     public int TimeSlotID;
     public int TableID;
     public int AccountID;

@@ -1,6 +1,6 @@
-public class Review {
-    public readonly int ID;
-    public readonly int RestaurantID;
+public class Review : IDBRestaurantClass {
+    public int ID {get;}
+    public int RestaurantID {get;}
     public readonly int AccountID;
     public readonly int ReservationID;
     public int Rating {get; private set;}
