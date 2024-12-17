@@ -21,31 +21,49 @@ public static class ReservationDisplay {
         =============================================================================================
         ";
 
+    private static string header = "====================================================================\n▗▄▄▖ ▗▄▄▄▖ ▗▄▄▖▗▄▄▄▖▗▄▄▖ ▗▖  ▗▖ ▗▄▖▗▄▄▄▖▗▄▄▄▖ ▗▄▖ ▗▖  ▗▖ ▗▄▄▖\n▐▌ ▐▌▐▌   ▐▌   ▐▌   ▐▌ ▐▌▐▌  ▐▌▐▌ ▐▌ █    █  ▐▌ ▐▌▐▛▚▖▐▌▐▌   \n▐▛▀▚▖▐▛▀▀▘ ▝▀▚▖▐▛▀▀▘▐▛▀▚▖▐▌  ▐▌▐▛▀▜▌ █    █  ▐▌ ▐▌▐▌ ▝▜▌ ▝▀▚▖\n▐▌ ▐▌▐▙▄▄▖▗▄▄▞▘▐▙▄▄▖▐▌ ▐▌ ▝▚▞▘ ▐▌ ▐▌ █  ▗▄█▄▖▝▚▄▞▘▐▌  ▐▌▗▄▄▞▘\n====================================================================\n\n";
+
     public static void ReservationMenu_Customer(int restaurantID, Accounts LoggedInAccount) {
         Console.Clear();
-        PrintHeader();
+        Console.WriteLine(header);
     }
 
     public static void ReservationMenu_Admin (int restaurantID, Accounts LoggedInAccount) {
         bool CanChangeReservations = AccountLogic.CanDisplay("cancelReservations", LoggedInAccount);
-        // THIS NEEDS TO BE IMPLEMENTED
-        // bool CanCancelReservations = AccountLogic.CanDisplay_CancelReservations(LoggedInAccount);
-        while (true) {
-            Console.Clear();
-            PrintHeader();
-            Console.WriteLine("1 - View reservations");
-                if (CanChangeReservations) {
-                    Console.WriteLine("2 - Cancel reservation");
-                }
-                Console.WriteLine("================================================================");
-                Console.WriteLine("Please select an account to change (enter Q to exit):");
+        List<string> options = ["Make a reservation for a customer", "View reservations"];
+        if (CanChangeReservations) {
+            options.Add("Cancel reservations");
+        }
+        options.Add("Exit");
+        
+        bool done = false;
+
+        while (!done) {
+            switch (Functions.OptionSelector(header, options)) {
+                case 0:
+                    //TODO IMPLEMENT THIS FEATURE FOR THE ADMIN
+                    break;
+                case 1:
+                    DisplayForRestaurant(restaurantID);
+                    break;
+                case 2:
+                    if (CanChangeReservations) {
+                        //TODO IMPLEMENT THIS FEATURE FOR THE ADMIN WITHOUT DELETING TIMESLOTS (WHICH IS WHAT WE CURRENTLY HAVE AS THE ONLY WAY TO CANCEL RESERVATIONS)
+                    } else {
+                        done = true;
+                    }
+                    break;
+                case 3:
+                    done = true;
+                    break;
+            }
         }
     }
 
     public static void DisplayForRestaurant(int restaurantID) 
     {
         Console.Clear();
-        PrintHeader();
+        Console.WriteLine(header);
         Console.WriteLine(ReservationLogic.RetrieveReservations(restaurantID));
         Console.WriteLine("====================================================================\n\n");
         Console.WriteLine("Press ENTER to exit");
@@ -54,7 +72,7 @@ public static class ReservationDisplay {
 
     public static void DisplayForRestaurantCustomer(int restaurantID, Accounts LoggedInAccount) {
         Console.Clear();
-        PrintHeader();
+        Console.WriteLine(header);
         Console.WriteLine(ReservationLogic.RetrieveReservations(restaurantID, LoggedInAccount.ID));
         Console.WriteLine("====================================================================\n\n");
         Console.WriteLine("Press ENTER to exit");
@@ -83,7 +101,7 @@ public static class ReservationDisplay {
     // }
 
     public static void DisplayCreateReservation_Customer(int restaurantID, Accounts LoggedInAccount) {
-        PrintHeader();
+        Console.WriteLine(header);
         Console.WriteLine("Please input following information requests to create a reservation.\n");
         Thread.Sleep(1000);
         // string TimeSlotID = TimeSlotLogic.GetIDFromDisplayString()
@@ -100,20 +118,9 @@ public static class ReservationDisplay {
         Console.WriteLine("====================================================================");
     }
 
-    private static void PrintHeader() {
-        Console.WriteLine("====================================================================");
-        Console.WriteLine("▗▄▄▖ ▗▄▄▄▖ ▗▄▄▖▗▄▄▄▖▗▄▄▖ ▗▖  ▗▖ ▗▄▖▗▄▄▄▖▗▄▄▄▖ ▗▄▖ ▗▖  ▗▖ ▗▄▄▖");
-        Console.WriteLine("▐▌ ▐▌▐▌   ▐▌   ▐▌   ▐▌ ▐▌▐▌  ▐▌▐▌ ▐▌ █    █  ▐▌ ▐▌▐▛▚▖▐▌▐▌   ");
-        Console.WriteLine("▐▛▀▚▖▐▛▀▀▘ ▝▀▚▖▐▛▀▀▘▐▛▀▚▖▐▌  ▐▌▐▛▀▜▌ █    █  ▐▌ ▐▌▐▌ ▝▜▌ ▝▀▚▖");
-        Console.WriteLine("▐▌ ▐▌▐▙▄▄▖▗▄▄▞▘▐▙▄▄▖▐▌ ▐▌ ▝▚▞▘ ▐▌ ▐▌ █  ▗▄█▄▖▝▚▄▞▘▐▌  ▐▌▗▄▄▞▘");
-        Console.WriteLine("====================================================================");
-    }
-
     public static void PrintFloorPlan() {
         Console.Clear();
-        Console.WriteLine("=============================================================================================================");
-        
-        Console.WriteLine("=============================================================================================================");
+        Console.WriteLine(header);
         Console.WriteLine(RestaurantFloorPlan);
         Console.WriteLine("=============================================================================================================\nPress ENTER to exit");
         Console.ReadLine();

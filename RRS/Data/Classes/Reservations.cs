@@ -1,6 +1,6 @@
-public class Reservations {
-    public int ID {get; private set;}
-    public int RestaurantID;
+public class Reservations : IDBRestaurantClass {
+    public int ID {get;}
+    public int RestaurantID {get;}
     public int TimeSlotID;
     public int TableID;
     public int AccountID;
@@ -24,4 +24,13 @@ public class Reservations {
         AccountID = accountID;
         Status = status;
     }
+
+    // public Reservations(string id, string restaurantID, int timeSlotID, int tableID, int accountID, int status) {
+    //     ID = id;
+    //     RestaurantID = restaurantID;
+    //     TimeSlotID = timeSlotID;
+    //     TableID = tableID;
+    //     AccountID = accountID;
+    //     Status = status;
+    // }
 }

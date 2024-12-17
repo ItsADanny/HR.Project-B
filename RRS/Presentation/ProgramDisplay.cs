@@ -129,7 +129,7 @@ public static class ProgramDisplay
 
             switch (Functions.OptionSelector(Header, menuOptions)) {
                 case 0:
-                    ReservationDisplay.DisplayForRestaurant(SelectedRestaurant);
+                    ReservationDisplay.ReservationMenu_Admin(SelectedRestaurant, LoggedInAccount);
                     break;
                 case 1:
                     TimeSlotDisplay.Menu(SelectedRestaurant, LoggedInAccount);

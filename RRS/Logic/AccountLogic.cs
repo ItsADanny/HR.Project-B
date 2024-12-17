@@ -7,6 +7,16 @@ public static class AccountLogic {
         } 
     }
 
+    public static string GetAccountsDisplay(Accounts LoggedInAccount) {
+        string returnValue = "";
+        foreach (Accounts accounts in Database.SelectAccount()) {
+            if (accounts.ID != LoggedInAccount.ID) {
+                returnValue += $"ID: {accounts.ID} - {accounts.FirstName} {accounts.LastName} - Account level: {accounts.AccountLevel} - {Database.SelectAccountLevel(accounts.AccountLevel).Name}\n";
+            }
+        }
+        return returnValue;
+    }
+
     public static Accounts GetSelectedAccount(Accounts LoggedInAccount, string input) {
         if (int.TryParse(input, out int output)) {
             foreach (Accounts accounts in Database.SelectAccount()) {

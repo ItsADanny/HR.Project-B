@@ -69,59 +69,16 @@ public static class AccountDisplay {
                 Console.WriteLine("5 - Delete account");
                 Console.WriteLine("6 - Change password\n\n");
             } else {
-                Console.WriteLine("2 - Lookup account");
-                Console.WriteLine("3 - Change password\n\n");
-            }
-            Console.WriteLine("================================================================");
-            Console.WriteLine("Please select an account to change (enter Q to exit):");
-            
-            string userInput = Console.ReadLine();
-            if (userInput.ToLower() == "q") {
-                break;
-            } else {
-                if (CanCreateAdminAccounts) {
-                    switch (userInput)
-                    {
-                        case "1":
-                            CreateCustomerAccount(LoggedInAccount);
-                            break;
-                        case "2":
-                            CreateAdminAccount(LoggedInAccount);
-                            break;
-                        case "3":
-                            LookupAccounts(LoggedInAccount);
-                            break;
-                        case "4":
-                            ChangeAccountLevels(LoggedInAccount);
-                            break;
-                        case "5":
-                            DeleteAccount(LoggedInAccount);
-                            break;
-                        case "6":
-                            NewPassword(LoggedInAccount);
-                            break;
-                        default:
-                            Console.WriteLine("Invalid input, please select a valid option");
-                            Thread.Sleep(1500);
-                            break;
-                    }
-                } else {
-                    switch (userInput)
-                    {
-                        case "1":
-                            CreateCustomerAccount(LoggedInAccount);
-                            break;
-                        case "2":
-                            LookupAccounts(LoggedInAccount);
-                            break;
-                        case "3":
-                            NewPassword(LoggedInAccount);
-                            break;
-                        default:
-                            Console.WriteLine("Invalid input, please select a valid option");
-                            Thread.Sleep(1500);
-                            break;
-                    }
+                switch (Functions.OptionSelector(header, options)) {
+                    case 0:
+                        LookupAccounts(LoggedInAccount);
+                        break;
+                    case 1:
+                        NewPassword(LoggedInAccount);
+                        break;
+                    case 2:
+                        Exit = true;
+                        break;
                 }
             }
         }
@@ -176,39 +133,33 @@ public static class AccountDisplay {
     }
 
     public static void LookupAccounts(Accounts LoggedInAccount) {
-        while (true) {
-            Console.Clear();
-            AccountLogic.PrintAccounts(LoggedInAccount);
-            Console.WriteLine("====================================================================\n");
-            Console.WriteLine("Selection options:");
-            Console.WriteLine("1 - Select by ID");
-            Console.WriteLine("2 - Select by Firstname");
-            Console.WriteLine("3 - Select by Lastname");
-            Console.WriteLine("4 - Select by E-mail\n\n");
-            Console.WriteLine("====================================================================");
-            Console.WriteLine("Please select a selection method (enter Q to exit):");
+        bool Exit = false;
+        string accounts = AccountLogic.GetAccountsDisplay(LoggedInAccount);
+        
+        string header = $"====================================================================\n ▗▄▖ ▗▄▄▄ ▗▖  ▗▖▗▄▄▄▖▗▖  ▗▖     ▗▄▖  ▗▄▄▖ ▗▄▄▖ ▗▄▖ ▗▖ ▗▖▗▖  ▗▖▗▄▄▄▖\n▐▌ ▐▌▐▌  █▐▛▚▞▜▌  █  ▐▛▚▖▐▌    ▐▌ ▐▌▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▛▚▖▐▌  █  \n▐▛▀▜▌▐▌  █▐▌  ▐▌  █  ▐▌ ▝▜▌    ▐▛▀▜▌▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌ ▝▜▌  █  \n▐▌ ▐▌▐▙▄▄▀▐▌  ▐▌▗▄█▄▖▐▌  ▐▌    ▐▌ ▐▌▝▚▄▄▖▝▚▄▄▖▝▚▄▞▘▝▚▄▞▘▐▌  ▐▌  █  \n====================================================================\n\n{accounts}\n\n====================================================================\n\n";
+        List<string> options = ["Select by ID", "Select by Firstname", "Select by Lastname", "Select by E-mail", "Exit"];
 
-            string userInput = Console.ReadLine();
-            if (userInput.ToLower() == "q") {
-                break;
-            } else {
-                switch (userInput) {
-                    case "1":
+        while (!Exit) {
+            switch (Functions.OptionSelector(header, options)) {
+                    case 0:
                         LookupAccounts_ID(LoggedInAccount);
+                        Exit = true;
                         break;
-                    case "2":
+                    case 1:
                         LookupAccounts_Firstname(LoggedInAccount);
+                        Exit = true;
                         break;
-                    case "3":
+                    case 2:
                         LookupAccounts_Lastname(LoggedInAccount);
+                        Exit = true;
                         break;
-                    case "4":
+                    case 3:
                         LookupAccounts_Email(LoggedInAccount);
+                        Exit = true;
                         break;
-                    default:
-                        Console.WriteLine("Invalid input, please select a valid option");
+                    case 4:
+                        Exit = true;
                         break;
-                }
             }
         }
     }

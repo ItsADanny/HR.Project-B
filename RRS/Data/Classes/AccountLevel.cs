@@ -1,5 +1,5 @@
-public class AccountLevel {
-    public int ID;
+public class AccountLevel : IDBClass {
+    public int ID {get;}
     public string Name;
     public bool CanChangeReservation;
     public bool CanChangeTimeSlots;

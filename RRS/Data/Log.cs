@@ -30,7 +30,7 @@ public static class Log {
     }
 
     private static bool CheckFile() {
-        Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.OSDescription.Contains("Darwin"));
+        // Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.OSDescription.Contains("Darwin"));
 
         //This is purely to make this part work with Windows and MacOS
         // if (System.Runtime.InteropServices.RuntimeInformation.OSDescription.Contains("Darwin")) {

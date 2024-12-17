@@ -1,5 +1,5 @@
-public class Accounts {
-    public int ID {get; private set;}
+public class Accounts : IDBClass {
+    public int ID {get;}
     public string Email;
     private string Password;
     public string FirstName;

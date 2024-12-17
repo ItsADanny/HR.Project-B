@@ -1,9 +1,9 @@
 using System.Data;
 using System.Globalization;
 
-public class ReservationTimeSlots {
-    public int ID;
-    public int RestaurantID;
+public class ReservationTimeSlots : IDBRestaurantClass {
+    public int ID {get;}
+    public int RestaurantID {get;}
     public DateTime StartDateTime;
     public DateTime EndDateTime;
 
