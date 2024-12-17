@@ -36,7 +36,7 @@ public static class Log {
         // if (System.Runtime.InteropServices.RuntimeInformation.OSDescription.Contains("Darwin")) {
         //     logfileLocation = $"Data/Logs/{currentLogTimestamp}_log.txt";
         // } else {
-            logfileLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent + $"/Data/Logs/{currentLogTimestamp}_log.txt";
+            logfileLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent + $"/Data/Logs/{currentLogTimestamp}_log.txt";
         // }
 
         if (!File.Exists(logfileLocation))

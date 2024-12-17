@@ -1,39 +1,55 @@
 public static class AccountDisplay {
 
-    public static void AccountMenu(Accounts LoggedInAccount) {
-        while (true) {
+    private static RRS.Logic.LanguageManager LanguageManager = null;
+
+    public static void AccountMenu(Accounts LoggedInAccount)
+    {
+        LanguageManager = new RRS.Logic.LanguageManager();
+        LanguageManager.SetLanguage(LoggedInAccount.Language);
+        
+        while (true)
+        {
             Console.Clear();
             Console.WriteLine("====================================================================");
             Console.WriteLine(" ▗▄▖  ▗▄▄▖ ▗▄▄▖ ▗▄▖ ▗▖ ▗▖▗▖  ▗▖▗▄▄▄▖\n" +
-                                "▐▌ ▐▌▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▛▚▖▐▌  █  \n" + 
+                                "▐▌ ▐▌▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▛▚▖▐▌  █  \n" +
                                 "▐▛▀▜▌▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌ ▝▜▌  █  \n" +
                                 "▐▌ ▐▌▝▚▄▄▖▝▚▄▄▖▝▚▄▞▘▝▚▄▞▘▐▌  ▐▌  █  ");
             Console.WriteLine("====================================================================\n");
-            Console.WriteLine("1 - Change password\n\n");
+            string Opt1 = LanguageManager.GetTranslation("ChangePassword");
+            Console.WriteLine(Opt1);
             Console.WriteLine("================================================================");
-            Console.WriteLine("Please select an account to change (enter Q to exit):");
+            string Please = LanguageManager.GetTranslation("PleaseSelectAccChange");
+            Console.WriteLine(Please);
 
             string userInput = Console.ReadLine();
-            if (userInput.ToLower() == "q") {
+            if (userInput.ToLower() == "q")
+            {
                 break;
-            } else {
+            }
+            else
+            {
                 switch (userInput)
                 {
                     case "1":
                         NewPassword(LoggedInAccount);
                         break;
                     default:
-                        Console.WriteLine("Invalid input, please select a valid option");
+                        string error = LanguageManager.GetTranslation("PlsValid");
+                        Console.WriteLine(error);
                         Thread.Sleep(1500);
                         break;
                 }
             }
         }
+        LanguageManager = null;
     }
-    
+
+
     public static void AdminAccountMenu(Accounts LoggedInAccount) {
         bool CanCreateAdminAccounts = AccountLogic.CanDisplay("createAdmins", LoggedInAccount);
-
+        LanguageManager = new RRS.Logic.LanguageManager();
+        LanguageManager.SetLanguage(LoggedInAccount.Language);
         while (true) {
             Console.Clear();
             Console.WriteLine("====================================================================");
@@ -42,10 +58,13 @@ public static class AccountDisplay {
                                 "▐▛▀▜▌▐▌  █▐▌  ▐▌  █  ▐▌ ▝▜▌    ▐▛▀▜▌▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌ ▝▜▌  █  \n" +
                                 "▐▌ ▐▌▐▙▄▄▀▐▌  ▐▌▗▄█▄▖▐▌  ▐▌    ▐▌ ▐▌▝▚▄▄▖▝▚▄▄▖▝▚▄▞▘▝▚▄▞▘▐▌  ▐▌  █  ");
             Console.WriteLine("====================================================================\n");
-            Console.WriteLine("1 - Create a new customer account");
+            string opt1 = = LanguageManager.GetTranslation("SuperAdminMenuOpt1"); 
+            Console.WriteLine(opt1);
             if (CanCreateAdminAccounts) {
-                Console.WriteLine("2 - Create a new admin account");
-                Console.WriteLine("3 - Lookup account");
+                string opt2 = LanguageManager.GetTranslation("SuperAdminMenuOpt2");
+                Console.WriteLine(opt2);
+                string opt3 = LanguageManager.GetTranslation("SuperAdminMenuOpt3");
+                Console.WriteLine(opt3);
                 Console.WriteLine("4 - Change accountlevels for an account");
                 Console.WriteLine("5 - Delete account");
                 Console.WriteLine("6 - Change password\n\n");
@@ -106,6 +125,7 @@ public static class AccountDisplay {
                 }
             }
         }
+        LanguageManager = null;
     }
 
     public static void ChangeAccountLevels(Accounts LoggedInAccount) {

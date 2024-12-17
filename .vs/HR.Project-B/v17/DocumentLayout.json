@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1C40379D-4B4D-48E5-B591-2858EDECC5CC}|RRS\\RRS.csproj|c:\\users\\mickd\\documents\\github\\hr.project-b\\rrs\\presentation\\accountdisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C40379D-4B4D-48E5-B591-2858EDECC5CC}|RRS\\RRS.csproj|solutionrelative:rrs\\presentation\\accountdisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C40379D-4B4D-48E5-B591-2858EDECC5CC}|RRS\\RRS.csproj|c:\\users\\mickd\\documents\\github\\hr.project-b\\rrs\\data\\classes\\language.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C40379D-4B4D-48E5-B591-2858EDECC5CC}|RRS\\RRS.csproj|solutionrelative:rrs\\data\\classes\\language.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C40379D-4B4D-48E5-B591-2858EDECC5CC}|RRS\\RRS.csproj|c:\\users\\mickd\\documents\\github\\hr.project-b\\rrs\\logic\\languageloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C40379D-4B4D-48E5-B591-2858EDECC5CC}|RRS\\RRS.csproj|solutionrelative:rrs\\logic\\languageloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C40379D-4B4D-48E5-B591-2858EDECC5CC}|RRS\\RRS.csproj|c:\\users\\mickd\\documents\\github\\hr.project-b\\rrs\\data\\log.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1C40379D-4B4D-48E5-B591-2858EDECC5CC}|RRS\\RRS.csproj|solutionrelative:rrs\\data\\log.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LanguageLoader.cs",
+              "DocumentMoniker": "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\Logic\\LanguageLoader.cs",
+              "RelativeDocumentMoniker": "RRS\\Logic\\LanguageLoader.cs",
+              "ToolTip": "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\Logic\\LanguageLoader.cs",
+              "RelativeToolTip": "RRS\\Logic\\LanguageLoader.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-12T14:34:45.996Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Language.cs",
+              "DocumentMoniker": "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\Data\\Classes\\Language.cs",
+              "RelativeDocumentMoniker": "RRS\\Data\\Classes\\Language.cs",
+              "ToolTip": "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\Data\\Classes\\Language.cs",
+              "RelativeToolTip": "RRS\\Data\\Classes\\Language.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAgwEsAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-12T14:33:22.935Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AccountDisplay.cs",
+              "DocumentMoniker": "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\Presentation\\AccountDisplay.cs",
+              "RelativeDocumentMoniker": "RRS\\Presentation\\AccountDisplay.cs",
+              "ToolTip": "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\Presentation\\AccountDisplay.cs",
+              "RelativeToolTip": "RRS\\Presentation\\AccountDisplay.cs",
+              "ViewState": "AgIAAHUAAAAAAAAAAAAYwDgAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-12T12:46:00.175Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Log.cs",
+              "DocumentMoniker": "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\Data\\Log.cs",
+              "RelativeDocumentMoniker": "RRS\\Data\\Log.cs",
+              "ToolTip": "C:\\Users\\mickd\\Documents\\GitHub\\HR.Project-B\\RRS\\Data\\Log.cs",
+              "RelativeToolTip": "RRS\\Data\\Log.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-12T12:31:32.006Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
