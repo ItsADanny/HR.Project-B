@@ -6,32 +6,37 @@ public static class ReservationLogic {
 
         //grab reserv list
         List<Reservations> reservations = Database.SelectReservations(restaurantID);
-
-        foreach (Reservations reservation in reservations) 
-        {
-            i++;
-            //grab reservation timeslot
-            ReservationTimeSlots reservationTimeSlot = Database.SelectReservationTimeSlot(reservation.TimeSlotID);
-            //retrieve acc info
-            Accounts accounts = Database.SelectAccount(reservation.AccountID);
-
-            string reservationStatus = "";
-            
-            //check actual status
-            if (reservation.Status == 1) 
+        Console.WriteLine(reservations.Count);
+        if (reservations.Count > 0) {
+            foreach (Reservations reservation in reservations) 
             {
-                reservationStatus = "CANCELLED";
-            }
-            
-            //add enter to every line
-            if (returnResult != "") 
-            {
-                returnResult += "\n";
-            }
+                i++;
+                //grab reservation timeslot
+                ReservationTimeSlots reservationTimeSlot = Database.SelectReservationTimeSlot(reservation.TimeSlotID);
+                //retrieve acc info
+                Accounts accounts = Database.SelectAccount(reservation.AccountID);
 
-            //format return
-            returnResult += $"{i} - Reservation for: {accounts.FirstName} {accounts.LastName}, Table: {reservation.TableID}, Date: {reservationTimeSlot.GetDate()}, from {reservationTimeSlot.GetStartTime24()} to {reservationTimeSlot.GetEndTime24()}";
+                string reservationStatus = "";
+                
+                //check actual status
+                if (reservation.Status == 1) 
+                {
+                    reservationStatus = "CANCELLED";
+                }
+                
+                //add enter to every line
+                if (returnResult != "") 
+                {
+                    returnResult += "\n";
+                }
+
+                //format return
+                returnResult += $"{i} - Reservation for: {accounts.FirstName} {accounts.LastName}, Table: {reservation.TableID}, Date: {reservationTimeSlot.GetDate()}, from {reservationTimeSlot.GetStartTime24()} to {reservationTimeSlot.GetEndTime24()}";
+            }
+        } else {
+            returnResult = "No reservations found";
         }
+        
         return returnResult;
     }
 

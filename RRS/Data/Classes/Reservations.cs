@@ -24,4 +24,13 @@ public class Reservations : IDBRestaurantClass {
         AccountID = accountID;
         Status = status;
     }
+
+    // public Reservations(string id, string restaurantID, int timeSlotID, int tableID, int accountID, int status) {
+    //     ID = id;
+    //     RestaurantID = restaurantID;
+    //     TimeSlotID = timeSlotID;
+    //     TableID = tableID;
+    //     AccountID = accountID;
+    //     Status = status;
+    // }
 }
