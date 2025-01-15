@@ -1,31 +1,13 @@
-public static class MenuLogic 
-{
-    //-{4/11/2024}-{MICK}
-    //Created the Menu logic, added in add delete and edit first
-    //-{11/11/2024}-{MICK}
-    //
-    public static bool AddMenuItem(int restaurantID, string Name,string Description, double Price,string Foodtype)
-    {
-        Menu newMenuItem = new Menu(restaurantID, Name, Description, Price, Database.SelectFoodType(restaurantID, Foodtype));
+public static class MenuLogic {
+    public static bool AddMenuItem(int restaurantID, string Name,string Description, double Price,string Foodtype) => Database.Insert(new Menu(restaurantID, Name, Description, Price, Database.SelectFoodType(restaurantID, Foodtype)));
 
-        return Database.Insert(newMenuItem);
+    public static bool Deletemenuitem(int restaurantID, string Name) => Database.DeleteMenuItem(restaurantID, Name);
 
-    }
+    public static bool Deletemenuitem(int restaurantID, int menuItemID, Accounts LoggedinUser) => Database.DeleteMenuItem(restaurantID, menuItemID);
 
-    public static bool Deletemenuitem(int restaurantID, string Name)
-    {
-        return Database.DeleteMenuItem(restaurantID, Name);
-    }
+    public static bool EditMenuItem(int restaurantID, string choice, string name, string input) => Database.UpdateMenuItem(restaurantID, choice, name, input);
 
-    public static bool EditMenuItem(int restaurantID, string choice, string name, string input)
-    {
-        return Database.UpdateMenuItem(restaurantID, choice, name, input);
-    }
-
-    public static List<FoodType> RetrieveFoodType(int restaurantID)
-    {
-        return Database.SelectFoodType(restaurantID);
-    }
+    public static List<FoodType> RetrieveFoodType(int restaurantID) => Database.SelectFoodType(restaurantID);
 
     public static List<string> RetrieveFoodTypes(int restaurantID)
     {
@@ -38,9 +20,42 @@ public static class MenuLogic
         return stringsFoodType;
     }
 
-    public static List<Menu> RetrieveItems(int restaurantID)
+    public static string RetrieveFoodType(int restaurantID, int foodTypeID)
     {
-        return Database.SelectMenu(restaurantID);
+        List<FoodType> foodTypes = Database.SelectFoodType(restaurantID);
+        foreach (FoodType foodtype in foodTypes)
+        {
+            if (foodtype.ID == foodTypeID) {
+                return foodtype.Name;
+            }
+        }
+        return null;
+    }
+
+    public static List<Menu> RetrieveItems(int restaurantID) => Database.SelectMenu(restaurantID);
+
+    public static List<string> ToDisplayString(List<Menu> menuItems)
+    {
+        List<string> returnValue = new ();
+        foreach (Menu menu in menuItems)
+        {
+            returnValue.Add($"{RetrieveFoodType(menu.RestaurantID, menu.Foodtype)} : {menu.Name} : {menu.Price}");
+        }
+        return returnValue;
+    }
+
+    public static int GetIDFromDisplayString(string displayString, int restaurantID)
+    {
+        int foundID = 0;
+        List<Menu> menuItems = RetrieveItems(restaurantID);
+        foreach (Menu menu in menuItems)
+        {
+            if ($"{RetrieveFoodType(menu.RestaurantID, menu.Foodtype)} : {menu.Name} : {menu.Price}" == displayString)
+            {
+                foundID = menu.ID;
+            }
+        }
+        return foundID;
     }
 
     public static Dictionary<int, string> RetrieveOrderedFoodTypes(int restaurantID)

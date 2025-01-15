@@ -1,109 +1,114 @@
 public static class ReservationDisplay {
 
+    private static string header = "====================================================================\n▗▄▄▖ ▗▄▄▄▖ ▗▄▄▖▗▄▄▄▖▗▄▄▖ ▗▖  ▗▖ ▗▄▖▗▄▄▄▖▗▄▄▄▖ ▗▄▖ ▗▖  ▗▖ ▗▄▄▖\n▐▌ ▐▌▐▌   ▐▌   ▐▌   ▐▌ ▐▌▐▌  ▐▌▐▌ ▐▌ █    █  ▐▌ ▐▌▐▛▚▖▐▌▐▌   \n▐▛▀▚▖▐▛▀▀▘ ▝▀▚▖▐▛▀▀▘▐▛▀▚▖▐▌  ▐▌▐▛▀▜▌ █    █  ▐▌ ▐▌▐▌ ▝▜▌ ▝▀▚▖\n▐▌ ▐▌▐▙▄▄▖▗▄▄▞▘▐▙▄▄▖▐▌ ▐▌ ▝▚▞▘ ▐▌ ▐▌ █  ▗▄█▄▖▝▚▄▞▘▐▌  ▐▌▗▄▄▞▘\n====================================================================\n\n";
+
     public static void ReservationMenu_Customer(int restaurantID, Accounts LoggedInAccount) {
-        PrintHeader();
+        Console.Clear();
+        Console.WriteLine(header);
     }
 
     public static void ReservationMenu_Admin (int restaurantID, Accounts LoggedInAccount) {
-        bool CanChangeReservations = AccountLogic.CanDisplay_ChangeReservations(LoggedInAccount);
-        // THIS NEEDS TO BE IMPLEMENTED
-        // bool CanCancelReservations = AccountLogic.CanDisplay_CancelReservations(LoggedInAccount);
-        while (true) {
-            PrintHeader();
-            Console.WriteLine("1 - View reservations");
-                if (CanChangeReservations) {
-                    Console.WriteLine("2 - Cancel reservation");
-                }
-                Console.WriteLine("================================================================");
-                Console.WriteLine("Please select an account to change (enter Q to exit):");
+        bool CanChangeReservations = AccountLogic.CanDisplay("cancelReservations", LoggedInAccount);
+        List<string> options = ["Make a reservation for a customer", "View currently running reservations", "View all reservations"];
+        if (CanChangeReservations) {
+            options.Add("Cancel reservations");
+        }
+        options.Add("Exit");
+        
+        bool done = false;
+
+        while (!done) {
+            switch (Functions.OptionSelector(header, options)) {
+                case 0:
+                    //TODO IMPLEMENT THIS FEATURE FOR THE ADMIN
+                    break;
+                case 1:
+                    DisplayCurrentForRestaurant(restaurantID);
+                    break;
+                case 2:
+                    DisplayForRestaurant(restaurantID);
+                    break;
+                case 3:
+                    if (CanChangeReservations) {
+                        //TODO IMPLEMENT THIS FEATURE FOR THE ADMIN WITHOUT DELETING TIMESLOTS (WHICH IS WHAT WE CURRENTLY HAVE AS THE ONLY WAY TO CANCEL RESERVATIONS)
+                    } else {
+                        done = true;
+                    }
+                    break;
+                case 4:
+                    done = true;
+                    break;
+            }
         }
     }
 
     public static void DisplayForRestaurant(int restaurantID) 
     {
-        PrintHeader();
+        Console.Clear();
+        Console.WriteLine(header);
         Console.WriteLine(ReservationLogic.RetrieveReservations(restaurantID));
         Console.WriteLine("====================================================================\n\n");
         Console.WriteLine("Press ENTER to exit");
         Console.ReadLine();
     }
 
+    public static void DisplayCurrentForRestaurant(int restaurantID) {
+        Console.Clear();
+        Console.WriteLine(header);
+        Console.WriteLine(ReservationLogic.RetrieveCurrentReservations(restaurantID));
+        Console.WriteLine("====================================================================\n\n");
+        Console.WriteLine("Press ENTER to exit");
+        Console.ReadLine();
+    }
+
     public static void DisplayForRestaurantCustomer(int restaurantID, Accounts LoggedInAccount) {
-        PrintHeader();
+        Console.Clear();
+        Console.WriteLine(header);
         Console.WriteLine(ReservationLogic.RetrieveReservations(restaurantID, LoggedInAccount.ID));
         Console.WriteLine("====================================================================\n\n");
         Console.WriteLine("Press ENTER to exit");
         Console.ReadLine();
     }
 
-    // public static void DisplayCreateReservation(int restaurantID) {
-    //     PrintHeader();
-    //     Console.WriteLine("Please input following information requests to create an reservation.\n");
-    //     string firstName = Functions.RequestValidString("First name");
-    //     string lastName = Functions.RequestValidString("Last name");
-    //     string email = Functions.RequestValidEmail();
-    //     string phoneNumber = Functions.RequestValidEmail();
-    //     string date = Functions.RequestValidDate();
-    //     string startTime = Functions.RequestValidTime("Start time");
-    //     string endTime = Functions.RequestValidTime("End time");
-    //     int Table = Functions.RequestValidInt("Table number:");
-    //     Console.WriteLine("====================================================================\n\n");
-    //     Console.WriteLine("Creating reservation");
-    //     if(ReservationLogic.CreateReservation(restaurantID, firstName, lastName, email, phoneNumber, date, startTime, endTime, Table)) {
-    //         Console.WriteLine("Reservation created succesfully\n\n");
-    //     } else {
-    //         Console.WriteLine("There was an error while trying to create the reservation, please try it again later.\n\n");
-    //     }
-    //     Console.WriteLine("====================================================================");
-    // }
-
     public static void DisplayCreateReservation_Customer(int restaurantID, Accounts LoggedInAccount) {
-        PrintHeader();
-        Console.WriteLine("Please input following information requests to create a reservation.\n");
-        string TimeSlotID = TimeSlotLogic.GetSelectedTimeSlot_Reservation();
-        int Table = Functions.RequestValidInt("Table number");
-        Console.WriteLine("====================================================================\n\n");
-        Console.WriteLine("Creating reservation");
-        if(ReservationLogic.CreateReservation(restaurantID, Convert.ToInt32(TimeSlotID), LoggedInAccount.ID, Table)) {
-            Console.WriteLine("Reservation created successfully\n\n");
-        } else {
-            Console.WriteLine("There was an error while trying to create the reservation, please try it again later.\n\n");
+        string reservationCustomerHeader = header + "Please input following information requests to create a reservation.\n";
+        ReservationTimeSlots SelectedTimeSlot = TimeSlotLogic.GetSelectedTimeSlot(TimeSlotLogic.GetIDFromDisplayString(Functions.OptionSelector(reservationCustomerHeader, TimeSlotLogic.ToDisplayString(TimeSlotLogic.FilterUpcoming(TimeSlotLogic.GetTimeSlots(restaurantID), false)), true), restaurantID));
+        reservationCustomerHeader = reservationCustomerHeader + TimeSlotLogic.ToDisplayString(SelectedTimeSlot) + "\nDo you want to use matchmaking, for getting assigned to an random table?";
+        switch (Functions.OptionSelector(reservationCustomerHeader, ["Yes", "No"])) {
+            case 0:
+                Table MatchMadeTable = TableLogic.matchMaking(SelectedTimeSlot, restaurantID);
+                if(ReservationLogic.CreateReservation(restaurantID, SelectedTimeSlot.ID, LoggedInAccount.ID, MatchMadeTable.ID)) {
+                    Console.WriteLine("Reservation created successfully\n\n");
+                } else {
+                    Console.WriteLine("There was an error while trying to create the reservation, please try it again later.\n\n");
+                }
+                break;
+            case 1:
+                List<string> ListOfTables = TableLogic.ToDisplayString(TableLogic.GetOpenTables(SelectedTimeSlot.ID, restaurantID), SelectedTimeSlot, restaurantID);
+                int selectedTable = Functions.OptionSelector(header + RestuarantPlans.GetFloorPlan() + "\nPlease select an table you want to join:", ListOfTables);
+                Table table = TableLogic.GetTableFromDisplayString(ListOfTables[selectedTable], SelectedTimeSlot, restaurantID);
+
+                reservationCustomerHeader = reservationCustomerHeader + $"\nPlease select an table you want to join:\n{TableLogic.ToDisplayString(table, SelectedTimeSlot, restaurantID)}";
+                Console.WriteLine(reservationCustomerHeader);
+
+                if(ReservationLogic.CreateReservation(restaurantID, SelectedTimeSlot.ID, LoggedInAccount.ID, table.ID)) {
+                    Console.WriteLine("Reservation created successfully\n\n");
+                } else {
+                    Console.WriteLine("There was an error while trying to create the reservation, please try it again later.\n\n");
+                }
+                break;
+            default:
+                Console.WriteLine("I am a massive idiot, but even an idiot is right twice -Danny");
+                Thread.Sleep(5000);
+                break;
         }
-        Console.WriteLine("====================================================================");
     }
 
-    private static void PrintFloorPlan()
-    {
-        string Floorplan = @"
-        ================================================================================================
-        |                                                         |                                    |
-        |    ==============       ========      ========          |              KITCHEN               |
-        |    |     T      |       |      |      |      |          |               + BAR                |
-        |    |     1      |       |      |      |      |          |                                    |
-        |    ==============       |  T4  |      |  T5  |          =====================================|
-        |                         |      |      |      |                                               |
-        |                         |      |      |      |                                               |
-        |    ==============       ========      ========                                               |
-        |    |     T      |                                           =========================        |
-        |    |     2      |                                           |         TABLE         |        |
-        |    ==============       ========      ========              |           8           |        |
-        |                         |  T6  |      |  T7  |              =========================        |
-        |                         |      |      |      |                                               |
-        |    ==============       ========      ========                                               |
-        |    |     T      |                                           ========         =============   |
-        |    |     3      |                   ==============          |  T9  |         |    T10    |   |
-        |    ==============                   |  ENTRANCE  |          |      |         |           |   |
-        |                                     |    ^^^^    |          ========         =============   |
-        ================================================================================================
-        ";
-    }
-
-    private static void PrintHeader() {
-        Console.WriteLine("====================================================================");
-        Console.WriteLine("▗▄▄▖ ▗▄▄▄▖ ▗▄▄▖▗▄▄▄▖▗▄▄▖ ▗▖  ▗▖ ▗▄▖▗▄▄▄▖▗▄▄▄▖ ▗▄▖ ▗▖  ▗▖ ▗▄▄▖");
-        Console.WriteLine("▐▌ ▐▌▐▌   ▐▌   ▐▌   ▐▌ ▐▌▐▌  ▐▌▐▌ ▐▌ █    █  ▐▌ ▐▌▐▛▚▖▐▌▐▌   ");
-        Console.WriteLine("▐▛▀▚▖▐▛▀▀▘ ▝▀▚▖▐▛▀▀▘▐▛▀▚▖▐▌  ▐▌▐▛▀▜▌ █    █  ▐▌ ▐▌▐▌ ▝▜▌ ▝▀▚▖");
-        Console.WriteLine("▐▌ ▐▌▐▙▄▄▖▗▄▄▞▘▐▙▄▄▖▐▌ ▐▌ ▝▚▞▘ ▐▌ ▐▌ █  ▗▄█▄▖▝▚▄▞▘▐▌  ▐▌▗▄▄▞▘");
-        Console.WriteLine("====================================================================");
+    public static void PrintFloorPlan() {
+        Console.Clear();
+        Console.WriteLine(header);
+        Console.WriteLine(RestuarantPlans.GetFloorPlan());
+        Console.WriteLine("=============================================================================================================\nPress ENTER to exit");
+        Console.ReadLine();
     }
 }

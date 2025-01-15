@@ -1,111 +1,130 @@
 public static class TimeSlotDisplay {
-    public static void Menu(Accounts LoggedInAccount) {
-        bool canChangeTimeSlots = AccountLogic.CanDisplay_ChangeTimeSlots(LoggedInAccount);
-        while (true) {
-            Console.Clear();
-            PrintHeader();
-            Console.WriteLine("\nOptions:");
-            Console.WriteLine("1 - View timeslots");
-            if (canChangeTimeSlots) {
-                // Console.WriteLine("2 - Create a new timeslot");
-                // Console.WriteLine("3 - Edit timeslot");
-                // Console.WriteLine("4 - Delete timeslot\n\n");
-                //BELOW IS TEMPORARY
-                Console.WriteLine("2 - Create a new timeslot");
-                Console.WriteLine("3 - Delete timeslot\n\n");
-            } else {
-                Console.WriteLine("\n");
+
+    private readonly static string Header = "====================================================================\n▗▄▄▄▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄▖ ▗▄▄▖▗▖    ▗▄▖▗▄▄▄▖▗▄▄▖\n  █    █  ▐▛▚▞▜▌▐▌   ▐▌   ▐▌   ▐▌ ▐▌ █ ▐▌   \n  █    █  ▐▌  ▐▌▐▛▀▀▘ ▝▀▚▖▐▌   ▐▌ ▐▌ █  ▝▀▚▖\n  █  ▗▄█▄▖▐▌  ▐▌▐▙▄▄▖▗▄▄▞▘▐▙▄▄▖▝▚▄▞▘ █ ▗▄▄▞▘\n====================================================================\n\n";
+    
+    public static void Menu(int restaurantID, Accounts LoggedInAccount) {
+        bool exitScreen = false;
+        while (!exitScreen) {
+            List<string> options = ["View timeslots"];
+            if (AccountLogic.CanDisplay("changeTimeslots", LoggedInAccount)) {
+                options.Add("Create a new timeslot");
+                options.Add("Delete timeslot");
             }
-            Console.WriteLine("================================================================");
-            Console.WriteLine("Please select an option (enter Q to exit):");
+            options.Add("Exit");
 
-            string userInput = Console.ReadLine();
-            if (userInput.ToLower() == "q") {
-
-                break;
-            } else {
-                if (canChangeTimeSlots) {
-                    switch (userInput) {
-                        case "1":
-                            ViewTimeSlots();
-                            break;
-                        case "2":
-                            CreateNewTimeSlot();
-                            break;
-                        // THIS WILL BE ADDED ON A LATER DATE, ITS NOT SUPER IMPORTANT FOR NOW
-                        // case "3":
-                        //     EditTimeSlot();
-                        //     break;
-                        // case "4":
-                        //     DeleteTimeSlot();
-                        //     break;
-                        case "3": //THIS IS A TEMPORARY PART WHICH WILL BE REPLACED WITH THE STUFF ABOVE THIS LINE
-                            DeleteTimeSlot();
-                            break;
-                        default:
-                            Console.WriteLine("Invalid input, please enter a valid option");
-                            Thread.Sleep(1500);
-                            break;
-                    }
-                 } else {
-                    switch (userInput) {
-                        case "1":
-                            ViewTimeSlots();
-                            break;
-                        default:
-                            Console.WriteLine("Invalid input, please enter a valid option");
-                            Thread.Sleep(1500);
-                            break;
-                    }
-                }
+            switch(Functions.OptionSelector(Header, options)) {
+                case 0:
+                    View(restaurantID);
+                    break;
+                case 1:
+                    Create(restaurantID, LoggedInAccount);
+                    break;
+                case 2:
+                    Delete(restaurantID, LoggedInAccount);
+                    break;
+                case 3:
+                    exitScreen = true;
+                    break;
             }
         }
     }
-
-    private static void ViewTimeSlots() {
+    
+    private static void View(int restaurantID) {
         Console.Clear();
-        PrintHeader();
-        TimeSlotLogic.PrintTimeSlots();
+        Console.WriteLine(Header);
+        foreach (ReservationTimeSlots timeslot in TimeSlotLogic.FilterUpcoming(TimeSlotLogic.GetTimeSlots(restaurantID), false)) {
+            Console.WriteLine($"date: {timeslot.GetDate()} from {timeslot.GetStartTime24()} until {timeslot.GetEndTime24()}");
+        }
         Console.WriteLine("====================================================================\n\n");
         Console.WriteLine("Press ENTER to exit");
         Console.ReadLine();
     }
 
-    private static void CreateNewTimeSlot() {
+    private static void Create(int restaurantID, Accounts LoggedInAccount) {
         Console.Clear();
-        PrintHeader();
+        Console.WriteLine(Header);
         Console.WriteLine("\nDate for the new timeslot:");
         string date = Functions.RequestValidDate();
-        string starttime = Functions.RequestValidTime24("Start time");
-        string endtime = Functions.RequestValidTime24("End time");
-        if (TimeSlotLogic.CreateTimeslot(date, starttime, endtime)) {
-            Console.WriteLine("Timeslot created, returning to timeslot menu");
+        if (Functions.OptionSelector($"{Header}\nDo you want to create bulk timeslots for this date: {date}", ["Yes", "No"]) == 0) {
+            TimeOnly startTimeDay = Functions.TimeSelector("Please select the opening time of the restaurant\n");
+            TimeOnly TimeSlotSize = Functions.TimeSelector("Please select an timeslot size\n");
+            Console.Clear();
+            // int timeslotAmount = Functions.RequestValidInt("Timeslot amount (Max 5)", 1, 5); //THIS IS NOT TO BE USED ANYMORE, PLEASE USE THE METHOD Functions.IntSelector -ItsDanny
+            int timeslotAmount = Functions.IntSelector("Please select an amount of timeslots you want to generate (min: 1, max: 5)", 1, 5);
+            Console.Clear();
+            List<List<string>> timeslots = TimeSlotLogic.GenerateTimeSlots(startTimeDay, TimeSlotSize, timeslotAmount);
+            Dictionary<string, bool> successes = new ();
+
+            foreach (List<string> timeslot in timeslots) {
+                string starttime = timeslot[0];
+                string endtime = timeslot[1];
+                string timeslot_str = $"{date} - start time: {starttime}, end time: {endtime}";
+                
+                if (TimeSlotLogic.CreateTimeslot(restaurantID, date, starttime, endtime, LoggedInAccount)) {
+                    successes.Add(timeslot_str, true);
+                } else {
+                    successes.Add(timeslot_str, false);
+                }
+            }
+
+            List<string> failed_timeslots = [];
+            int succes = 0;
+            int failures = 0;
+
+            foreach (KeyValuePair<string, bool> row in successes) {
+                if (row.Value) {
+                    succes++;
+                } else {
+                    failures++;
+                    failed_timeslots.Add(row.Key);
+                }
+            }
+
+            if (failures > 0) {
+                Console.WriteLine($"\x1b[32m{succes}\x1b[39m timeslots succesfully created");
+                Console.WriteLine($"\x1b[31m{failures}\x1b[39m timeslots had an erro while trying to be created\nHere is an list of the uncreated timeslots:\n");
+                foreach (string failed_timeslot in failed_timeslots) {
+                    Console.WriteLine("");
+                }
+            } else {
+                Console.WriteLine($"\x1b[32m{succes}\x1b[39m timeslots succesfully created, returning to timeslot menu");
+            }
+
         } else {
-            Console.WriteLine("There was a problem while trying to create your timeslot, please try again later");
+            string starttime = Functions.RequestValidTime24("Start time");
+            string endtime = Functions.RequestValidTime24("End time");
+
+            if (TimeSlotLogic.CreateTimeslot(date, starttime, endtime)) {
+                Console.WriteLine("Timeslot created, returning to timeslot menu");
+            } else {
+                Console.WriteLine("There was a problem while trying to create your timeslot, please try again later");
+            }
         }
+
         Thread.Sleep(1500);
     }
 
-    private static void DeleteTimeSlot() {
-        Console.Clear();
-        PrintHeader();
-        TimeSlotLogic.PrintTimeSlots();
-        Console.WriteLine("====================================================================\n\n");
-        string TimeSlotID = TimeSlotLogic.GetSelectedTimeSlot();
-        if (TimeSlotLogic.DeleteTimeSlot(TimeSlotID)) {
-            Console.WriteLine("Timeslot deleted, returning to timeslot menu");
-        } else {
-            Console.WriteLine("There was an error while trying to delete the selected timeslot, please try again later");
+    private static void Delete(int restaurantID, Accounts LoggedInAccount) {
+        string header = Header + "\n\nPlease select the timeslots you want to delete:";
+        Dictionary<string, bool> slotsToDelete = Functions.CheckBoxSelector(header, TimeSlotLogic.ToDisplayString(TimeSlotLogic.FilterUpcoming(TimeSlotLogic.GetTimeSlots(restaurantID), false)));
+        
+        foreach (KeyValuePair<string, bool> row in slotsToDelete) {
+            if (row.Value) {
+                int timeslotID = TimeSlotLogic.GetIDFromDisplayString(row.Key, restaurantID);
+                if (TimeSlotLogic.DeleteTimeSlot(timeslotID, LoggedInAccount)) {
+                    if (ReservationLogic.CancelReservation(timeslotID, LoggedInAccount)) {
+                        Console.WriteLine($"Timeslot \"{row.Key}\" deleted, associated reservations have been cancelled");
+                    } else {
+                        Console.WriteLine($"Timeslot \"{row.Key}\" deleted, but there was an error while trying to cancel associated reservations.\nPlease cancel these reservations manually");
+                    }
+                } else {
+                    Console.WriteLine($"There was an error while trying to delete timeslot \"{row.Key}\", please try again later");
+                }
+            }
         }
-        Thread.Sleep(1500);
-    }
 
-    private static void PrintHeader() {
-        Console.WriteLine("====================================================================");
-        Console.WriteLine("▗▄▄▄▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄▖ ▗▄▄▖▗▖    ▗▄▖▗▄▄▄▖▗▄▄▖");
-        Console.WriteLine("  █    █  ▐▛▚▞▜▌▐▌   ▐▌   ▐▌   ▐▌ ▐▌ █ ▐▌   ");
-        Console.WriteLine("  █    █  ▐▌  ▐▌▐▛▀▀▘ ▝▀▚▖▐▌   ▐▌ ▐▌ █  ▝▀▚▖");
-        Console.WriteLine("  █  ▗▄█▄▖▐▌  ▐▌▐▙▄▄▖▗▄▄▞▘▐▙▄▄▖▝▚▄▞▘ █ ▗▄▄▞▘");
-        Console.WriteLine("====================================================================");
+        Thread.Sleep(1500);
+        Console.WriteLine("====================================================================\n\nPress any key to continue");
+        Console.ReadKey();
     }
 }

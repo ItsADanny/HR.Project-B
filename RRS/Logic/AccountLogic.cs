@@ -1,5 +1,3 @@
-using System.Globalization;
-
 public static class AccountLogic {
     public static void PrintAccounts(Accounts LoggedInAccount) {
         foreach (Accounts accounts in Database.SelectAccount()) {
@@ -9,12 +7,31 @@ public static class AccountLogic {
         } 
     }
 
+    public static string GetAccountsDisplay(Accounts LoggedInAccount) {
+        string returnValue = "";
+        foreach (Accounts accounts in Database.SelectAccount()) {
+            if (accounts.ID != LoggedInAccount.ID) {
+                returnValue += $"ID: {accounts.ID} - {accounts.FirstName} {accounts.LastName} - Account level: {accounts.AccountLevel} - {Database.SelectAccountLevel(accounts.AccountLevel).Name}\n";
+            }
+        }
+        return returnValue;
+    }
+
     public static Accounts GetSelectedAccount(Accounts LoggedInAccount, string input) {
         if (int.TryParse(input, out int output)) {
             foreach (Accounts accounts in Database.SelectAccount()) {
                 if (accounts.ID == output && accounts.ID != LoggedInAccount.ID) {
                     return accounts;
                 }
+            }
+        }
+        return null;
+    }
+
+    public static Accounts GetSelectedAccount(int input) {
+        foreach (Accounts accounts in Database.SelectAccount()) {
+            if (accounts.ID == input) {
+                return accounts;
             }
         }
         return null;
@@ -51,24 +68,22 @@ public static class AccountLogic {
         }
     }
 
-    public static bool CanDisplay_CreateAdminAccounts(Accounts LoggedInAccount) {
+    public static bool CanDisplay(string lookupReqeust, Accounts LoggedInAccount) {
         AccountLevel LoggedInAccountsAccountLevel = Database.SelectAccountLevel(LoggedInAccount.AccountLevel);
-        return LoggedInAccountsAccountLevel.CanCreateAdmins;
-    }
-
-    public static bool CanDisplay_CancelReservations(Accounts LoggedInAccount) {
-        AccountLevel LoggedInAccountsAccountLevel = Database.SelectAccountLevel(LoggedInAccount.AccountLevel);
-        return LoggedInAccountsAccountLevel.CanCancelReservations;
-    }
-
-    public static bool CanDisplay_ChangeReservations(Accounts LoggedInAccount) {
-        AccountLevel LoggedInAccountsAccountLevel = Database.SelectAccountLevel(LoggedInAccount.AccountLevel);
-        return LoggedInAccountsAccountLevel.CanChangeReservation;
-    }
-
-    public static bool CanDisplay_ChangeTimeSlots(Accounts LoggedInAccount) {
-        AccountLevel LoggedInAccountsAccountLevel = Database.SelectAccountLevel(LoggedInAccount.AccountLevel);
-        return LoggedInAccountsAccountLevel.CanChangeTimeSlots;
+        switch (lookupReqeust) {
+            case "createAdmins":
+                return LoggedInAccountsAccountLevel.CanCreateAdmins;
+            case "cancelReservations":
+                return LoggedInAccountsAccountLevel.CanCancelReservations;
+            case "changeReservations":
+                return LoggedInAccountsAccountLevel.CanChangeReservation;
+            case "changeTimeslots":
+                return LoggedInAccountsAccountLevel.CanChangeTimeSlots;
+            case "logs":
+                return LoggedInAccountsAccountLevel.CanViewLogs;
+            default:
+                return false;
+        }
     }
 
     public static void SearchForUser_ByID(string userInput) {
@@ -121,7 +136,7 @@ public static class AccountLogic {
 
     public static bool CreateNewCustomerAccount(string Email, string Password, string FirstName, string LastName, string PhoneNumber)
     {
-        return Database.Insert(new Accounts(Email, Password, FirstName, LastName, PhoneNumber, 3));
+        return Database.Insert(new Accounts(Email, Password, FirstName, LastName, PhoneNumber, "EN", 3));
     }
 
 
@@ -141,7 +156,16 @@ public static class AccountLogic {
 
     public static bool CheckCurrPassword(string input, Accounts LoggedInAccount) => Database.CheckAccountPassword(LoggedInAccount.ID, input);
 
-
     public static bool DoesAccountEmailExist(string inputEmail) => Database.DoesEmailAlreadyExist(inputEmail);
 
+    public static int GetInfoSharedCode(Accounts AccountID1, Accounts AccountID2) {
+        int resultCheck = Database.SelectSharedInfoCode(AccountID1.ID, AccountID2.ID);
+        if (resultCheck == 999999999) {
+            Database.InsertInformationShare(AccountID1, AccountID2);
+            return Database.SelectSharedInfoCode(AccountID1.ID, AccountID2.ID);
+        }
+        return resultCheck;
+    }
+
+    public static void UpdateShareInfo(int AccountIDOne, int AccountIDTwo, int ShareInfoCode) => Database.UpdateShareInfo(AccountIDOne, AccountIDTwo, ShareInfoCode);
 }
