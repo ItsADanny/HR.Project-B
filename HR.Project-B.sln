@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RRS", "RRS\RRS.csproj", "{1C40379D-4B4D-48E5-B591-2858EDECC5CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RRSTests", "RRSTests\RRSTests.csproj", "{B57D0A11-AC73-4108-8BE8-C6CC5F5D0A22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{1C40379D-4B4D-48E5-B591-2858EDECC5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C40379D-4B4D-48E5-B591-2858EDECC5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C40379D-4B4D-48E5-B591-2858EDECC5CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B57D0A11-AC73-4108-8BE8-C6CC5F5D0A22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B57D0A11-AC73-4108-8BE8-C6CC5F5D0A22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B57D0A11-AC73-4108-8BE8-C6CC5F5D0A22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B57D0A11-AC73-4108-8BE8-C6CC5F5D0A22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

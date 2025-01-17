@@ -29,6 +29,30 @@ public static class Database {
         }
     }
 
+    public static SqliteConnection CreateConn(string altfileloc="") {
+        string dbLocation;
+        if (altfileloc != "") {
+            dbLocation = altfileloc;
+        } else {
+            dbLocation = $"{Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent}/Data/Database/rrs.db";
+        }
+
+        //Create a new database connection
+        SqliteConnection db_conn = new SqliteConnection($"Data Source={dbLocation}");
+
+        //Try to open the connection, if its not possible then we return a null
+        try {
+            db_conn.Open();
+            //When this has been a succes, write a line to our log file
+            Log.Write("Connection to database has been succesfully created");
+            return db_conn;
+        } catch (Exception ex) {
+            //Write the error to a current logfile
+            Log.WriteError("There was an error when trying to create a connection to the database", ex);
+            return null;
+        }
+    }
+
     //[16-10-2024] - [82924077] – [ItsDanny]
     //[Created a function for closing a connection to our database]
     //This function will close a connection to the SQLite database

@@ -41,8 +41,12 @@ public static class Log {
 
         if (!File.Exists(logfileLocation))
         {
-            FileStream fs = File.Create(logfileLocation);
-            fs.Close();
+            try {
+                FileStream fs = File.Create(logfileLocation);
+                fs.Close();
+            } catch (Exception ex) {
+                return false;
+            }
         }
         return true;
     }
