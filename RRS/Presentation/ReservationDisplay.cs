@@ -1,3 +1,5 @@
+using System.Linq;
+
 public static class ReservationDisplay {
 
     private static string header = "====================================================================\n▗▄▄▖ ▗▄▄▄▖ ▗▄▄▖▗▄▄▄▖▗▄▄▖ ▗▖  ▗▖ ▗▄▖▗▄▄▄▖▗▄▄▄▖ ▗▄▖ ▗▖  ▗▖ ▗▄▄▖\n▐▌ ▐▌▐▌   ▐▌   ▐▌   ▐▌ ▐▌▐▌  ▐▌▐▌ ▐▌ █    █  ▐▌ ▐▌▐▛▚▖▐▌▐▌   \n▐▛▀▚▖▐▛▀▀▘ ▝▀▚▖▐▛▀▀▘▐▛▀▚▖▐▌  ▐▌▐▛▀▜▌ █    █  ▐▌ ▐▌▐▌ ▝▜▌ ▝▀▚▖\n▐▌ ▐▌▐▙▄▄▖▗▄▄▞▘▐▙▄▄▖▐▌ ▐▌ ▝▚▞▘ ▐▌ ▐▌ █  ▗▄█▄▖▝▚▄▞▘▐▌  ▐▌▗▄▄▞▘\n====================================================================\n\n";
@@ -9,7 +11,7 @@ public static class ReservationDisplay {
 
     public static void ReservationMenu_Admin (int restaurantID, Accounts LoggedInAccount) {
         bool CanChangeReservations = AccountLogic.CanDisplay("cancelReservations", LoggedInAccount);
-        List<string> options = ["Make a reservation for a customer", "View currently running reservations", "View all reservations"];
+        List<string> options = ["View currently running reservations", "View all reservations"];
         if (CanChangeReservations) {
             options.Add("Cancel reservations");
         }
@@ -20,22 +22,19 @@ public static class ReservationDisplay {
         while (!done) {
             switch (Functions.OptionSelector(header, options)) {
                 case 0:
-                    //TODO IMPLEMENT THIS FEATURE FOR THE ADMIN
-                    break;
-                case 1:
                     DisplayCurrentForRestaurant(restaurantID);
                     break;
-                case 2:
+                case 1:
                     DisplayForRestaurant(restaurantID);
                     break;
-                case 3:
+                case 2:
                     if (CanChangeReservations) {
-                        //TODO IMPLEMENT THIS FEATURE FOR THE ADMIN WITHOUT DELETING TIMESLOTS (WHICH IS WHAT WE CURRENTLY HAVE AS THE ONLY WAY TO CANCEL RESERVATIONS)
+                        DisplayReservationToCancel(restaurantID);
                     } else {
                         done = true;
                     }
                     break;
-                case 4:
+                case 3:
                     done = true;
                     break;
             }
@@ -98,10 +97,9 @@ public static class ReservationDisplay {
                 }
                 break;
             default:
-                Console.WriteLine("I am a massive idiot, but even an idiot is right twice -Danny");
-                Thread.Sleep(5000);
                 break;
         }
+        Thread.Sleep(2000);
     }
 
     public static void PrintFloorPlan() {
@@ -110,5 +108,34 @@ public static class ReservationDisplay {
         Console.WriteLine(RestuarantPlans.GetFloorPlan());
         Console.WriteLine("=============================================================================================================\nPress ENTER to exit");
         Console.ReadLine();
+    }
+
+    public static void DisplayReservationToCancel(int restaurantID) {
+        List<Reservations> currReservation = ReservationLogic.RemoveCancelled(ReservationLogic.RetrieveCurrReservations(restaurantID));
+        List<string> DisplayStrings = ReservationLogic.ConvertToDisplayString(currReservation);
+        List<string> options = DisplayStrings;
+        options.Add("Exit");
+
+        bool done = false;
+
+        while (!done) {
+            int selected = Functions.OptionSelector(header, options);
+            if (options.Count() != 1) {
+                if (selected == currReservation.Count()) {
+                    done = true;
+                } else {
+                    Reservations selectedReservation = currReservation[selected];
+                    if (ReservationLogic.CancelReservation(selectedReservation)) {
+                        Console.WriteLine($"Reservation {selectedReservation.ID} has been canceld");
+                    } else {
+                        Console.WriteLine($"There was an error when trying to cancel the reservation {selectedReservation.ID}, please try again later");
+                    }
+                    Thread.Sleep(2000);
+                    done = true;
+                }
+            } else {
+                done = true;
+            }
+        }
     }
 }

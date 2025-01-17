@@ -128,6 +128,55 @@ public static class Database {
     //INSERT
     //========================================================================================
 
+    //Generics solution
+    //Still needs some extra debugging
+    // public static bool Insert<T>(T insertionData) where T : class {
+    //     string sql_insertion_string = "";
+
+    //     switch (typeof(T)) {
+    //         case var cls when cls == typeof(Menu):
+    //             Menu menuItem = (Menu)(object)insertionData;
+    //             sql_insertion_string = $"INSERT INTO Menu (RestaurantID, Name, Description, Foodtype, Price) VALUES ({menuItem.RestaurantID}, '{menuItem.Name}', '{menuItem.Description}', '{menuItem.Foodtype}', {menuItem.Price});";
+    //             break;
+    //         case var cls when cls == typeof(Reservations):
+    //             Reservations reservation = (Reservations)(object)insertionData;
+    //             sql_insertion_string = $"INSERT INTO Reservations (RestaurantID, TimeSlotID, TableID, AccountID, Status) VALUES ({reservation.RestaurantID}, '{reservation.TimeSlotID}', '{reservation.TableID}', '{reservation.AccountID}', {reservation.Status});";
+    //             break;
+    //         case var cls when cls == typeof(Accounts):
+    //             Accounts account = (Accounts)(object)insertionData;
+    //             sql_insertion_string = $"INSERT INTO Accounts (Email, Password, FirstName, LastName, PhoneNumber, Language, AccountLevel) VALUES ('{account.Email}', '{account.GetPassword()}', '{account.FirstName}', '{account.LastName}', '{account.PhoneNumber}', 'EN', {account.AccountLevel});";
+    //             break;
+    //         case var cls when cls == typeof(ReservationTimeSlots):
+    //             ReservationTimeSlots timeSlot = (ReservationTimeSlots)(object)insertionData;
+    //             sql_insertion_string = $"INSERT INTO ReservationTimeSlots (RestaurantID, ReservationDate, StartTime, EndTime) VALUES ({timeSlot.RestaurantID}, '{timeSlot.GetDate()}', '{timeSlot.GetStartTime24()}', '{timeSlot.GetEndTime24()}');";
+    //             break;
+    //         case var cls when cls == typeof(Reservations):
+    //             Review reviews = (Review)(object)insertionData;
+    //             sql_insertion_string = $"INSERT INTO Review (RestaurantID, UserID, ReservationID, Rating, Comment) VALUES ({reviews.RestaurantID}, '{reviews.AccountID}', '{reviews.ReservationID}', '{reviews.Rating}', \"{reviews.Comment}\");";
+    //             break;
+    //         default:
+    //             //Do nothing if its an unsupported type
+    //             break;
+    //     }
+
+    //     Log.Write(sql_insertion_string);
+
+    //     if (sql_insertion_string != "") {
+    //         SqliteConnection db_conn = CreateConn();
+
+    //         if (db_conn is not null) {
+    //             SqliteCommand sqlite_cmd;
+    //             sqlite_cmd = db_conn.CreateCommand();
+    //             sqlite_cmd.CommandText = sql_insertion_string;
+    //             sqlite_cmd.ExecuteNonQuery();
+
+    //             CloseConn(db_conn);
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+
     //[22-10-2024] - [82924077] – [ItsDanny]
     //[Added the insert function for the Menu, Reservations and Account]
     //Menu
@@ -1317,22 +1366,22 @@ public static class Database {
             sqlite_cmd = db_conn.CreateCommand();
             switch (choice) {
                 case "name":
-                    sqlite_cmd.CommandText = $"UPDATE Menu SET Name = \"{input}\" WHERE Name = \"{itemname}\";";
+                    sqlite_cmd.CommandText = $"UPDATE Menu SET Name = \'{input}\' WHERE Name = \'{itemname}\';";
                     //DEBUG
                     // Console.WriteLine($"name: UPDATE Menu SET Name = \"{input}\" WHERE Name = \"{itemname}\";");
                     break;
                 case "description":
-                    sqlite_cmd.CommandText = $"UPDATE Menu SET Description = \"{input}\" WHERE Name = \"{itemname}\";";
+                    sqlite_cmd.CommandText = $"UPDATE Menu SET Description = \'{input}\' WHERE Name = \'{itemname}\';";
                     //DEBUG
                     // Console.WriteLine($"description: UPDATE Menu SET Description = \"{input}\" WHERE Name = \"{itemname}\";");
                     break;
                 case "price":
-                    sqlite_cmd.CommandText = $"UPDATE Menu SET Price = {input} WHERE Name = \"{itemname}\";";
+                    sqlite_cmd.CommandText = $"UPDATE Menu SET Price = \'{input}\' WHERE Name = \'{itemname}\';";
                     //DEBUG
                     // Console.WriteLine($"price: UPDATE Menu SET Price = {input} WHERE Name = \"{itemname}\";");
                     break;
                 case "foodtype":
-                    sqlite_cmd.CommandText = $"UPDATE Menu SET FoodType = {input} WHERE Name = \"{itemname}\";";
+                    sqlite_cmd.CommandText = $"UPDATE Menu SET FoodType = \'{input}\' WHERE Name = \'{itemname}\';";
                     //DEBUG
                     // Console.WriteLine($"foodtype: UPDATE Menu SET FoodType = {input} WHERE Name = \"{itemname}\";");
                     break;
@@ -1347,14 +1396,32 @@ public static class Database {
         return false;
     }
 
-    public static bool UpdateReservationStatus(int TimeSlotID, int StatusCode) {
-        if (TimeSlotID != 0 && StatusCode == 0) {
+    public static bool UpdateReservationStatusBulk(int TimeSlotID, int StatusCode) {
+        if (TimeSlotID != 0 && StatusCode != 0) {
             //Creating a connection to the database
             SqliteConnection db_conn = CreateConn();
 
             SqliteCommand sqlite_cmd;
             sqlite_cmd = db_conn.CreateCommand();
-            sqlite_cmd.CommandText = $"UPDATE ReservationTimeSlots SET Status = {StatusCode} WHERE TimeSlotID = {TimeSlotID};";
+            sqlite_cmd.CommandText = $"UPDATE Reservations SET Status = {StatusCode} WHERE TimeSlotID = {TimeSlotID};";
+            sqlite_cmd.ExecuteNonQuery();
+
+            //Close the connection to the database
+            CloseConn(db_conn);
+
+            return true;
+        }
+        return false;
+    }
+
+    public static bool UpdateReservationStatus(Reservations reservations, int StatusCode) {
+        if (reservations is not null && StatusCode != 0) {
+            //Creating a connection to the database
+            SqliteConnection db_conn = CreateConn();
+
+            SqliteCommand sqlite_cmd;
+            sqlite_cmd = db_conn.CreateCommand();
+            sqlite_cmd.CommandText = $"UPDATE Reservations SET Status = {StatusCode} WHERE ID = {reservations.ID};";
             sqlite_cmd.ExecuteNonQuery();
 
             //Close the connection to the database

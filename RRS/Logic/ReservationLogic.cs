@@ -15,14 +15,6 @@ public static class ReservationLogic {
                 if (reservationTimeSlot.EndDateTime >= DateTime.Now) {
                     //retrieve acc info
                     Accounts accounts = Database.SelectAccount(reservation.AccountID);
-
-                    string reservationStatus = "";
-                    
-                    //check actual status
-                    if (reservation.Status == 1)
-                    {
-                        reservationStatus = "CANCELLED";
-                    }
                     
                     //add enter to every line
                     if (returnResult != "") 
@@ -30,8 +22,11 @@ public static class ReservationLogic {
                         returnResult += "\n";
                     }
 
-                    //format return
-                    returnResult += $"Reservation for: {accounts.FirstName} {accounts.LastName}, Table: {reservation.TableID}, Date: {reservationTimeSlot.GetDate()}, from {reservationTimeSlot.GetStartTime24()} to {reservationTimeSlot.GetEndTime24()}";
+                    if (reservation.Status == 1) {
+                        returnResult += $"Reservation for: {accounts.FirstName} {accounts.LastName}, Table: {reservation.TableID}, Date: {reservationTimeSlot.GetDate()}, from {reservationTimeSlot.GetStartTime24()} to {reservationTimeSlot.GetEndTime24()} - CANCELLED";
+                    } else {
+                        returnResult += $"Reservation for: {accounts.FirstName} {accounts.LastName}, Table: {reservation.TableID}, Date: {reservationTimeSlot.GetDate()}, from {reservationTimeSlot.GetStartTime24()} to {reservationTimeSlot.GetEndTime24()}";
+                    }
                 }
             }
         } else {
@@ -39,6 +34,26 @@ public static class ReservationLogic {
         }
         
         return returnResult;
+    }
+
+    public static List<Reservations> RetrieveCurrReservations(int restaurantID) {
+        List<Reservations> reservations = Database.SelectReservations(restaurantID);
+
+        IEnumerable<Reservations> returnValue =
+            from Reservations in reservations
+            where TimeSlotLogic.GetSelectedTimeSlot(Reservations.TimeSlotID).StartDateTime > DateTime.Now
+            select Reservations;
+
+        return returnValue.ToList();
+    }
+
+    public static List<Reservations> RemoveCancelled(List<Reservations> reservations) {
+        IEnumerable<Reservations> returnValue =
+            from Reservations in reservations
+            where Reservations.Status != 1
+            select Reservations;
+
+        return returnValue.ToList();
     }
 
     public static string RetrieveCurrentReservations(int restaurantID) 
@@ -57,14 +72,6 @@ public static class ReservationLogic {
                 if (reservationTimeSlot.StartDateTime <= DateTime.Now & reservationTimeSlot.EndDateTime >= DateTime.Now) {
                     //retrieve acc info
                     Accounts accounts = Database.SelectAccount(reservation.AccountID);
-
-                    string reservationStatus = "";
-                    
-                    //check actual status
-                    if (reservation.Status == 1)
-                    {
-                        reservationStatus = "CANCELLED";
-                    }
                     
                     //add enter to every line
                     if (returnResult != "") 
@@ -73,7 +80,11 @@ public static class ReservationLogic {
                     }
 
                     //format return
-                    returnResult += $"Reservation for: {accounts.FirstName} {accounts.LastName}, Table: {reservation.TableID}, Date: {reservationTimeSlot.GetDate()}, from {reservationTimeSlot.GetStartTime24()} to {reservationTimeSlot.GetEndTime24()}";
+                    if (reservation.Status == 1) {
+                        returnResult += $"Reservation for: {accounts.FirstName} {accounts.LastName}, Table: {reservation.TableID}, Date: {reservationTimeSlot.GetDate()}, from {reservationTimeSlot.GetStartTime24()} to {reservationTimeSlot.GetEndTime24()} - CANCELLED";
+                    } else {
+                        returnResult += $"Reservation for: {accounts.FirstName} {accounts.LastName}, Table: {reservation.TableID}, Date: {reservationTimeSlot.GetDate()}, from {reservationTimeSlot.GetStartTime24()} to {reservationTimeSlot.GetEndTime24()}";
+                    }
                 }
             }
         } else {
@@ -147,10 +158,9 @@ public static class ReservationLogic {
         return Database.Insert(new Reservations(restaurantID, TimeSlotID, table, AccountID, 0));
     }
 
-    public static bool CancelReservation(int timeslotID, Accounts LoggedAccount) {
-        //1 defines that a reservation has been cancelled
-        return Database.UpdateReservationStatus(timeslotID, 1);
-    }
+    public static bool CancelReservationsBulk(int timeslotID, Accounts LoggedAccount) => Database.UpdateReservationStatusBulk(timeslotID, 1);
+
+    public static bool CancelReservation(Reservations reservations) => Database.UpdateReservationStatus(reservations, 1);
 
     public static List<string> ConvertToDisplayString(List<Reservations> reservations) {
         List<string> returnValue = [];

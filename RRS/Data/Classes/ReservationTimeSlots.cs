@@ -64,4 +64,6 @@ public class ReservationTimeSlots : IDBRestaurantClass {
     public string GetEndTime24() => EndDateTime.ToString("HH:mm"); 
 
     public string GetDate() => StartDateTime.ToString("dd/MM/yyyy");
+
+    public string ToStringDisplay() => $"ID: {ID}\nRestaurantID: {RestaurantID}\nStartDateTime: {GetDate} {GetStartTime24}\n EndDateTime: {GetDate} {GetEndTime24}";
 }

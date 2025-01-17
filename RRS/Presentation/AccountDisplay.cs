@@ -76,6 +76,9 @@ public static class AccountDisplay {
                 case 3:
                     infoSharedText = "Shared";
                     break;
+                case 4:
+                    infoSharedText = "Request declined";
+                    break;
                 default:
                     infoSharedText = "Not shared yet";
                     break;
@@ -119,7 +122,7 @@ public static class AccountDisplay {
                 options.Add("Decline request");
                 break;
             case 3:
-                header += $"";
+                header += $"\nContact details:\nPhonenumber: {SelectedAccount.PhoneNumber}";
                 break;
             case 4:
                 header += "Request declined";
@@ -129,12 +132,13 @@ public static class AccountDisplay {
                 options.Add("Send request");
                 break;
         }
+        options.Add("Exit");
 
         bool Exit = false;
         while (!Exit) {
             int selectedOption = Functions.OptionSelector(header, options);
 
-            if (selectedOption == options.Count()) {
+            if (selectedOption + 1 == options.Count()) {
                 Exit = true;
             } else {
                 switch (AccountSharedCode) {

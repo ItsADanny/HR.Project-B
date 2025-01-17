@@ -37,4 +37,6 @@ public class Reservations : IDBRestaurantClass {
             throw new Exception("Invalid input, Can't create reservation from invalid input, please only input numerics that can be converted to integers");
         }
     }
+
+    public string ToStringDisplay() => $"ID: {ID}\nRestaurantID: {RestaurantID}\nTimeSlotID: {TimeSlotID}\nTableID: {TableID}\nAccountID: {AccountID}\nStatus: {Status}";
 }

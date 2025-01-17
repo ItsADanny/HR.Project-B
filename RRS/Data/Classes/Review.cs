@@ -23,4 +23,6 @@ public class Review : IDBRestaurantClass {
         Rating = rating;
         Comment = comment;
     }
+
+    public string ToStringDisplay() => $"ID: {ID}\nRestaurantID: {RestaurantID}\nAccountID: {AccountID}\nReservationID: {ReservationID}\nRating: {Rating}\nComment: {Comment}";
 }

@@ -10,4 +10,6 @@ public class Table : IDBRestaurantClass {
         Name = name;
         MaxSize = maxSize;
     }
+
+    public string ToStringDisplay() => $"ID: {ID}\nRestaurantID: {RestaurantID}\nName: {Name}\nMaxSize: {MaxSize}";
 }

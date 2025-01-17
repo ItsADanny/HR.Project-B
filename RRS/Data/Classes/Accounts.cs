@@ -52,27 +52,15 @@ public class Accounts : IDBClass {
         AccountLevel = accountlevel;
     }
 
-    public string GetPassword() {
-        return Password;
-    }
+    public string GetPassword() => Password;
 
-    public override string ToString()
-    {
-        return $"ID: {ID}\nEmail: {Email}\nFirstName: {FirstName}\nLastName: {LastName}\nPhoneNumber: {PhoneNumber}\nLanguage: {Language}\nAccountLevel: {AccountLevel}";
-    }
+    public override string ToString() => $"ID: {ID}\nEmail: {Email}\nFirstName: {FirstName}\nLastName: {LastName}\nPhoneNumber: {PhoneNumber}\nLanguage: {Language}\nAccountLevel: {AccountLevel}";
 
-    public string ToString_WithAccountLevelName()
-    {
-        return $"ID: {ID}\nEmail: {Email}\nFirstName: {FirstName}\nLastName: {LastName}\nPhoneNumber: {PhoneNumber}\nLanguage: {Language}\nAccountLevel: {Database.SelectAccountLevel(AccountLevel).Name}";
-    }
+    public string ToString_WithAccountLevelName() => $"ID: {ID}\nEmail: {Email}\nFirstName: {FirstName}\nLastName: {LastName}\nPhoneNumber: {PhoneNumber}\nLanguage: {Language}\nAccountLevel: {Database.SelectAccountLevel(AccountLevel).Name}";
 
-    public string FancyToString_WithAccountLevelName()
-    {
-        return $"===============================================================\nID           : {ID}\nEmail        : {Email}\nFirstName    : {FirstName}\nLastName     : {LastName}\nPhoneNumber  : {PhoneNumber}\nAccountLevel : {Database.SelectAccountLevel(AccountLevel).Name}\n===============================================================";
-    }
+    public string FancyToString_WithAccountLevelName() => $"===============================================================\nID           : {ID}\nEmail        : {Email}\nFirstName    : {FirstName}\nLastName     : {LastName}\nPhoneNumber  : {PhoneNumber}\nAccountLevel : {Database.SelectAccountLevel(AccountLevel).Name}\n===============================================================";
 
-    public string FancyToString_WithAccountLevelName_NoBorder()
-    {
-        return $"ID           : {ID}\nEmail        : {Email}\nFirstName    : {FirstName}\nLastName     : {LastName}\nPhoneNumber  : {PhoneNumber}\nAccountLevel : {Database.SelectAccountLevel(AccountLevel).Name}";
-    }
+    public string FancyToString_WithAccountLevelName_NoBorder() => $"ID           : {ID}\nEmail        : {Email}\nFirstName    : {FirstName}\nLastName     : {LastName}\nPhoneNumber  : {PhoneNumber}\nAccountLevel : {Database.SelectAccountLevel(AccountLevel).Name}";
+
+    public string ToStringDisplay() => $"ID           : {ID}\nEmail        : {Email}\nFirstName    : {FirstName}\nLastName     : {LastName}\nPhoneNumber  : {PhoneNumber}\nAccountLevel : {Database.SelectAccountLevel(AccountLevel).Name}";
 }

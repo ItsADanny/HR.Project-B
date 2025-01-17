@@ -18,4 +18,6 @@ public class FoodType : IDBRestaurantClass {
     {
         return $"ID: {ID}\nRestaurantID: {RestaurantID}\nName: {Name}";
     }
+
+    public string ToStringDisplay() => $"ID: {ID}\nRestaurantID: {RestaurantID}\nName: {Name}";
 }

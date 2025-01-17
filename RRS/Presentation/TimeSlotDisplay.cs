@@ -112,10 +112,10 @@ public static class TimeSlotDisplay {
             if (row.Value) {
                 int timeslotID = TimeSlotLogic.GetIDFromDisplayString(row.Key, restaurantID);
                 if (TimeSlotLogic.DeleteTimeSlot(timeslotID, LoggedInAccount)) {
-                    if (ReservationLogic.CancelReservation(timeslotID, LoggedInAccount)) {
+                    if (ReservationLogic.CancelReservationsBulk(timeslotID, LoggedInAccount)) {
                         Console.WriteLine($"Timeslot \"{row.Key}\" deleted, associated reservations have been cancelled");
                     } else {
-                        Console.WriteLine($"Timeslot \"{row.Key}\" deleted, but there was an error while trying to cancel associated reservations.\nPlease cancel these reservations manually");
+                        Console.WriteLine($"Timeslot \"{row.Key}\" deleted");
                     }
                 } else {
                     Console.WriteLine($"There was an error while trying to delete timeslot \"{row.Key}\", please try again later");
